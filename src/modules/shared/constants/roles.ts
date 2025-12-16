@@ -1,0 +1,7 @@
+export enum ROLE {
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER',
+  ADMIN = 'ADMIN',
+}
+
+export const CURRENT_ROLE: ROLE = ROLE.STUDENT

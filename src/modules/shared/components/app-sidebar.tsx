@@ -8,12 +8,17 @@ import {
   SidebarRail,
 } from './ui/sidebar'
 import { NavMain } from './nav-main'
-import { LINKS } from '@/config/links'
+import { CURRENT_ROLE } from '@/modules/shared/constants'
+import { ROLE_LINKS } from '@/config/links'
 import Logo from './logo'
 import { useIsDesktop } from '@/modules/shared/hooks/use-desktop'
 
-const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {}
+
+const AppSidebar = ({ ...props }: AppSidebarProps) => {
   const isDesktop = useIsDesktop()
+
+  const linksForRole = ROLE_LINKS[CURRENT_ROLE]
 
   return (
     <Sidebar
@@ -25,7 +30,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         <Logo />
       </SidebarHeader>
       <SidebarContent className="flex-1 overflow-auto">
-        <NavMain links={LINKS} />
+        <NavMain links={linksForRole} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

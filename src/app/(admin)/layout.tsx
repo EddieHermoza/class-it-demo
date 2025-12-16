@@ -31,10 +31,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     >
       <AppSidebar />
       <SidebarInset className="flex h-screen flex-col">
-        <Navbar />
-        <div className="bg-noise-subtle flex-1 overflow-auto bg-gradient-to-br bg-[length:300%_300%] dark:from-violet-950/30 dark:via-black dark:to-black">
-          {children}
+        {/* Trigger visible solo en móviles/tablets */}
+        <div className="flex h-16 shrink-0 items-center gap-2 border-b px-4 lg:hidden">
+          <SidebarTrigger />
         </div>
+        <Navbar />
+        <div className="flex-1 overflow-auto">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   )
