@@ -39,10 +39,27 @@ export function NavMain({ links }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
-    const index = links.findIndex(
-      (link) => link.src && pathname.startsWith(link.src)
-    )
-    setActiveIndex(index !== -1 ? index : 0)
+    const sortedLinks = [...links].sort((a, b) => {
+      const aLength = a.src?.length || 0
+      const bLength = b.src?.length || 0
+      return bLength - aLength
+    })
+
+    const index = sortedLinks.findIndex((link) => {
+      if (!link.src) return false
+      if (link.src === '/') {
+        return pathname === '/'
+      }
+      return (
+        pathname.startsWith(link.src) &&
+        (pathname === link.src || pathname[link.src.length] === '/')
+      )
+    })
+
+    const originalIndex =
+      index !== -1 ? links.findIndex((link) => link === sortedLinks[index]) : -1
+
+    setActiveIndex(originalIndex !== -1 ? originalIndex : 0)
   }, [pathname, links])
 
   return (
