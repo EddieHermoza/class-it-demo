@@ -30,9 +30,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       className="flex h-screen"
     >
       <AppSidebar />
-      <SidebarInset className="flex h-screen flex-col">
+      <SidebarInset className="flex-1 h-screen overflow-hidden">
         <Navbar />
-        <div className="bg-noise-subtle flex-1 overflow-auto bg-gradient-to-br bg-[length:300%_300%] dark:from-violet-950/30 dark:via-black dark:to-black">
+        <div className="flex-1 overflow-y-scroll custom-scrollbar bg-gradient-to-br bg-[length:300%_300%] dark:from-violet-950/30 dark:via-black dark:to-black">
           {children}
         </div>
       </SidebarInset>

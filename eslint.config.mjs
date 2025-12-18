@@ -10,15 +10,14 @@ const eslintConfig = defineConfig([
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
 
-      'no-console': 'warn',
-
-      'no-unused-vars': 'error',
+      '@/no-console': 'warn',
 
       '@typescript-eslint/no-unused-vars': [
-        'error',
+        'warn',
         {
-          argsIgnorePattern: '^',
-          varsIgnorePattern: '^',
+          ignoreRestSiblings: true,
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
         },
       ],
     },

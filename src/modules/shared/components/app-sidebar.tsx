@@ -32,7 +32,6 @@ const AppSidebar = ({ ...props }: AppSidebarProps) => {
       <SidebarContent className="flex-1 overflow-auto">
         <NavMain links={linksForRole} />
       </SidebarContent>
-      <SidebarRail />
     </Sidebar>
   )
 }

@@ -34,7 +34,7 @@ export const LINKS_STUDENT = [
   },
   {
     label: 'Configuración',
-    src: '#',
+    src: '/settings',
     icon: TbSettings,
   },
 ]
@@ -70,7 +70,7 @@ export const LINKS_TEACHER = [
   },
   {
     label: 'Configuración',
-    src: '#',
+    src: '/settings',
     icon: TbSettings,
   },
 ]
