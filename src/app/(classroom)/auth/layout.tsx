@@ -3,7 +3,7 @@ import React from 'react'
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="flex h-full items-center justify-center"
+      className="flex-center h-full"
       // style={{
       //   backgroundImage: "url('/auth-bg.png')",
       //   backgroundSize: 'cover',
