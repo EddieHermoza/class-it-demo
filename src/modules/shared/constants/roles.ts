@@ -4,4 +4,4 @@ export enum ROLE {
   ADMIN = 'ADMIN',
 }
 
-export const CURRENT_ROLE: ROLE = ROLE.STUDENT
+export const CURRENT_ROLE: ROLE = ROLE.TEACHER
