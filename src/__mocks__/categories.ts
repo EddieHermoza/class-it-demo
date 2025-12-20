@@ -1,0 +1,16 @@
+export const categories = [
+  { id: 'all', label: 'Ver todos', value: 'all' },
+  { id: 'desarrollo', label: 'Desarrollo', value: 'desarrollo' },
+  { id: 'marketing', label: 'Marketing', value: 'marketing' },
+  { id: 'diseño', label: 'Diseño', value: 'diseño' },
+  { id: 'negocios', label: 'Negocios', value: 'negocios' },
+  { id: 'data', label: 'Data Science', value: 'data' },
+  { id: 'programacion', label: 'Programación', value: 'programacion' },
+  { id: 'matematicas', label: 'Matemáticas', value: 'matematicas' },
+  { id: 'ciencias', label: 'Ciencias', value: 'ciencias' },
+  { id: 'historia', label: 'Historia', value: 'historia' },
+  { id: 'arte', label: 'Arte', value: 'arte' },
+  { id: 'musica', label: 'Música', value: 'musica' },
+  { id: 'deportes', label: 'Deportes', value: 'deportes' },
+  { id: 'idiomas', label: 'Idiomas', value: 'idiomas' },
+]

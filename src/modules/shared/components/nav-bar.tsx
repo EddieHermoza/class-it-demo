@@ -24,7 +24,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="bg-sidebar w-full px-4 py-3 shadow-sm">
+    <nav className="bg-sidebar w-full px-4 py-3 shadow-sm border-l">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <div className="flex items-center gap-2 lg:hidden">
           <SidebarTrigger />

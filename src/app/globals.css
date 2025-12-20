@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 @plugin 'tailwind-scrollbar';
 
 @custom-variant dark (&:is(.dark *));
@@ -29,7 +29,8 @@
   --chart-3: oklch(0.541 0.281 293.009);
   --chart-4: oklch(0.491 0.27 292.581);
   --chart-5: oklch(0.432 0.232 292.759);
-  --sidebar: oklch(0.985 0 0);
+  /* --sidebar: oklch(0.985 0 0); */
+  --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.141 0.005 285.823);
   --sidebar-primary: oklch(0.541 0.281 293.009);
   --sidebar-primary-foreground: oklch(0.969 0.016 293.756);
@@ -131,17 +132,21 @@
 }
 
 @utility bg-custom-conic-gradient-light {
-  background-image: conic-gradient(from 120deg at 50% 64%,
-      transparent,
-      #fff 1deg 120deg,
-      transparent 121deg);
+  background-image: conic-gradient(
+    from 120deg at 50% 64%,
+    transparent,
+    #fff 1deg 120deg,
+    transparent 121deg
+  );
 }
 
 @utility bg-custom-conic-gradient-dark {
-  background-image: conic-gradient(from 120deg at 50% 64%,
-      transparent,
-      #000 1deg 120deg,
-      transparent 121deg);
+  background-image: conic-gradient(
+    from 120deg at 50% 64%,
+    transparent,
+    #000 1deg 120deg,
+    transparent 121deg
+  );
 }
 
 .loader {
@@ -166,7 +171,6 @@
 }
 
 @keyframes l27-0 {
-
   0%,
   30% {
     transform: rotate(0);
@@ -189,7 +193,8 @@
 
   30%,
   70% {
-    transform: rotate(calc(var(--s, 1) * 120deg)) translate(calc(var(--s, 1) * -5px), 10px);
+    transform: rotate(calc(var(--s, 1) * 120deg))
+      translate(calc(var(--s, 1) * -5px), 10px);
   }
 
   100% {

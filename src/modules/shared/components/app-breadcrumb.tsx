@@ -1,0 +1,66 @@
+'use client'
+
+import React from 'react'
+import Link from 'next/link'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/modules/shared/components/ui/breadcrumb'
+
+export interface BreadcrumbItemType {
+  label: string
+  href?: string
+}
+
+interface AppBreadcrumbProps {
+  items: BreadcrumbItemType[]
+  className?: string
+}
+
+export default function AppBreadcrumb({
+  items,
+  className,
+}: AppBreadcrumbProps) {
+  if (items.length === 0) return null
+
+  return (
+    <div className={`border-b border-white/10 ${className || ''}`}>
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumb>
+          <BreadcrumbList>
+            {items.map((item, index) => {
+              const isLast = index === items.length - 1
+
+              return (
+                <React.Fragment key={index}>
+                  {isLast ? (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  ) : (
+                    <>
+                      <BreadcrumbItem>
+                        {item.href ? (
+                          <BreadcrumbLink asChild>
+                            <Link href={item.href}>{item.label}</Link>
+                          </BreadcrumbLink>
+                        ) : (
+                          <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                        )}
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                    </>
+                  )}
+                </React.Fragment>
+              )
+            })}
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+    </div>
+  )
+}
