@@ -21,7 +21,7 @@ interface AppBreadcrumbProps {
   className?: string
 }
 
-export default function AppBreadcrumb({
+export function AppBreadcrumb({
   items,
   className,
 }: AppBreadcrumbProps) {

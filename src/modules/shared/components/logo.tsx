@@ -5,7 +5,7 @@ interface Props {
   iconClassName?: string
   className?: string
 }
-export default function Logo({ iconClassName, className }: Props) {
+export function Logo({ iconClassName, className }: Props) {
   return (
     <span className="flex-center flex h-full">
       <span className={`${className}`}>LMS</span>

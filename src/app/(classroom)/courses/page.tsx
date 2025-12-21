@@ -1,6 +1,5 @@
 'use client'
 import { courses, categories } from '@/__mocks__'
-import { Pagination } from '@/modules/shared/components/pagination'
 import {
   CourseCard,
   CategoryFilter,
@@ -8,7 +7,7 @@ import {
 } from '@/modules/courses/components'
 import { useEffect, useMemo, useState } from 'react'
 import { ITEMS_PER_PAGE } from '@/modules/shared/constants'
-import Loading from '@/modules/shared/components/loading'
+import { Loading, Pagination } from '@/modules/shared/components'
 
 const CoursesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')

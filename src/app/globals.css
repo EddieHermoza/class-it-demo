@@ -201,3 +201,19 @@
     transform: rotate(calc(var(--s, 1) * 120deg)) translate(0);
   }
 }
+
+.toaster [data-sonner-toast] {
+  background: var(--popover) !important;
+  color: var(--popover-foreground) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.toaster [data-sonner-toast] [data-description] {
+  color: var(--muted-foreground) !important;
+  opacity: 0.9 !important;
+}
+
+.toaster [data-sonner-toast] [data-title] {
+  color: var(--popover-foreground) !important;
+  font-weight: 500 !important;
+}

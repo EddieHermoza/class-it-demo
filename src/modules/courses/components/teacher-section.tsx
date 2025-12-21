@@ -15,15 +15,16 @@ interface TeacherSectionProps {
 export function TeacherSection({ teacher }: TeacherSectionProps) {
   return (
     <section className="mb-12">
-      <h2 className="mb-8 text-3xl font-bold">Sobre nuestro experto</h2>
+      <h2 className="mb-6 text-xl font-bold sm:mb-7 sm:text-2xl md:mb-8 md:text-3xl">
+        Sobre nuestro experto
+      </h2>
 
-      <div className="p-8 backdrop-blur-sm">
-        <div className="flex flex-col items-start gap-8 md:flex-row">
-          {/* Avatar */}
+      <div className="p-4 backdrop-blur-sm sm:p-6 md:p-8">
+        <div className="flex flex-col items-start gap-6 md:flex-row md:gap-8">
           <div className="shrink-0">
             <div className="relative">
               <div className="from-primary/40 to-primary/20 absolute inset-0 rounded-full bg-linear-to-br blur-xl" />
-              <div className="border-primary shadow-primary/20 relative h-36 w-36 overflow-hidden rounded-full border-4 shadow-lg">
+              <div className="relative h-24 w-24 overflow-hidden rounded-full sm:h-28 sm:w-28 md:h-36 md:w-36">
                 <Image
                   src={teacher.avatarUrl || '/placeholder.svg'}
                   alt={`${teacher.name} ${teacher.lastName}`}
@@ -35,15 +36,14 @@ export function TeacherSection({ teacher }: TeacherSectionProps) {
             </div>
           </div>
 
-          {/* Info */}
           <div className="flex-1">
-            <h3 className="mb-2 text-2xl font-bold">
+            <h3 className="mb-2 text-lg font-bold sm:text-xl md:text-2xl">
               {teacher.name} {teacher.lastName}
             </h3>
-            <p className="text-primary mb-6 text-lg font-medium">
+            <p className="text-primary mb-4 text-base font-medium sm:mb-5 sm:text-lg md:mb-6">
               {teacher.title}
             </p>
-            <p className="text-base leading-relaxed whitespace-pre-line">
+            <p className="text-sm leading-relaxed whitespace-pre-line sm:text-base">
               {teacher.bio}
             </p>
           </div>

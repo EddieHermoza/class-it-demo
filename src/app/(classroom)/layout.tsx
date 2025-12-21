@@ -5,9 +5,8 @@ import {
   SidebarProvider,
   SidebarInset,
 } from '@/modules/shared/components/ui/sidebar'
-import AppSidebar from '@/modules/shared/components/app-sidebar'
+import { AppSidebar, Navbar } from '@/modules/shared/components'
 import { useIsDesktop } from '@/modules/shared/hooks/use-desktop'
-import Navbar from '@/modules/shared/components/nav-bar'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useIsDesktop()

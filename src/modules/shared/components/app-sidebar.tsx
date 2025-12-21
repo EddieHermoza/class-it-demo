@@ -10,12 +10,12 @@ import {
 import { NavMain } from './nav-main'
 import { CURRENT_ROLE } from '@/modules/shared/constants'
 import { ROLE_LINKS } from '@/config/links'
-import Logo from './logo'
+import { Logo } from './logo'
 import { useIsDesktop } from '@/modules/shared/hooks/use-desktop'
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {}
 
-const AppSidebar = ({ ...props }: AppSidebarProps) => {
+export function AppSidebar({ ...props }: AppSidebarProps) {
   const isDesktop = useIsDesktop()
 
   const linksForRole = ROLE_LINKS[CURRENT_ROLE]
@@ -35,5 +35,3 @@ const AppSidebar = ({ ...props }: AppSidebarProps) => {
     </Sidebar>
   )
 }
-
-export default AppSidebar

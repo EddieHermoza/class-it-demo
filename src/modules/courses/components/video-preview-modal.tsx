@@ -1,14 +1,23 @@
 'use client'
 
-import { Dialog, DialogContent } from '@/modules/shared/components/ui/dialog'
-import { Button } from '@/modules/shared/components/ui/button'
-import { Play, Eye, X } from 'lucide-react'
+import { useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from '@/modules/shared/components/ui/dialog'
+import { Play } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getYouTubeThumbnail } from '@/modules/shared/utils'
+// import { YouTubePlayerComponent } from '@/modules/shared/components/youtube-player'
+import { YouTubeIframePlayer } from '@/modules/shared/components/youtube-iframe-player'
 
 interface Video {
   id: string
   title: string
   duration: string
+  youtubeUrl: string
+  thumbnail?: string
 }
 
 interface VideoPreviewModalProps {
@@ -28,81 +37,131 @@ export function VideoPreviewModal({
 }: VideoPreviewModalProps) {
   const currentVideo = videos.find((v) => v.id === currentVideoId)
 
+  const [playing, setPlaying] = useState(false)
+
+  const handleVideoSelect = (videoId: string) => {
+    onVideoChange(videoId)
+    setPlaying(true)
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
-        className="h-[85vh] w-full max-w-6xl border-white/10 bg-[#0a0f1c] p-0"
+        className="h-[70vh]! w-[98vw]! max-w-[98vw]! border-white/10 bg-[#0a0f1c] p-0! sm:max-w-[1400px]!"
         showCloseButton={false}
       >
-        <div className="flex h-full flex-col md:flex-row">
-          {/* Video Player Section */}
-          <div className="flex flex-1 flex-col bg-black">
-            {/* Close button */}
-            <div className="flex items-center justify-between border-b border-white/10 p-4">
-              <h3 className="truncate pr-4 font-semibold text-white">
-                {currentVideo?.title || 'Vista previa del curso'}
-              </h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                className="shrink-0 text-white/70 hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
+        <DialogTitle className="sr-only">Videos de vista previa</DialogTitle>
+        <div className="flex h-full flex-col lg:flex-row">
+          <div className="flex flex-2 flex-col bg-black lg:flex-3">
+            <div className="relative flex flex-1 items-center justify-center bg-black">
+              {currentVideo?.youtubeUrl ? (
+                // <YouTubePlayerComponent
+                //   videoUrl={currentVideo.youtubeUrl}
+                //   autoplay={playing}
+                //   className="h-full w-full"
+                // />
 
-            {/* Video placeholder */}
-            <div className="flex flex-1 items-center justify-center bg-black">
-              <div className="text-center">
-                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/10">
-                  <Play className="ml-1 h-10 w-10 text-white/60" />
+                <YouTubeIframePlayer
+                  videoUrl={currentVideo.youtubeUrl}
+                  autoplay={playing}
+                  className="h-full w-full"
+                />
+              ) : (
+                <div className="text-center">
+                  <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/10">
+                    <Play className="ml-1 h-10 w-10 text-white/60" />
+                  </div>
+                  <p className="text-sm text-white/60">Selecciona un video</p>
                 </div>
-                <p className="text-sm text-white/60">
-                  Video: {currentVideo?.title}
-                </p>
-                <p className="mt-1 text-xs text-white/40">
-                  Duración: {currentVideo?.duration}
-                </p>
-              </div>
+              )}
             </div>
           </div>
 
-          {/* Video List Sidebar */}
-          <div className="flex max-h-[40vh] flex-col border-l border-white/10 bg-[#111827] md:max-h-full md:w-80">
-            <div className="border-b border-white/10 p-4">
-              <div className="flex items-center gap-2 text-white/80">
-                <Eye className="h-4 w-4" />
-                <span className="text-sm font-semibold">
-                  Videos de vista previa ({videos.length})
-                </span>
+          <div className="border-border bg-background flex max-h-[30vh] flex-col border-t lg:max-h-full lg:w-[350px] lg:flex-1 lg:border-t-0 lg:border-l">
+            <div className="border-border bg-muted/50 border-b p-4 backdrop-blur-sm">
+              <div className="text-foreground flex items-center gap-2">
+                <div>
+                  <h4 className="text-sm font-semibold">
+                    Videos de vista previa
+                  </h4>
+                  <p className="text-muted-foreground text-xs">
+                    {videos.length} videos disponibles
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
-              {videos.map((video) => (
-                <button
-                  key={video.id}
-                  onClick={() => onVideoChange(video.id)}
-                  className={cn(
-                    'w-full border-b border-white/10 p-4 text-left transition-colors hover:bg-white/5',
-                    currentVideoId === video.id &&
-                      'border-l-4 border-l-blue-500 bg-blue-600/20'
-                  )}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-white/10">
-                      <Play className="h-4 w-4 text-white/60" />
+            <div className="scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent flex-1 overflow-y-auto">
+              {videos.map((video) => {
+                const isActive = currentVideoId === video.id
+                const thumbnail =
+                  video.thumbnail || getYouTubeThumbnail(video.youtubeUrl)
+                return (
+                  <button
+                    key={video.id}
+                    onClick={() => handleVideoSelect(video.id)}
+                    className={cn(
+                      'group border-border hover:bg-muted w-full border-b p-4 text-left transition-all duration-200',
+                      isActive && 'border-l-primary bg-primary/10 border-l-4'
+                    )}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="relative shrink-0">
+                        <div
+                          className={cn(
+                            'flex h-14 w-20 items-center justify-center overflow-hidden rounded-lg bg-linear-to-br transition-all duration-200',
+                            isActive
+                              ? 'from-primary to-primary'
+                              : 'from-muted to-muted group-hover:from-primary/50 group-hover:to-primary/50'
+                          )}
+                        >
+                          {thumbnail ? (
+                            <img
+                              src={thumbnail}
+                              alt={video.title}
+                              className="h-full w-full rounded-lg object-cover"
+                            />
+                          ) : (
+                            <Play
+                              className={cn(
+                                'h-6 w-6 transition-colors',
+                                isActive
+                                  ? 'text-primary-foreground'
+                                  : 'text-muted-foreground group-hover:text-primary'
+                              )}
+                            />
+                          )}
+                        </div>
+                        {/* <div className="bg-primary text-primary-foreground absolute -top-1 -left-1 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold shadow-lg">
+                          {index + 1}
+                        </div> */}
+                      </div>
+
+                      <div className="min-w-0 flex-1">
+                        <p
+                          className={cn(
+                            'mb-1 line-clamp-2 text-sm font-semibold transition-colors',
+                            isActive
+                              ? 'text-primary'
+                              : 'text-foreground group-hover:text-primary'
+                          )}
+                        >
+                          {video.title}
+                        </p>
+                        <div className="text-muted-foreground flex items-center gap-2 text-xs">
+                          <span>{video.duration}</span>
+                          {isActive && (
+                            <span className="text-primary flex items-center gap-1">
+                              <div className="bg-primary h-1.5 w-1.5 animate-pulse rounded-full" />
+                              Reproduciendo
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="mb-1 truncate text-sm font-medium text-white">
-                        {video.title}
-                      </p>
-                      <p className="text-xs text-white/50">{video.duration}</p>
-                    </div>
-                  </div>
-                </button>
-              ))}
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>

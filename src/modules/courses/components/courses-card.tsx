@@ -2,9 +2,11 @@
 
 import type React from 'react'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Star, Clock, Plus, Check } from 'lucide-react'
+import { toast } from 'sonner'
 import { Card, CardContent } from '@/modules/shared/components/ui/card'
 import {
   Avatar,
@@ -14,6 +16,7 @@ import {
 import { Badge } from '@/modules/shared/components/ui/badge'
 import { Button } from '@/modules/shared/components/ui/button'
 import { CourseInterface } from '@/__mocks__'
+import { Spinner } from '@/modules/shared/components/ui/spinner'
 
 interface CourseCardProps {
   course: CourseInterface
@@ -33,6 +36,7 @@ export function CourseCard({
   onToggleProfile,
 }: CourseCardProps) {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleOpenDetails = () => {
     router.push(`/courses/${course.id}`)
@@ -40,7 +44,24 @@ export function CourseCard({
 
   const handleToggleProfile = (e: React.MouseEvent) => {
     e.stopPropagation()
-    onToggleProfile?.(course.id)
+    setIsLoading(true)
+
+    const wasInProfile = isInProfile
+
+    setTimeout(() => {
+      onToggleProfile?.(course.id)
+      setIsLoading(false)
+
+      if (wasInProfile) {
+        toast.warning('Curso eliminado exitosamente', {
+          description: `${course.title} ha sido eliminado de tu perfil`,
+        })
+      } else {
+        toast.success('Curso agregado exitosamente', {
+          description: `${course.title} ha sido agregado a tu perfil`,
+        })
+      }
+    }, 1000)
   }
 
   return (
@@ -67,14 +88,6 @@ export function CourseCard({
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-110"
         />
-        {isInProfile && (
-          <div className="absolute top-2 left-2">
-            <Badge className="bg-primary text-primary-foreground flex items-center gap-1 px-2 py-0.5 text-xs shadow-lg backdrop-blur-sm">
-              <Check className="h-3 w-3" />
-              En tu perfil
-            </Badge>
-          </div>
-        )}
         <div
           className={`absolute top-2 ${isInProfile ? 'right-2' : 'right-2'}`}
         >
@@ -92,7 +105,7 @@ export function CourseCard({
           <h3 className="group-hover:text-primary line-clamp-2 text-base leading-tight font-semibold text-balance transition-colors">
             {course.title}
           </h3>
-          <p className="text-muted-foreground line-clamp-2 text-xs leading-relaxed">
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
             {course.shortDescription}
           </p>
         </div>
@@ -109,7 +122,7 @@ export function CourseCard({
                 {course.teacher.lastName[0]}
               </AvatarFallback>
             </Avatar>
-            <span className="truncate text-xs font-medium">
+            <span className="truncate text-sm font-medium">
               {course.teacher.name} {course.teacher.lastName}
             </span>
           </div>
@@ -134,22 +147,30 @@ export function CourseCard({
         <Button
           onClick={handleToggleProfile}
           variant={isInProfile ? 'outline' : 'default'}
+          disabled={isLoading}
           className={`w-full transition-all ${
             isInProfile
               ? 'border-primary/50 hover:bg-primary/10 hover:border-primary'
               : 'bg-primary hover:bg-primary/90'
           }`}
-          size="sm"
+          size="lg"
         >
-          {isInProfile ? (
+          {isLoading ? (
+            <>
+              <Spinner className="mr-1.5 h-3.5 w-3.5" />
+              <span className="text-sm">
+                {isInProfile ? 'Eliminando curso...' : 'Agregando curso...'}
+              </span>
+            </>
+          ) : isInProfile ? (
             <>
               <Check className="mr-1.5 h-3.5 w-3.5" />
-              <span className="text-xs">Agregado</span>
+              <span className="text-sm">Agregado</span>
             </>
           ) : (
             <>
               <Plus className="mr-1.5 h-3.5 w-3.5" />
-              <span className="text-xs">Agregar a mi perfil</span>
+              <span className="text-sm">Agregar a mi perfil</span>
             </>
           )}
         </Button>
