@@ -284,10 +284,8 @@ const injectedRtkApi = api
         query: (queryArg) => ({
           url: `/api/V1/certificates/my-certificates`,
           params: {
-            limit: queryArg.queryLimit,
-            page: queryArg.queryPage,
-            limit: queryArg._queryLimit,
-            page: queryArg._queryPage,
+            limit: queryArg.limit,
+            page: queryArg.page,
           },
         }),
         providesTags: ['Certificates'],
@@ -435,10 +433,8 @@ const injectedRtkApi = api
         query: (queryArg) => ({
           url: `/api/V1/admins`,
           params: {
-            limit: queryArg.queryLimit,
-            page: queryArg.queryPage,
-            limit: queryArg._queryLimit,
-            page: queryArg._queryPage,
+            limit: queryArg.limit,
+            page: queryArg.page,
           },
         }),
         providesTags: ['Administradores'],
@@ -655,13 +651,9 @@ export type CertificatesControllerGetCertificatesByStudentApiResponse =
   /** status 200  */ PaginatedCertificateResponseDto
 export type CertificatesControllerGetCertificatesByStudentApiArg = {
   /** Cantidad de resultados por página */
-  queryLimit?: number
+  limit?: number
   /** Número de página */
-  queryPage?: number
-  /** Cantidad de resultados por página */
-  _queryLimit?: number
-  /** Número de página */
-  _queryPage?: number
+  page?: number
 }
 export type EnrollmentsControllerGetMyEnrollmentsApiResponse =
   /** status 200  */ PaginatedEnrollmentResponseDto
@@ -726,13 +718,9 @@ export type AdminsControllerFindAllApiResponse =
   /** status 200 Lista paginada de administradores */ PaginatedAdminResponseDto
 export type AdminsControllerFindAllApiArg = {
   /** Cantidad de resultados por página */
-  queryLimit?: number
+  limit?: number
   /** Número de página */
-  queryPage?: number
-  /** Cantidad de resultados por página */
-  _queryLimit?: number
-  /** Número de página */
-  _queryPage?: number
+  page?: number
 }
 export type AdminsControllerFindOneApiResponse =
   /** status 200 Detalles del administrador */ AdminResponseDto

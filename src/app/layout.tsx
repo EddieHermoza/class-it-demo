@@ -4,6 +4,8 @@ import './globals.css'
 import { ThemeProvider } from '@/providers/theme-provider'
 import { Toaster } from '@/modules/shared/components/ui/sonner'
 import { StoreProvider } from '@/modules/shared/store'
+import { NextAuthProvider } from '@/providers/session-provider'
+
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -20,22 +22,22 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="es" suppressHydrationWarning>
       <body className={`${plusJakartaSans.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          disableTransitionOnChange
-        >
-          <div>
-            <main className="flex-1">
-              <StoreProvider>
-                {children}
-              </StoreProvider>
-            </main>
-          </div>
-        </ThemeProvider>
-        <Toaster />
+        <NextAuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            disableTransitionOnChange
+          >
+            <div>
+              <main className="flex-1">
+                <StoreProvider>{children}</StoreProvider>
+              </main>
+            </div>
+          </ThemeProvider>
+          <Toaster />
+        </NextAuthProvider>
       </body>
     </html>
   )

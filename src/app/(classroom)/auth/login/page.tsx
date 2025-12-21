@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import {
   Card,
@@ -13,19 +13,66 @@ import { Label } from '@/modules/shared/components/ui/label'
 import { Input } from '@/modules/shared/components/ui/input'
 import { Button } from '@/modules/shared/components/ui/button'
 import { Eye, EyeOff } from 'lucide-react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  LoginSchema,
+  LoginSchemaType,
+} from '@/modules/auth/schemas/login-schema'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { signIn, useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
+import { toast } from 'sonner'
+import ErrorMessage from '@/modules/shared/components/ErrorMessage'
+import { AiOutlineLoading } from 'react-icons/ai'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const { data: session } = useSession()
+  const [loading, setLoading] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
+  })
+
+  const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
+    setLoading(true)
+    try {
+      const response = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      })
+      if (!response?.ok) {
+        throw {
+          message: response?.error || 'Error en la solicitud',
+        }
+      }
+      setLoading(false)
+      toast.success('Inicio de sesión exitoso')
+    } catch (error: unknown) {
+      setLoading(false)
+      const errorMessage = (error as Error).message
+      toast.error(errorMessage)
+    }
   }
+
+  useEffect(() => {
+    const handleRedirect = async () => {
+      if (session?.user?.role) {
+        const role = session.user.role
+        if (role) redirect('/')
+      }
+    }
+    handleRedirect()
+  }, [session])
 
   return (
     <div className="relative grid w-full max-w-7xl items-center gap-16 lg:grid-cols-2">
-      <div className="bg-transparent hidden lg:flex">
+      <div className="hidden bg-transparent lg:flex">
         <Image
           src="/udemy.webp"
           className="size-140"
@@ -44,7 +91,7 @@ export default function LoginPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
                 Correo Electrónico
@@ -53,10 +100,9 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="tu@ejemplo.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+                {...register('email')}
               />
+              <ErrorMessage message={errors.email?.message} />
             </div>
 
             <div className="space-y-2">
@@ -64,7 +110,10 @@ export default function LoginPage() {
                 <Label htmlFor="password" className="text-sm font-medium">
                   Contraseña
                 </Label>
-                <Link href="/auth/forgot-password" className="text-primary text-sm hover:underline">
+                <Link
+                  href="/auth/forgot-password"
+                  className="text-primary text-sm hover:underline"
+                >
                   ¿Olvidaste tu contraseña?
                 </Link>
               </div>
@@ -73,9 +122,7 @@ export default function LoginPage() {
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
+                  {...register('password')}
                   className="pr-10"
                 />
                 <button
@@ -100,7 +147,14 @@ export default function LoginPage() {
               className="h-11 w-full text-base font-medium"
               size="lg"
             >
-              Iniciar Sesión
+              {loading ? (
+                <AiOutlineLoading
+                  size={18}
+                  className="animate-spin ease-in-out"
+                />
+              ) : (
+                <>Iniciar Sesión</>
+              )}
             </Button>
 
             <div className="relative">

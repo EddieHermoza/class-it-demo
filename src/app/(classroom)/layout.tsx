@@ -1,41 +1,33 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import {
-  SidebarProvider,
-  SidebarInset,
-} from '@/modules/shared/components/ui/sidebar'
-import { AppSidebar, Navbar } from '@/modules/shared/components'
-import { useIsDesktop } from '@/modules/shared/hooks/use-desktop'
+import { LINKS_STUDENT } from '@/config/links'
+import { Navbar } from '@/modules/shared/components'
+import Link from 'next/link'
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const isDesktop = useIsDesktop()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  useEffect(() => {
-    setSidebarOpen(isDesktop)
-  }, [isDesktop])
-
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider
-      defaultOpen={sidebarOpen}
-      open={isDesktop ? true : sidebarOpen}
-      onOpenChange={(open) => {
-        if (!isDesktop) {
-          setSidebarOpen(open)
-        }
-      }}
-      className="flex h-screen"
-    >
-      <AppSidebar />
-      <SidebarInset className="flex h-screen flex-1 flex-col overflow-hidden">
+    <div className="flex h-screen w-full overflow-hidden relative">
+      <aside className="group flex-center relative h-screen w-20 border-r bg-sidebar duration-200 will-change-[width] hover:w-64">
+        <ul className="flex flex-col gap-4 pl-16 duration-200 group-hover:pl-0">
+          {LINKS_STUDENT.map(({ label, src, icon: Icon }, index) => (
+            <li key={index} className="flex w-30">
+              <Link
+                href={src}
+                className="hover:bg-primary/10 flex h-14 w-30 items-center gap-5 rounded-full p-3 transition-[width,background-color,opacity,transform] duration-200 will-change-[width,opacity] group-hover:w-44"
+              >
+                {Icon && <Icon className="size-6 shrink-0" />}
+                <span className="truncate text-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  {label}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </aside>
+      <div className="custom-scrollbar flex-1 overflow-y-auto bg-linear-to-br bg-size-[300%_300%] dark:from-violet-950/30 dark:via-black dark:to-black">
         <Navbar />
-        <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto bg-linear-to-br bg-size-[300%_300%] dark:from-violet-950/30 dark:via-black dark:to-black">
-          {children}
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        {children}
+      </div>
+    </div>
   )
 }
-
-export default Layout

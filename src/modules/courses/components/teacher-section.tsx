@@ -23,7 +23,6 @@ export function TeacherSection({ teacher }: TeacherSectionProps) {
         <div className="flex flex-col items-start gap-6 md:flex-row md:gap-8">
           <div className="shrink-0">
             <div className="relative">
-              <div className="from-primary/40 to-primary/20 absolute inset-0 rounded-full bg-linear-to-br blur-xl" />
               <div className="relative h-24 w-24 overflow-hidden rounded-full sm:h-28 sm:w-28 md:h-36 md:w-36">
                 <Image
                   src={teacher.avatarUrl || '/placeholder.svg'}
