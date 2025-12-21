@@ -3,12 +3,10 @@
 import React, { useEffect, useState } from 'react'
 import {
   SidebarProvider,
-  SidebarTrigger,
   SidebarInset,
 } from '@/modules/shared/components/ui/sidebar'
-import AppSidebar from '@/modules/shared/components/app-sidebar'
+import { AppSidebar, Navbar } from '@/modules/shared/components'
 import { useIsDesktop } from '@/modules/shared/hooks/use-desktop'
-import Navbar from '@/modules/shared/components/nav-bar'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useIsDesktop()
@@ -30,9 +28,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       className="flex h-screen"
     >
       <AppSidebar />
-      <SidebarInset className="flex-1 h-screen overflow-hidden">
+      <SidebarInset className="flex h-screen flex-1 flex-col overflow-hidden">
         <Navbar />
-        <div className="flex-1 overflow-y-scroll custom-scrollbar bg-gradient-to-br bg-[length:300%_300%] dark:from-violet-950/30 dark:via-black dark:to-black">
+        <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto bg-linear-to-br bg-size-[300%_300%] dark:from-violet-950/30 dark:via-black dark:to-black">
           {children}
         </div>
       </SidebarInset>

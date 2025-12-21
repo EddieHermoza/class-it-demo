@@ -47,21 +47,11 @@ export const LINKS_TEACHER = [
   },
   {
     label: 'Cursos',
-    icon: MdOutlineLibraryBooks,
-    src: '/my-courses',
-  },
-  {
-    label: 'Mis Cursos',
     children: [
-      { label: 'Cursos Obtenidos', src: '#/obtenidos' },
-      { label: 'Cursos Subidos', src: '#/subidos' },
+      { label: 'Cursos Borrador', src: '#/obtenidos' },
+      { label: 'Cursos Publicados', src: '#/subidos' },
     ],
     icon: FaRegBookmark,
-  },
-  {
-    label: 'Mis Certificados',
-    src: '/my-certificates',
-    icon: TbCertificate,
   },
   {
     label: 'Calendario',

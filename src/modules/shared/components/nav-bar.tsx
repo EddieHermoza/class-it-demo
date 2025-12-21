@@ -9,7 +9,7 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-const Navbar = () => {
+export function Navbar() {
   const isMobile = useIsMobile()
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
@@ -24,7 +24,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="bg-sidebar w-full px-4 py-3 shadow-sm">
+    <nav className="bg-sidebar w-full border-l px-4 py-3 shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <div className="flex items-center gap-2 lg:hidden">
           <SidebarTrigger />
@@ -71,5 +71,3 @@ const Navbar = () => {
     </nav>
   )
 }
-
-export default Navbar
