@@ -21,15 +21,12 @@ interface AppBreadcrumbProps {
   className?: string
 }
 
-export function AppBreadcrumb({
-  items,
-  className,
-}: AppBreadcrumbProps) {
+export function AppBreadcrumb({ items, className }: AppBreadcrumbProps) {
   if (items.length === 0) return null
 
   return (
-    <div className={`border-b border-white/10 ${className || ''}`}>
-      <div className="container mx-auto px-4 py-4">
+    <div className={`${className || ''}`}>
+      <div className="container mx-auto">
         <Breadcrumb>
           <BreadcrumbList>
             {items.map((item, index) => {
