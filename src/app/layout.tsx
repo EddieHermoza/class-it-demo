@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/providers/theme-provider'
 import { Toaster } from '@/modules/shared/components/ui/sonner'
+import { StoreProvider } from '@/modules/shared/store'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -27,7 +28,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div>
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              <StoreProvider>
+                {children}
+              </StoreProvider>
+            </main>
           </div>
         </ThemeProvider>
         <Toaster />
