@@ -70,7 +70,7 @@ export default function CertificatesPage() {
   }
 
   return (
-    <div className="container p-5">
+    <div className="container p-5 mx-auto">
       <Card className="border-none bg-transparent shadow-none">
         <CardHeader className="border-b">
           <CardTitle className="text-2xl">Mis Certificados</CardTitle>

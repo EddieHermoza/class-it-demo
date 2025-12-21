@@ -80,7 +80,7 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className="container p-5">
+    <div className="container p-5 mx-auto">
       {CURRENT_ROLE === 'STUDENT' ? (
         <Card className="border-none bg-transparent shadow-none">
           <CardHeader className="border-b">

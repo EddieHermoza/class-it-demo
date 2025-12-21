@@ -3,13 +3,15 @@
 import { Button } from './ui/button'
 import { InputGroup, InputGroupAddon, InputGroupInput } from './ui/input-group'
 import { Search, Moon, Sun } from 'lucide-react'
-import { SidebarTrigger } from './ui/sidebar'
 import { useIsMobile } from '../hooks/use-mobile'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import UserPopover from '@/modules/auth/session/user-popover'
 
 export function Navbar() {
+  const { data: session } = useSession()
   const isMobile = useIsMobile()
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
@@ -24,11 +26,9 @@ export function Navbar() {
   }
 
   return (
-    <nav className="bg-sidebar w-full border-l px-4 py-3 shadow-sm">
+    <nav className="bg-sidebar sticky top-0 z-50 w-full border-l px-4 py-3 shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-        <div className="flex items-center gap-2 lg:hidden">
-          <SidebarTrigger />
-        </div>
+        <div className="flex items-center gap-2 lg:hidden"></div>
         <div className="flex flex-1 justify-center px-4">
           <div className="w-full max-w-md lg:max-w-lg">
             <InputGroup>
@@ -57,15 +57,23 @@ export function Navbar() {
               <Moon className="h-5 w-5" />
             )}
           </Button>
-          <Button variant="link" onClick={() => router.push('/auth/login')}>
-            {isMobile ? 'Iniciar' : 'Iniciar sesión'}
-          </Button>
-          <Button
-            className="hidden lg:inline-flex"
-            onClick={() => router.push('/auth/register')}
-          >
-            Registrarse
-          </Button>
+          {session ? (
+            <>
+              <UserPopover />
+            </>
+          ) : (
+            <>
+              <Button variant="link" onClick={() => router.push('/auth/login')}>
+                {isMobile ? 'Iniciar' : 'Iniciar sesión'}
+              </Button>
+              <Button
+                className="hidden lg:inline-flex"
+                onClick={() => router.push('/auth/register')}
+              >
+                Registrarse
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </nav>

@@ -1,12 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarRail,
-} from './ui/sidebar'
+import { Sidebar, SidebarContent, SidebarHeader } from './ui/sidebar'
 import { NavMain } from './nav-main'
 import { CURRENT_ROLE } from '@/modules/shared/constants'
 import { ROLE_LINKS } from '@/config/links'
