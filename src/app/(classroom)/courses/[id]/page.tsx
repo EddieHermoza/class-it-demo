@@ -43,7 +43,7 @@ const CourseDetailsPage = () => {
         ]}
       />
 
-      <div className="container mx-auto px-4 pt-6 pb-12">
+      <div className="container mx-auto px-0 pt-6 pb-12">
         <div className="w-full">
           <div className="mb-4 flex flex-wrap gap-2">
             {courseDetail.categories.map((category) => (
@@ -71,7 +71,7 @@ const CourseDetailsPage = () => {
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 border-b border-white/10 pb-6">
+          <div className="flex flex-wrap items-center gap-6 pb-6">
             <div className="flex items-center gap-2.5 rounded-lg bg-white/5 px-3 py-2 transition-colors hover:bg-white/10">
               <div className="bg-primary/20 rounded-md p-1.5">
                 <BarChart3 className="text-primary size-4" />
@@ -108,7 +108,7 @@ const CourseDetailsPage = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
           <div className="max-w-4xl flex-1">
             <section className="mb-12">
@@ -134,11 +134,11 @@ const CourseDetailsPage = () => {
             </section>
 
             <div className="mb-12 grid gap-6 md:grid-cols-2">
-              <section className="rounded-xl px-0 py-6 backdrop-blur-sm lg:p-6">
+              <section className="rounded-xl px-0 py-6 backdrop-blur-sm">
                 <h2 className="mb-3 text-lg font-bold sm:mb-4 sm:text-xl md:text-2xl">
                   ¿A quiénes está dirigido?
                 </h2>
-                <p className="text-sm leading-relaxed sm:text-base">
+                <p className="text-sm leading-relaxed lg:px-6 sm:text-base">
                   {courseDetail.targetAudience}
                 </p>
               </section>
@@ -147,7 +147,7 @@ const CourseDetailsPage = () => {
                 <h2 className="mb-3 text-lg font-bold sm:mb-4 sm:text-xl md:text-2xl">
                   Requisitos
                 </h2>
-                <p className="text-sm leading-relaxed sm:text-base">
+                <p className="text-sm leading-relaxed lg:px-6 sm:text-base">
                   {courseDetail.requirements}
                 </p>
               </section>

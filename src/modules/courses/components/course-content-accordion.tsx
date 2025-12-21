@@ -40,7 +40,6 @@ export function CourseContentAccordion({
         return <Play className="text-primary size-4" />
     }
   }
-
   return (
     <Accordion type="multiple" className="space-y-3">
       {sections.map((section) => (

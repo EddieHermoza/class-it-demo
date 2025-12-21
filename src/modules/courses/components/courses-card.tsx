@@ -77,7 +77,7 @@ export function CourseCard({
       }}
       className={`group cursor-pointer overflow-hidden py-0 transition-all duration-300 hover:shadow-xl ${
         isInProfile
-          ? 'border-primary/70 bg-primary/5 hover:border-primary shadow-primary/10 shadow-lg'
+          ? 'border-primary/70 hover:border-primary shadow-primary/10 shadow-lg'
           : 'border-border/50 hover:border-primary/50 hover:shadow-primary/5'
       }`}
     >
