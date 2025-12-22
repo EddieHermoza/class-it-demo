@@ -6,8 +6,8 @@ import Link from 'next/link'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen w-full overflow-hidden relative">
-      <aside className="group flex-center relative h-screen w-20 border-r bg-sidebar duration-200 will-change-[width] hover:w-64">
+    <div className="relative flex h-screen w-full overflow-hidden">
+      <aside className="group flex-center bg-sidebar relative h-screen w-20 border-r duration-200 will-change-[width] hover:w-64 max-lg:hidden">
         <ul className="flex flex-col gap-4 pl-16 duration-200 group-hover:pl-0">
           {LINKS_STUDENT.map(({ label, src, icon: Icon }, index) => (
             <li key={index} className="flex w-30">

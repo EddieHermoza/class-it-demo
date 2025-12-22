@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import {
@@ -24,6 +23,8 @@ import { redirect } from 'next/navigation'
 import { toast } from 'sonner'
 import ErrorMessage from '@/modules/shared/components/ErrorMessage'
 import { AiOutlineLoading } from 'react-icons/ai'
+import Lottie from 'lottie-react'
+import animationData from '@/assets/animation/login.json'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -71,18 +72,12 @@ export default function LoginPage() {
   }, [session])
 
   return (
-    <div className="relative grid w-full max-w-7xl items-center gap-16 lg:grid-cols-2">
+    <div className="relative grid w-full max-w-7xl items-center gap-16 lg:grid-cols-2 ">
       <div className="hidden bg-transparent lg:flex">
-        <Image
-          src="/udemy.webp"
-          className="size-140"
-          width={480}
-          height={480}
-          alt=""
-        />
+        <Lottie animationData={animationData} loop />
       </div>
 
-      <span className="bg-primary absolute left-1/2 h-full w-0.5 -translate-x-1/2"></span>
+      <span className="bg-primary absolute left-1/2 h-full w-0.5 -translate-x-1/2 max-lg:hidden"></span>
 
       <Card className="border-none shadow-none">
         <CardHeader>
