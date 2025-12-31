@@ -1,12 +1,18 @@
-import { IoCalendarOutline } from 'react-icons/io5'
-import { TbCertificate, TbSettings, TbLayoutDashboard } from 'react-icons/tb'
+'use client'
+
+import { IoCalendarOutline as _ } from 'react-icons/io5'
+import { TbCertificate } from 'react-icons/tb'
 import { MdOutlineLibraryBooks } from 'react-icons/md'
 import { FaRegBookmark } from 'react-icons/fa'
 import { IoMdHome } from 'react-icons/io'
-import { CiUser } from 'react-icons/ci'
-import { ROLE } from '@/modules/shared/constants'
 
-export const LINKS_STUDENT = [
+type NavItem = {
+  label: string
+  src: string
+  icon: React.ComponentType<{ className?: string }>
+}
+
+export const COMMON_LINKS: NavItem[] = [
   {
     label: 'Inicio',
     src: '/',
@@ -14,92 +20,37 @@ export const LINKS_STUDENT = [
   },
   {
     label: 'Cursos',
-    icon: MdOutlineLibraryBooks,
     src: '/courses',
+    icon: MdOutlineLibraryBooks,
   },
+  // {
+  //   label: 'Calendario',
+  //   src: '/calendar',
+  //   icon: IoCalendarOutline,
+  // },
+]
+
+const STUDENT_SPECIFIC: NavItem[] = [
+  {
+    label: 'Aprendizaje',
+    src: '/learning',
+    icon: FaRegBookmark,
+  },
+  {
+    label: 'Certificados',
+    src: '/certificates',
+    icon: TbCertificate,
+  },
+]
+
+const TEACHER_SPECIFIC: NavItem[] = [
   {
     label: 'Mis Cursos',
+    icon: FaRegBookmark,
     src: '/my-courses',
-    icon: FaRegBookmark,
-  },
-  {
-    label: 'Mis Certificados',
-    src: '/my-certificates',
-    icon: TbCertificate,
-  },
-  {
-    label: 'Calendario',
-    src: '/calendar',
-    icon: IoCalendarOutline,
-  },
-  {
-    label: 'Configuración',
-    src: '/settings',
-    icon: TbSettings,
   },
 ]
 
-export const LINKS_TEACHER = [
-  {
-    label: 'Inicio',
-    src: '/',
-    icon: IoMdHome,
-  },
-  {
-    label: 'Cursos',
-    children: [
-      { label: 'Cursos Borrador', src: '#/obtenidos' },
-      { label: 'Cursos Publicados', src: '#/subidos' },
-    ],
-    icon: FaRegBookmark,
-  },
-  {
-    label: 'Calendario',
-    src: '/calendar',
-    icon: IoCalendarOutline,
-  },
-  {
-    label: 'Configuración',
-    src: '/settings',
-    icon: TbSettings,
-  },
-]
+export const LINKS_STUDENT: NavItem[] = [...COMMON_LINKS, ...STUDENT_SPECIFIC]
 
-export const LINKS_ADMIN = [
-  {
-    label: 'Dashboard',
-    src: '/dashboard',
-    icon: TbLayoutDashboard,
-  },
-  {
-    label: 'Usuarios',
-    src: '/users',
-    icon: CiUser,
-  },
-  {
-    label: 'Cursos',
-    src: '/courses',
-    icon: MdOutlineLibraryBooks,
-  },
-  {
-    label: 'Certificaciones',
-    src: '/certifications',
-    icon: TbCertificate,
-  },
-  {
-    label: 'Calendario',
-    src: '/calendar',
-    icon: IoCalendarOutline,
-  },
-  {
-    label: 'Configuración',
-    src: '/settings',
-    icon: TbSettings,
-  },
-]
-
-export const ROLE_LINKS = {
-  [ROLE.STUDENT]: LINKS_STUDENT,
-  [ROLE.TEACHER]: LINKS_TEACHER,
-  [ROLE.ADMIN]: LINKS_ADMIN,
-} as const
+export const LINKS_TEACHER: NavItem[] = [...COMMON_LINKS, ...TEACHER_SPECIFIC]

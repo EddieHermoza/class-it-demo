@@ -21,31 +21,29 @@ import {
   RegisterSchemaType,
 } from '@/modules/auth/schemas/register-schema'
 import { toast } from 'sonner'
-import { useAuthControllerRegisterMutation } from '@/services/generated/classRoomApi.generated'
-import ErrorMessage from '@/modules/shared/components/ErrorMessage'
+import ErrorMessage from '@/modules/shared/components/error-message'
+import { useSendRequest } from '@/modules/shared/hooks/use-send-request'
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
-
+  const { sendRequest } = useSendRequest('/api/V1/auth/register', 'POST')
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema),
   })
 
-  const [registerUser, { isLoading }] = useAuthControllerRegisterMutation()
-
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
-    try {
-      await registerUser(data).unwrap()
-      toast.success('Cuenta creada correctamente')
-      reset()
-    } catch {
+    const { error } = await sendRequest(data)
+    if (error) {
       toast.error('Error al crear la cuenta')
+      return
     }
+    toast.success('Cuenta creada correctamente')
+    reset()
   }
 
   return (
@@ -120,9 +118,9 @@ export default function RegisterPage() {
             <Button
               type="submit"
               className="h-11 w-full text-base"
-              disabled={isLoading}
+              disabled={isSubmitting}
             >
-              {isLoading ? 'Registrando...' : 'Registrarse'}
+              {isSubmitting ? 'Registrando...' : 'Registrarse'}
             </Button>
 
             <div className="text-center text-sm">

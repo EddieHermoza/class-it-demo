@@ -21,14 +21,13 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { signIn, useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import { toast } from 'sonner'
-import ErrorMessage from '@/modules/shared/components/ErrorMessage'
+import ErrorMessage from '@/modules/shared/components/error-message'
 import { AiOutlineLoading } from 'react-icons/ai'
 import Lottie from 'lottie-react'
 import animationData from '@/assets/animation/login.json'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-
   const { data: session } = useSession()
   const [loading, setLoading] = useState(false)
   const {
@@ -42,22 +41,22 @@ export default function LoginPage() {
   const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
     setLoading(true)
     try {
-      const response = await signIn('credentials', {
+      const res = await signIn('credentials', {
         email: data.email,
         password: data.password,
         redirect: false,
       })
-      if (!response?.ok) {
+      if (!res?.ok) {
         throw {
-          message: response?.error || 'Error en la solicitud',
+          message: res?.error || 'Error en la solicitud',
         }
       }
-      setLoading(false)
       toast.success('Inicio de sesión exitoso')
     } catch (error: unknown) {
-      setLoading(false)
       const errorMessage = (error as Error).message
       toast.error(errorMessage)
+    } finally{
+      setLoading(false)
     }
   }
 
@@ -65,14 +64,14 @@ export default function LoginPage() {
     const handleRedirect = async () => {
       if (session?.user?.role) {
         const role = session.user.role
-        if (role) redirect('/')
+        if (role !== 'ADMIN' && role !== 'SUPER_ADMIN') redirect('/')
       }
     }
     handleRedirect()
   }, [session])
 
   return (
-    <div className="relative grid w-full max-w-7xl items-center gap-16 lg:grid-cols-2 ">
+    <div className="relative grid w-full max-w-7xl items-center gap-16 lg:grid-cols-2">
       <div className="hidden bg-transparent lg:flex">
         <Lottie animationData={animationData} loop />
       </div>

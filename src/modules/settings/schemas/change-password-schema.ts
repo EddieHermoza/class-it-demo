@@ -1,0 +1,18 @@
+import { z } from 'zod'
+
+export const ChangePasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, 'La contraseña debe tener al menos 8 caracteres'),
+    newPassword: z
+      .string()
+      .min(8, 'La nueva contraseña debe tener al menos 8 caracteres'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['confirmPassword'],
+  })
+
+export type ChangePasswordSchemaType = z.infer<typeof ChangePasswordSchema>

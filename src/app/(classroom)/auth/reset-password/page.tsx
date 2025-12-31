@@ -1,6 +1,3 @@
-'use client'
-
-import { Button } from '@/modules/shared/components/ui/button'
 import {
   Card,
   CardContent,
@@ -8,51 +5,20 @@ import {
   CardHeader,
   CardTitle,
 } from '@/modules/shared/components/ui/card'
-import { Input } from '@/modules/shared/components/ui/input'
-import { Label } from '@/modules/shared/components/ui/label'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  ResetPasswordSchema,
-  ResetPasswordSchemaType,
-} from '@/modules/auth/schemas/reset-password.schema'
-import { toast } from 'sonner'
-import { useAuthControllerResetPasswordMutation } from '@/services/generated/classRoomApi.generated'
-import ErrorMessage from '@/modules/shared/components/ErrorMessage'
 
-export default function ResetPasswordPage() {
-  const searchParams = useSearchParams()
-  const { push } = useRouter()
+import ResetPasswordForm from '@/modules/auth/forms/reset-password-form'
 
-  const token = searchParams.get('token')
+type SearchParams = {
+  token?: string
+}
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ResetPasswordSchemaType>({
-    resolver: zodResolver(ResetPasswordSchema),
-    defaultValues: {
-      token: token ?? '',
-    },
-  })
-
-  const [resetPassword, { isLoading }] =
-    useAuthControllerResetPasswordMutation()
-
-  const onSubmit = async (data: ResetPasswordSchemaType) => {
-    try {
-      await resetPassword(data).unwrap()
-      toast.success('Contraseña actualizada correctamente')
-      push('/auth/login')
-    } catch {
-      toast.error('Error al reestablecer la contraseña')
-    }
-  }
-
+type Props = {
+  searchParams: Promise<SearchParams>
+}
+export default async function ResetPasswordPage({ searchParams }: Props) {
+  const { token } = await searchParams
   if (!token) {
     return (
       <p className="text-destructive text-center">Token inválido o expirado</p>
@@ -68,27 +34,7 @@ export default function ResetPasswordPage() {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            <div className="space-y-2">
-              <Label>Contraseña</Label>
-              <Input type="password" {...register('newPassword')} />
-              {errors.newPassword && (
-                <ErrorMessage message={errors.newPassword.message} />
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label>Confirmar Contraseña</Label>
-              <Input type="password" {...register('confirmPassword')} />
-              {errors.confirmPassword && (
-                <ErrorMessage message={errors.confirmPassword.message} />
-              )}
-            </div>
-
-            <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? 'Actualizando...' : 'Reestablecer contraseña'}
-            </Button>
-          </form>
+          <ResetPasswordForm token={token} />
         </CardContent>
 
         <Link

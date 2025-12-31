@@ -1,80 +1,45 @@
 'use client'
 
 import { Button } from './ui/button'
-import { InputGroup, InputGroupAddon, InputGroupInput } from './ui/input-group'
-import { Search, Moon, Sun } from 'lucide-react'
-import { useIsMobile } from '../hooks/use-mobile'
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import UserPopover from '@/modules/auth/session/user-popover'
+import UserPopover from '@/modules/auth/components/user-popover'
+import { SheetSidebar } from './app-sidebar/sheet-sidebar'
+import { ThemeTogglerButton } from '../animate-ui/components/buttons/theme-toggler'
+import Link from 'next/link'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import SearchBar from '@/modules/courses/components/search-bar'
 
 export function Navbar() {
-  const { data: session } = useSession()
-  const isMobile = useIsMobile()
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  const router = useRouter()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }
+  const { data: session, status } = useSession()
 
   return (
-    <nav className="bg-sidebar sticky top-0 z-50 w-full border-l px-4 py-3 shadow-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-        <div className="flex items-center gap-2 lg:hidden"></div>
-        <div className="flex flex-1 justify-center px-4">
-          <div className="w-full max-w-md lg:max-w-lg">
-            <InputGroup>
-              <InputGroupInput
-                placeholder="Buscar cursos..."
-                className={isMobile ? 'text-sm' : 'text-base'}
-              />
-              <InputGroupAddon>
-                <Search />
-              </InputGroupAddon>
-            </InputGroup>
-          </div>
-        </div>
+    <nav className="bg-sidebar sticky top-0 z-50 flex h-15 w-full items-center justify-between py-2 shadow-sm sm:px-5">
+      <div className="flex items-center gap-2 xl:hidden">
+        <SheetSidebar />
+      </div>
 
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            className="h-9 w-9"
-            aria-label="Cambiar tema"
-          >
-            {mounted && theme === 'dark' ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
+      <SearchBar />
+
+      <div className="flex-center items-center gap-3 max-sm:pr-5">
+        <ThemeTogglerButton
+          className="cursor-pointer rounded-full"
+          variant="ghost"
+          size={'lg'}
+          modes={['light', 'dark']}
+          direction="rtl"
+        />
+
+        {status === 'loading' ? (
+          <div className="flex-center size-12">
+            <AiOutlineLoading3Quarters className="text-primary animate-spin" />
+          </div>
+        ) : session ? (
+          <UserPopover session={session} />
+        ) : (
+          <Button asChild>
+            <Link href="/auth/login">Acceder</Link>
           </Button>
-          {session ? (
-            <>
-              <UserPopover />
-            </>
-          ) : (
-            <>
-              <Button variant="link" onClick={() => router.push('/auth/login')}>
-                {isMobile ? 'Iniciar' : 'Iniciar sesión'}
-              </Button>
-              <Button
-                className="hidden lg:inline-flex"
-                onClick={() => router.push('/auth/register')}
-              >
-                Registrarse
-              </Button>
-            </>
-          )}
-        </div>
+        )}
       </div>
     </nav>
   )

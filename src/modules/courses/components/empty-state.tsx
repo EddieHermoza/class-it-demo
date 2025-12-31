@@ -1,17 +1,6 @@
-'use client'
-
 import { SearchX, Filter } from 'lucide-react'
-import { Button } from '@/modules/shared/components/ui/button'
 
-interface EmptyStateProps {
-  selectedCategory: string
-  onResetFilter: () => void
-}
-
-export function EmptyState({
-  selectedCategory,
-  onResetFilter,
-}: EmptyStateProps) {
+export function EmptyState() {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="relative mb-6">
@@ -26,20 +15,6 @@ export function EmptyState({
       <h3 className="mb-2 text-center text-2xl font-semibold text-balance">
         No encontramos cursos
       </h3>
-
-      <p className="text-muted-foreground mb-6 max-w-md text-center text-balance">
-        No hay cursos disponibles en la categoría{' '}
-        <span className="text-foreground font-medium">{selectedCategory}</span>{' '}
-        en este momento.
-      </p>
-
-      <Button
-        onClick={onResetFilter}
-        variant="default"
-        size="lg"
-      >
-        Ver todos los cursos
-      </Button>
     </div>
   )
 }

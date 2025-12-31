@@ -1,12 +1,7 @@
 'use client'
 
-import type React from 'react'
-
-import { useState } from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Star, Clock, Plus, Check } from 'lucide-react'
-import { toast } from 'sonner'
 import { Card, CardContent } from '@/modules/shared/components/ui/card'
 import {
   Avatar,
@@ -15,53 +10,21 @@ import {
 } from '@/modules/shared/components/ui/avatar'
 import { Badge } from '@/modules/shared/components/ui/badge'
 import { Button } from '@/modules/shared/components/ui/button'
-import { CourseInterface } from '@/__mocks__'
-import { Spinner } from '@/modules/shared/components/ui/spinner'
+import Link from 'next/link'
+import { formatDuration, getCourseLevelLabel } from '@/lib/utils'
+import CustomImage from '@/modules/shared/components/custom-image'
+import { PublishedCourse } from './courses-container'
 
 interface CourseCardProps {
-  course: CourseInterface
+  course: PublishedCourse
   isInProfile?: boolean
-  onToggleProfile?: (courseId: string) => void
 }
 
-const LEVEL_LABELS: Record<string, string> = {
-  BEGINNER: 'Principiante',
-  INTERMEDIATE: 'Intermedio',
-  ADVANCED: 'Avanzado',
-}
-
-export function CourseCard({
-  course,
-  isInProfile = false,
-  onToggleProfile,
-}: CourseCardProps) {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+export function CourseCard({ course, isInProfile = false }: CourseCardProps) {
+  const { push } = useRouter()
 
   const handleOpenDetails = () => {
-    router.push(`/courses/${course.id}`)
-  }
-
-  const handleToggleProfile = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setIsLoading(true)
-
-    const wasInProfile = isInProfile
-
-    setTimeout(() => {
-      onToggleProfile?.(course.id)
-      setIsLoading(false)
-
-      if (wasInProfile) {
-        toast.warning('Curso eliminado exitosamente', {
-          description: `${course.title} ha sido eliminado de tu perfil`,
-        })
-      } else {
-        toast.success('Curso agregado exitosamente', {
-          description: `${course.title} ha sido agregado a tu perfil`,
-        })
-      }
-    }, 1000)
+    push(`/courses/${course.id}`)
   }
 
   return (
@@ -75,27 +38,27 @@ export function CourseCard({
           handleOpenDetails()
         }
       }}
-      className={`group cursor-pointer overflow-hidden py-0 transition-all duration-300 hover:shadow-xl ${
+      className={`group cursor-pointer overflow-hidden rounded-none py-0 transition-all duration-300 hover:shadow-xl ${
         isInProfile
           ? 'border-primary/70 hover:border-primary shadow-primary/10 shadow-lg'
           : 'border-border/50 hover:border-primary/50 hover:shadow-primary/5'
       }`}
     >
       <div className="bg-muted relative aspect-video overflow-hidden">
-        <Image
-          src={course.imageUrl || '/placeholder.svg'}
+        <CustomImage
+          src={course.imageUrl}
           alt={course.title}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-110"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div
           className={`absolute top-2 ${isInProfile ? 'right-2' : 'right-2'}`}
         >
           <Badge
             variant="secondary"
-            className="bg-background/90 py-0.5 text-xs shadow-lg backdrop-blur-sm"
+            className="bg-background/90 py-0.5 text-xs"
           >
-            {LEVEL_LABELS[course.level] || course.level}
+            {getCourseLevelLabel(course.level)}
           </Badge>
         </div>
       </div>
@@ -105,7 +68,7 @@ export function CourseCard({
           <h3 className="group-hover:text-primary line-clamp-2 text-base leading-tight font-semibold text-balance transition-colors">
             {course.title}
           </h3>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
+          <p className="text-muted-foreground line-clamp-1 text-sm leading-relaxed">
             {course.shortDescription}
           </p>
         </div>
@@ -114,16 +77,15 @@ export function CourseCard({
           <div className="flex min-w-0 items-center gap-2">
             <Avatar className="h-7 w-7 shrink-0">
               <AvatarImage
-                src={course.teacher.avatarUrl || '/placeholder.svg'}
-                alt={course.teacher.name}
+                src={course.teacherAvatarUrl}
+                alt={course.teacherFullName}
               />
-              <AvatarFallback className="text-xs">
-                {course.teacher.name[0]}
-                {course.teacher.lastName[0]}
+              <AvatarFallback className="bg-primary/80 text-primary-foreground text-xs">
+                {course.teacherFullName.split('')[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <span className="truncate text-sm font-medium">
-              {course.teacher.name} {course.teacher.lastName}
+              {course.teacherFullName}
             </span>
           </div>
 
@@ -133,45 +95,34 @@ export function CourseCard({
               <span className="font-semibold">
                 {course.avgRating.toFixed(1)}
               </span>
-              <span className="text-muted-foreground">
-                ({course.reviewsCount})
-              </span>
             </div>
             <div className="text-muted-foreground flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
-              <span>{course.estimatedDuration}h</span>
+              <span>{formatDuration(course.estimatedDuration)}</span>
             </div>
           </div>
         </div>
 
         <Button
-          onClick={handleToggleProfile}
+          asChild
           variant={isInProfile ? 'outline' : 'default'}
-          disabled={isLoading}
-          className={`w-full transition-all ${
+          className={`btn-cut w-full rounded-none transition-all ${
             isInProfile
               ? 'border-primary/50 hover:bg-primary/10 hover:border-primary'
               : 'bg-primary hover:bg-primary/90'
           }`}
           size="lg"
         >
-          {isLoading ? (
-            <>
-              <Spinner className="mr-1.5 h-3.5 w-3.5" />
-              <span className="text-sm">
-                {isInProfile ? 'Eliminando curso...' : 'Agregando curso...'}
-              </span>
-            </>
-          ) : isInProfile ? (
-            <>
-              <Check className="mr-1.5 h-3.5 w-3.5" />
+          {isInProfile ? (
+            <Link href={''}>
+              <Check className="mr-1.5 size-3.5" />
               <span className="text-sm">Agregado</span>
-            </>
+            </Link>
           ) : (
-            <>
-              <Plus className="mr-1.5 h-3.5 w-3.5" />
+            <Link href={`/courses/${course.id}`}>
+              <Plus className="mr-1.5 size-3.5" />
               <span className="text-sm">Agregar a mi perfil</span>
-            </>
+            </Link>
           )}
         </Button>
       </CardContent>
