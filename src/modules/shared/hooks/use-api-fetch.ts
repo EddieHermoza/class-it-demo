@@ -2,6 +2,7 @@
 
 import useSWR, { SWRConfiguration } from 'swr'
 import { fetcher } from '@/lib/http/fetcher'
+import { API_URL } from '@/config/env'
 
 export function useApiFetch<T = unknown>(
   endpoint: string | null,
@@ -22,7 +23,7 @@ export function useApiFetch<T = unknown>(
   ).toString()
 
   const fullUrl = endpoint
-    ? `${process.env.NEXT_PUBLIC_API_URL}${endpoint}${queryString ? `?${queryString}` : ''}`
+    ? `${API_URL}${endpoint}${queryString ? `?${queryString}` : ''}`
     : null
 
   const { data, error, isLoading, mutate, isValidating } = useSWR<T>(
