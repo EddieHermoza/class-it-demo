@@ -1,6 +1,6 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
 import type { NextAuthOptions } from 'next-auth'
-
+import { API_URL } from '@/config/env'
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
         const { email, password } = credentials
 
         try {
-          const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/v1/auth/sign-in', {
+          const res = await fetch(API_URL + '/api/v1/auth/sign-in', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
