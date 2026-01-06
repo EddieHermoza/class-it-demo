@@ -13,12 +13,14 @@ import {
 
 import '@vidstack/react/player/styles/default/theme.css'
 import '@vidstack/react/player/styles/default/layouts/video.css'
-import { useCourseMediaPlayer } from '@/modules/learning/context/use-course-media-provider'
-import { extractYouTubeId } from '../../utils'
+import { extractYouTubeId } from '../utils'
 
-export default function CourseVideoPlayer() {
-  const { currentLecture, playerRef } = useCourseMediaPlayer()
-  const youtubeId = extractYouTubeId(currentLecture?.videoUrl ?? '')
+interface Props {
+  videoUrl?: string
+  title?: string
+}
+export default function VideoPlayer({ videoUrl, title }: Props) {
+  const youtubeId = extractYouTubeId(videoUrl ?? '')
 
   if (!youtubeId) {
     return (
@@ -33,8 +35,7 @@ export default function CourseVideoPlayer() {
   return (
     <div className="relative size-full rounded-none bg-black/60 p-0">
       <MediaPlayer
-        ref={playerRef}
-        title={currentLecture?.title}
+        title={title}
         src={`youtube/${youtubeId}`}
         viewType="video"
         streamType="on-demand"

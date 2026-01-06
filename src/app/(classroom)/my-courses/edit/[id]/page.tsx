@@ -25,7 +25,7 @@ export default async function EditCoursePage({ params }: Props) {
   const { id } = await params
   if (!id) notFound()
 
-  const res = await fetch(`${API_URL}/api/V1/courses/${id}/full-content`, {
+  const res = await fetch(`${API_URL}/api/V1/courses/${id}/full-content-preview`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ export default function CoursesGridSkeleton({ items }: Props) {
       {skeletonItems.map((_, index) => (
         <Skeleton
           key={index}
-          className={`border-border relative h-44 w-full max-sm:rounded-none max-sm:border sm:h-80 ${index % 2 == 0 ? 'duration-700' : ''}`}
+          className={`border-border relative w-full max-sm:border h-100 max-sm:max-w-80 mx-auto ${index % 2 == 0 ? 'duration-700' : ''}`}
         ></Skeleton>
       ))}
     </>

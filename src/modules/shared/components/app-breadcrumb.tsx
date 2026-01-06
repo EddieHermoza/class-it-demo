@@ -36,7 +36,7 @@ export function AppBreadcrumb({ items, className }: AppBreadcrumbProps) {
                 <React.Fragment key={index}>
                   {isLast ? (
                     <BreadcrumbItem>
-                      <BreadcrumbPage className="cursor-default hover:font-semibold">
+                      <BreadcrumbPage className="hover:text-primary cursor-default transition-colors duration-300">
                         {item.label}
                       </BreadcrumbPage>
                     </BreadcrumbItem>
@@ -45,7 +45,7 @@ export function AppBreadcrumb({ items, className }: AppBreadcrumbProps) {
                       <BreadcrumbItem>
                         {item.href ? (
                           <BreadcrumbLink
-                            className="hover:font-semibold"
+                            className="hover:text-primary cursor-pointer transition-colors duration-300"
                             asChild
                           >
                             <Link href={item.href}>{item.label}</Link>

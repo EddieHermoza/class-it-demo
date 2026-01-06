@@ -19,7 +19,11 @@ export type EnrolledCourse = {
   lastLectureId: string
   lastLectureTitle: string
   teacherFullName: string
-  lastViewedAt: string // ISO 8601
+  lastViewedAt: string
+}
+
+interface GetEnrolledCourses {
+  data: EnrolledCourse[]
 }
 
 export default function LastWatchedContainer() {
@@ -27,20 +31,18 @@ export default function LastWatchedContainer() {
   const accessToken = session?.tokens?.access as string | undefined
   const isAuthenticated = status === 'authenticated' && !!accessToken
 
-  const { data, error, isLoading, isValidating } = useApiFetch<
-    EnrolledCourse[]
-  >(
-    '/api/V1/enrollments/last-watched',
-    {},
-    accessToken,
-    { revalidateOnFocus: false },
-    isAuthenticated
-  )
+  const { data, error, isLoading, isValidating } =
+    useApiFetch<GetEnrolledCourses>(
+      '/api/V1/enrollments/last-watched',
+      {},
+      accessToken,
+      {},
+      isAuthenticated
+    )
 
-  const courses = data ?? []
-  const hasCourses = courses.length > 0
+  const courses = data?.data ?? []
 
-  if (isLoading || (isValidating && !hasCourses)) {
+  if (isLoading) {
     return <LastWatchedSkeleton />
   }
 
@@ -48,47 +50,29 @@ export default function LastWatchedContainer() {
     toast.error(error.message || 'Error al cargar tus cursos recientes')
   }
 
-  if (!hasCourses) {
+  if (courses.length === 0) {
     return <EmptyState />
   }
 
   return (
-    <section className="space-y-6">
-      <header className="flex items-center gap-3">
-        <Clock className="text-primary size-6" />
-        <h2 className="text-2xl font-bold tracking-tight">
-          Continúa donde lo dejaste
-        </h2>
-      </header>
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {courses.map((course) => (
-          <LastWatchedCourseCard key={course.courseId} course={course} />
-        ))}
-      </div>
-    </section>
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {courses.map((course) => (
+        <LastWatchedCourseCard key={course.courseId} course={course} />
+      ))}
+    </div>
   )
 }
 
 function LastWatchedSkeleton() {
   return (
-    <section className="space-y-6">
-      <header className="flex items-center gap-3">
-        <Clock className="text-primary size-6" />
-        <h2 className="text-2xl font-bold tracking-tight">
-          Continúa donde lo dejaste
-        </h2>
-      </header>
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="bg-muted/50 h-32 animate-pulse border-border/80"
-          />
-        ))}
-      </div>
-    </section>
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      {[...Array(4)].map((_, i) => (
+        <div
+          key={i}
+          className="bg-muted/50 border-border/80 h-32 animate-pulse"
+        />
+      ))}
+    </div>
   )
 }
 

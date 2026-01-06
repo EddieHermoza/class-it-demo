@@ -31,16 +31,16 @@ export default function UserPopover({ session }: Props) {
   const fullName = `${user.name || ''} ${user.lastName || ''}`.trim()
   const usernameInitial = user.name?.[0]?.toUpperCase() || 'U'
   const avatar = user.avatarUrl
-  const role = user.role 
+  const role = user.role
 
   const isTeacher = role === 'TEACHER'
 
   return (
     <HoverCard openDelay={0} closeDelay={200}>
-      <HoverCardTrigger className="hover:bg-primary/10 flex size-12 cursor-pointer items-center justify-center rounded transition-colors max-sm:hidden">
-        <Avatar className="size-10">
+      <HoverCardTrigger className="hover:bg-primary/10 flex-center size-12 cursor-pointer rounded transition-colors max-sm:hidden">
+        <Avatar className="size-9">
           <AvatarImage src={avatar || undefined} alt={fullName} />
-          <AvatarFallback className="bg-primary text-primary-foreground text-lg font-medium">
+          <AvatarFallback className="bg-primary text-primary-foreground text-base">
             {usernameInitial}
           </AvatarFallback>
         </Avatar>
@@ -48,8 +48,7 @@ export default function UserPopover({ session }: Props) {
 
       <HoverCardContent
         align="end"
-        sideOffset={6}
-        alignOffset={-10}
+        sideOffset={5}
         className="w-64 rounded-none border p-2 shadow-lg"
       >
         <div className="flex flex-col items-center gap-1 py-3 text-center">

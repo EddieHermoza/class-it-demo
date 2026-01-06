@@ -1,11 +1,11 @@
-import { Aldrich, Plus_Jakarta_Sans } from "next/font/google";
+import { Aldrich, Rubik } from 'next/font/google'
 
 export const aldrich = Aldrich({
   subsets: ['latin'],
   weight: ['400'],
 })
 
-export const plusJakartaSans = Plus_Jakarta_Sans({
+export const primaryFont = Rubik({
   subsets: ['latin'],
-  weight: ['300'],
+  weight: ['300', '700'],
 })

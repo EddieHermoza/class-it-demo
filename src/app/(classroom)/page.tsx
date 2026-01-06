@@ -24,9 +24,15 @@ export default function LandingPage() {
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button size="lg" className="btn-cut w-full rounded-none">
-                  Ir a cursos
-                  <ArrowRight className="ml-2 size-4" />
+                <Button
+                  asChild
+                  size="lg"
+                  className="btn-cut w-full rounded-none"
+                >
+                  <Link href={'/courses'}>
+                    Ir a cursos
+                    <ArrowRight className="ml-2 size-4" />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -117,9 +123,12 @@ export default function LandingPage() {
               asChild
               size="lg"
               variant="secondary"
-              className="btn-cut rounded-none px-10 py-6 text-lg"
+              className="btn-cut w-full rounded-none px-10 py-6 text-lg max-w-80"
             >
-              <Link href={'/courses'}>Explorar cursos</Link>
+              <Link href={'/courses'}>
+                Ir cursos
+                <ArrowRight className="ml-2 size-4" />
+              </Link>
             </Button>
           </div>
         </div>

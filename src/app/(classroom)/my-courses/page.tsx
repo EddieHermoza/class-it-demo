@@ -1,5 +1,7 @@
 import { authOptions } from '@/modules/auth/auth-options'
-import { CategoryFilter } from '@/modules/courses/components'
+import { ToggleCategory } from '@/modules/my-courses/filters/categories-filter'
+import QueryFilter from '@/modules/my-courses/filters/query-filter'
+import { ToggleStatus } from '@/modules/my-courses/filters/status-filter'
 import MyCourseContainer from '@/modules/my-courses/my-courses-container'
 import { Button } from '@/modules/shared/components/ui/button'
 import { getServerSession } from 'next-auth'
@@ -13,17 +15,17 @@ export default async function MyCoursesPage() {
     redirect('/auth/login')
   }
   return (
-    <div className="py-5">
-      <div className="container mx-auto mb-5 flex w-full items-end justify-between gap-5 px-5">
+    <div className="py-5 max-md:px-3">
+      <div className="container mx-auto mb-5 flex w-full items-end justify-between gap-5 p-5 max-sm:flex-col">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-balance lg:text-3xl">
             Mis cursos
           </h1>
           <p className="text-muted-foreground">
-            Gestiona tus cursos creados como instructor
+            Gestiona tus cursos publicados y en borrador como instructor
           </p>
         </div>
-        <Button asChild className="flex-center gap-3 rounded-none">
+        <Button asChild className="flex-center gap-3 rounded-none max-sm:w-full">
           <Link href={'/my-courses/create'}>
             <FiPlus className="size-4" />
             Crear un curso
@@ -31,7 +33,11 @@ export default async function MyCoursesPage() {
         </Button>
       </div>
       <Suspense>
-        <CategoryFilter className="w-screen justify-center xl:w-full" />
+        <div className="container mx-auto mb-5 flex items-center justify-between gap-5 max-md:flex-col max-md:items-start ">
+          <QueryFilter />
+          <ToggleStatus />
+          <ToggleCategory />
+        </div>
         <MyCourseContainer />
       </Suspense>
     </div>

@@ -89,13 +89,13 @@ export default function EnrollmentsContainer() {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <div className="flex-center mt-5 w-full">
-          <Pagination totalPages={data?.totalPages ?? 0} />
-        </div>
+      <div className="relative grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {enrollments.map((enrollment, i) => (
           <EnrollmentCard key={i} enrollment={enrollment} />
         ))}
+      </div>
+      <div className="flex-center mt-5 w-full">
+        <Pagination totalPages={data?.totalPages ?? 0} />
       </div>
     </>
   )

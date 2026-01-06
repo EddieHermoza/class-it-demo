@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 type Props = {
   src: string
-  width?: number 
+  width?: number
   height?: number
   alt: string
   category?: string
@@ -42,13 +42,10 @@ export default function CustomImage({
           width={fill ? undefined : width}
           height={fill ? undefined : height}
           fill={fill}
-          className={cn(
-            'object-cover transition-all duration-300',
-            fill && 'inset-0',
-            className
-          )}
+          className={cn(className, 'object-cover', fill && 'inset-0')}
           sizes={fill ? '100vw' : undefined}
-          priority={false} 
+          priority={false}
+          loading="lazy"
           onError={(e) => {
             e.currentTarget.style.display = 'none'
             e.currentTarget.nextElementSibling?.classList.remove('hidden')

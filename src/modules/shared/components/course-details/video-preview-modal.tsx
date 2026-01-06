@@ -8,7 +8,8 @@ import {
 import { Play } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getYouTubeThumbnail } from '@/modules/shared/utils'
-import VideoPlayer from './custom-video-player'
+import CourseVideoPlayer from './custom-video-player'
+import VideoPlayer from '../video-player'
 
 interface PreviewVideo {
   id: string
@@ -47,8 +48,8 @@ export function VideoPreviewModal({
         <div className="flex max-lg:flex-col">
           <div className="bg-background flex-center relative aspect-video h-auto w-full max-w-4xl overflow-hidden">
             <VideoPlayer
-              videoUrl={currentVideo?.url ?? ''}
-              title={currentVideo?.title ?? ''}
+              title={currentVideo?.title}
+              videoUrl={currentVideo?.url}
             />
           </div>
 
@@ -117,7 +118,7 @@ export function VideoPreviewModal({
                           {video.title}
                         </p>
                         <div className="text-muted-foreground flex items-center gap-2 text-xs">
-                          <span>{video.duration}</span>
+                          <span>{video.duration} min</span>
                           {isActive && (
                             <span className="text-primary flex items-center gap-1">
                               <div className="bg-primary size-1.5 animate-pulse rounded-full" />

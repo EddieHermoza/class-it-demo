@@ -2,16 +2,19 @@
 
 import Link from 'next/link'
 import { AiOutlineLoading } from 'react-icons/ai'
-import { useGetCategories } from '../../hooks/use-get-categories'
+import { useGetCategories } from '../hooks/use-get-categories'
 
 interface Props {
   onCategoryClick?(): void
+  className?: string
 }
 
-export default function CategoriesList({ onCategoryClick }: Props) {
+export default function CategoriesList({ onCategoryClick, className }: Props) {
   const { categories, isLoading } = useGetCategories()
   return (
-    <ul className="custom-scrollbar max-h-60 w-full space-y-2 overflow-y-auto">
+    <ul
+      className={`${className} custom-scrollbar max-h-60 w-full space-y-2 overflow-y-auto`}
+    >
       {isLoading ? (
         <div className="p-5">
           <AiOutlineLoading className="text-primary m-auto animate-spin" />

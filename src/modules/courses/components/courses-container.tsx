@@ -59,7 +59,12 @@ export default function CoursesContainer() {
 
   const { data, error, isLoading, setSize, isValidating } = useSWRInfinite(
     getKey,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false, 
+      revalidateIfStale: false, 
+      revalidateOnReconnect: false,
+    }
   )
 
   const loaderReference = useRef<HTMLDivElement | null>(null)
@@ -97,7 +102,7 @@ export default function CoursesContainer() {
   if (error) toast.error(error.message)
 
   return (
-    <div className="container mx-auto grid sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="container mx-auto grid sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-5">
       <CategoryFilter className="col-span-1 flex sm:gap-5 md:col-span-2 lg:col-span-3 lg:justify-center xl:col-span-4" />
       {isLoading && <CoursesGridSkeleton items={12} />}
 

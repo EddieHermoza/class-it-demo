@@ -7,19 +7,20 @@ import { Separator } from '@/modules/shared/components/ui/separator'
 import { useApiFetch } from '../shared/hooks/use-api-fetch'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
-import { CourseFullContentAccordion } from '../shared/components/course-details/course-full-content-accordion'
 import { CourseType } from '../shared/types/course.types'
-import { SectionType } from '../shared/types/sections.types'
 import { TeacherType } from '../shared/types/teacher.types'
 import { Button } from '../shared/components/ui/button'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
-import VideoPlayer from '../shared/components/course-details/custom-video-player'
 import { TeacherSection } from '../shared/components/course-details/teacher-section'
 import CourseInfoSection from '../shared/components/course-details/course-info-section'
+import VideoPlayer from '../shared/components/video-player'
+import { SectionPreview } from '../shared/types/sections.types'
+import { CourseFullContentPreviewAccordion } from '../shared/components/course-details/full-course-preview-accordion'
+
 interface CourseFullContent {
   course: CourseType
-  sections: SectionType[]
+  sections: SectionPreview[]
   teacher: TeacherType
 }
 
@@ -27,7 +28,7 @@ interface Props {
   courseId: string
 }
 
-export default function CourseFullContent({ courseId }: Props) {
+export default function CourseFullContentPreviewPage({ courseId }: Props) {
   const { data: session } = useSession()
   const accessToken = session?.tokens.access
   const hasToken = !!accessToken
@@ -38,7 +39,7 @@ export default function CourseFullContent({ courseId }: Props) {
   const selectedLectureId = searchParams.get('lectureId')
 
   const { data, isLoading, error } = useApiFetch<CourseFullContent>(
-    `/api/V1/courses/${courseId}/full-content`,
+    `/api/V1/courses/${courseId}/full-content-preview`,
     {},
     accessToken,
     {},
@@ -93,7 +94,7 @@ export default function CourseFullContent({ courseId }: Props) {
         <h1 className="text-xl font-semibold">{course?.title}</h1>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3">
         <div className="xl:col-span-2">
           {selectedLecture && (
             <div className="overflow-hidden">
@@ -127,7 +128,7 @@ export default function CourseFullContent({ courseId }: Props) {
             Contenido del curso
             <Separator className="bg-primary mt-1 h-0.5 w-10" />
           </h2>
-          <CourseFullContentAccordion sections={sections} />
+          <CourseFullContentPreviewAccordion sections={sections} />
         </aside>
       </div>
     </>

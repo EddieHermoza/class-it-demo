@@ -2,14 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { Play } from 'lucide-react'
-import { Card, CardContent } from '@/modules/shared/components/ui/card'
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/modules/shared/components/ui/avatar'
 import { Button } from '@/modules/shared/components/ui/button'
-import { Progress } from '@/modules/shared/components/ui/progress'
 import Link from 'next/link'
 import CustomImage from '@/modules/shared/components/custom-image'
 import { Enrollment } from './enrollments-container'
@@ -20,9 +13,10 @@ interface Props {
 
 export function EnrollmentCard({ enrollment }: Props) {
   const { push } = useRouter()
+  const progress = enrollment.progress ?? 0
 
   return (
-    <Card
+    <article
       role="button"
       tabIndex={0}
       onClick={() => push(`/learning/${enrollment.courseId}`)}
@@ -32,58 +26,58 @@ export function EnrollmentCard({ enrollment }: Props) {
           push(`/learning/${enrollment.courseId}`)
         }
       }}
-      className="group border-border/50 hover:border-primary/50 hover:shadow-primary/5 cursor-pointer overflow-hidden rounded-none py-0 transition-all duration-300 hover:shadow-xl"
+      className="group bg-card hover:border-primary transition-color flex h-32 cursor-pointer flex-col overflow-hidden rounded-none border pt-0 shadow-none duration-300 max-sm:flex-row sm:h-full sm:max-h-90"
     >
-      <div className="bg-muted relative aspect-video overflow-hidden">
+      <div className="bg-muted/40 relative aspect-video w-full max-sm:size-32">
         <CustomImage
           src={enrollment.courseImageUrl}
           alt={enrollment.courseTitle}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-110"
+          className="object-cover max-sm:object-center"
         />
       </div>
 
-      <CardContent className="space-y-2.5 p-3">
-        <div className="space-y-1.5">
-          <h3 className="group-hover:text-primary line-clamp-2 text-base leading-tight font-semibold text-balance transition-colors">
-            {enrollment.courseTitle}
-          </h3>
-        </div>
+      <div className="flex flex-col gap-5 p-5 max-sm:my-auto max-sm:p-2 w-full">
+        <h3 className="text-foreground line-clamp-2 text-base leading-tight font-semibold max-sm:text-xs">
+          {enrollment.courseTitle}
+        </h3>
 
-        <div className="space-y-1">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-muted-foreground font-medium">Progreso</span>
-            <span className="text-primary font-semibold">
-              {enrollment.progress}%
-            </span>
-          </div>
-          <Progress value={enrollment.progress} className="h-2" />
-        </div>
-
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex min-w-0 items-center gap-2">
-            <Avatar className="h-7 w-7 shrink-0">
-              <AvatarImage
-                src={enrollment.teacherFullName || '/placeholder.svg'}
-                alt={enrollment.teacherFullName}
+        <div className="flex items-center justify-between gap-4 w-full">
+          <div className="relative size-12 shrink-0 max-sm:size-10">
+            <svg className="size-full -rotate-90" viewBox="0 0 36 36">
+              <circle
+                cx="18"
+                cy="18"
+                r="16"
+                fill="none"
+                className="stroke-muted"
+                strokeWidth="3.5"
               />
-              <AvatarFallback className="text-xs">
-                {enrollment.teacherFullName.split('')[0]}
-              </AvatarFallback>
-            </Avatar>
-            <span className="truncate text-sm font-medium">
-              {enrollment.teacherFullName}
-            </span>
+              <circle
+                cx="18"
+                cy="18"
+                r="16"
+                fill="none"
+                className="stroke-primary"
+                strokeWidth="3.5"
+                strokeDasharray="100"
+                strokeDashoffset={100 - progress}
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className="text-primary flex-center absolute inset-0 text-xs">
+              {progress}
+            </div>
           </div>
-        </div>
 
-        <Button asChild className="w-full">
-          <Link href={`learning/${enrollment.courseId}`}>
-            <Play className="mr-1.5 h-3.5 w-3.5" />
-            <span className="text-sm">Ver Curso</span>
-          </Link>
-        </Button>
-      </CardContent>
-    </Card>
+          <Button asChild className="gap-3 rounded-none px-3">
+            <Link href={`/learning/${enrollment.courseId}`}>
+              <Play className="size-4" />
+              {progress > 0 ? 'Continuar' : 'Ver curso'}
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </article>
   )
 }

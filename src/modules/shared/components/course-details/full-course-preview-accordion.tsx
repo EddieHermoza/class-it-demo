@@ -8,11 +8,12 @@ import {
   AccordionTrigger,
 } from '@/modules/shared/components/ui/accordion'
 import { formatDuration } from '@/lib/utils'
-import CompleteLectureCheckBox from '@/modules/learning/components/complete-lecture-checkbox'
-import { useCourseMediaPlayer } from '@/modules/learning/context/use-course-media-provider'
+import { SectionPreview } from '../../types/sections.types'
 
-export function CourseFullContentAccordion() {
-  const { sections } = useCourseMediaPlayer()
+interface Props {
+  sections: SectionPreview[]
+}
+export function CourseFullContentPreviewAccordion({ sections }: Props) {
   const { replace } = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -26,14 +27,14 @@ export function CourseFullContentAccordion() {
   }
 
   return (
-    <Accordion type="multiple">
+    <Accordion type="multiple" className="">
       {sections.map((section) => (
         <AccordionItem
           key={section.id}
           value={section.id}
-          className="overflow-hidden rounded-none border-x border-t border-b-0 last:border-b"
+          className="overflow-hidden rounded-none border-t border-b-0 last:border-b border-x"
         >
-          <AccordionTrigger className="hover:bg-secondary rounded-none p-4 hover:no-underline sm:px-6">
+          <AccordionTrigger className="hover:bg-secondary rounded-none p-4 hover:no-underline sm:px-6 ">
             <div className="flex w-full justify-between gap-3">
               <span className="text-sm font-semibold sm:text-base">
                 {section.title}
@@ -59,10 +60,6 @@ export function CourseFullContentAccordion() {
                         : 'hover:bg-secondary border-transparent hover:border-white/5'
                     }`}
                   >
-                    <CompleteLectureCheckBox
-                      lectureId={l.id}
-                      completed={l.progress.fullWatched}
-                    />
                     <div className="flex flex-1 items-center gap-3">
                       <span
                         className={`truncate text-xs sm:text-sm ${

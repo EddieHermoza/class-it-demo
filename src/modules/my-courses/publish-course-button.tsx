@@ -19,10 +19,10 @@ interface Props {
   courseId: string
   token: string
 }
-export default function PublishCourseButton({ courseId, token }: Props) {
+export default function ReadyForReviewCourseButton({ courseId, token }: Props) {
   const { push } = useRouter()
   const { sendRequest, loading } = useSendRequest(
-    `/api/V1/courses/${courseId}/publish`,
+    `/api/V1/courses/${courseId}/ready-for-review`,
     'PATCH',
     token
   )
@@ -35,21 +35,23 @@ export default function PublishCourseButton({ courseId, token }: Props) {
       return
     }
 
-    toast.success('Curso publicado correctamente')
+    toast.success('Curso enviado a revisión')
     push('/my-courses')
   }
 
   return (
     <Dialog>
       <Button asChild className="rounded-none">
-        <DialogTrigger>Publicar Curso</DialogTrigger>
+        <DialogTrigger>Enviar a revisión</DialogTrigger>
       </Button>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>¿Seguro q desea publicar este curso?</DialogTitle>
+          <DialogTitle>
+            ¿Seguro q desea marcar a revision este curso?
+          </DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          Una vez publicado habrá limitaciones en su modificación
+          Se marcara a estado de revision para su publicación
         </DialogDescription>
         <div className="flex w-full items-center justify-between pt-6">
           <Button onClick={handlePublish} disabled={loading}>

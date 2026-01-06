@@ -11,38 +11,44 @@ import { Label } from '@/modules/shared/components/ui/label'
 import { Input } from '@/modules/shared/components/ui/input'
 import { Button } from '@/modules/shared/components/ui/button'
 import { Eye, EyeOff } from 'lucide-react'
-import animationData from '@/assets/animation/register.json'
+import animationData from '@/assets/animation/forgot-password.json'
 import Lottie from 'lottie-react'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  RegisterSchema,
-  RegisterSchemaType,
-} from '@/modules/auth/schemas/register-schema'
+  RegisterTeacherSchema,
+  RegisterTeacherSchemaType,
+} from '@/modules/auth/schemas/register-teacher.schema'
 import { toast } from 'sonner'
 import ErrorMessage from '@/modules/shared/components/error-message'
 import { useSendRequest } from '@/modules/shared/hooks/use-send-request'
 
-export default function RegisterPage() {
+export default function RegisterTeacherPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const { sendRequest } = useSendRequest('/api/V1/auth/register', 'POST')
+  const { sendRequest } = useSendRequest(
+    '/api/V1/teachers/',
+    'POST'
+  )
+
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterSchemaType>({
-    resolver: zodResolver(RegisterSchema),
+  } = useForm<RegisterTeacherSchemaType>({
+    resolver: zodResolver(RegisterTeacherSchema),
   })
 
-  const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
+  const onSubmit: SubmitHandler<RegisterTeacherSchemaType> = async (data) => {
     const { error } = await sendRequest(data)
     if (error) {
-      toast.error('Error al crear la cuenta')
+      toast.error('Error al crear la cuenta de instructor')
       return
     }
-    toast.success('Cuenta creada correctamente')
+    toast.success(
+      'Solicitud de instructor enviada correctamente. Te contactaremos pronto.'
+    )
     reset()
   }
 
@@ -57,7 +63,7 @@ export default function RegisterPage() {
       <Card className="border-none shadow-none">
         <CardHeader>
           <CardTitle className="text-foreground text-3xl font-bold">
-            Crear Cuenta
+            Convertirme en Instructor
           </CardTitle>
         </CardHeader>
 
@@ -90,6 +96,16 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
+              <Label>Número de contacto</Label>
+              <Input
+                type="text"
+                placeholder="999999999"
+                {...register('number')}
+              />
+              {errors.email && <ErrorMessage message={errors.email.message} />}
+            </div>
+
+            <div className="space-y-2">
               <Label>Contraseña</Label>
               <div className="relative">
                 <Input
@@ -115,12 +131,32 @@ export default function RegisterPage() {
               )}
             </div>
 
+            <div className="space-y-2">
+              <Label>Especialidad principal</Label>
+              <Input
+                {...register('title')}
+                placeholder="Experto en inteligencia artificial"
+              />
+              <ErrorMessage message={errors?.title?.message} />
+            </div>
+
+            <div className="space-y-2">
+              <Label>LinkedIn o sitio web profesional (opcional)</Label>
+              <Input
+                {...register('referenceUrl')}
+                placeholder="https://linkedin.com/in/tu-perfil"
+              />
+              <ErrorMessage message={errors?.referenceUrl?.message} />
+            </div>
+
             <Button
               type="submit"
               className="h-11 w-full text-base"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Registrando...' : 'Registrarse'}
+              {isSubmitting
+                ? 'Enviando solicitud...'
+                : 'Solicitar ser Instructor'}
             </Button>
 
             <div className="text-center text-sm">

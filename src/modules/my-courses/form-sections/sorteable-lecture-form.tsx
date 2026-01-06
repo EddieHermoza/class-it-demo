@@ -12,6 +12,7 @@ import { Button } from '@/modules/shared/components/ui/button'
 import { Checkbox } from '@/modules/shared/components/ui/checkbox'
 import { Label } from '@/modules/shared/components/ui/label'
 import ErrorMessage from '@/modules/shared/components/error-message'
+import { extractYouTubeId } from '@/modules/shared/utils'
 
 interface SortableLectureProps {
   id: string
@@ -50,22 +51,12 @@ export function SortableLecture({
 
   const lectureErrors = errors.sections?.[sectionIndex]?.lectures?.[index]
 
-  // Observamos el videoUrl para generar el thumbnail
   const videoUrl = useWatch({
     control,
     name: `sections.${sectionIndex}.lectures.${index}.videoUrl`,
   })
 
-  // Función para extraer videoId de URLs de YouTube
-  const getYoutubeVideoId = (url: string): string | null => {
-    if (!url) return null
-    const regex =
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i
-    const match = url.match(regex)
-    return match ? match[1] : null
-  }
-
-  const videoId = videoUrl ? getYoutubeVideoId(videoUrl) : null
+  const videoId = videoUrl ? extractYouTubeId(videoUrl) : null
   const thumbnailUrl = videoId
     ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
     : null
@@ -76,7 +67,6 @@ export function SortableLecture({
       style={style}
       className="group bg-card relative flex items-stretch rounded-xl border shadow-sm transition-shadow hover:shadow-md"
     >
-      {/* Grip Vertical */}
       <div
         {...attributes}
         {...listeners}
@@ -97,9 +87,7 @@ export function SortableLecture({
           </div>
         </div>
       )}
-      {/* Contenido principal */}
       <div className="flex-1 py-4 pr-4 pl-4">
-        {/* Fila 1: Título + Vista previa (checkbox) */}
         <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-12">
           <div className="md:col-span-9">
             <div className="relative">
@@ -135,14 +123,10 @@ export function SortableLecture({
           </div>
         </div>
 
-        {/* Fila 2: URL del video + Duración */}
-        {/* Fila 2: URL del video + Duración */}
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-12">
           <div className="md:col-span-9">
             <div className="relative">
-              {/* Thumbnail pequeño si hay video de YouTube */}
 
-              {/* Ícono de enlace */}
               <Link
                 className={`text-muted-foreground pointer-events-none absolute top-3 left-3 size-4 transition-all`}
               />
@@ -157,7 +141,6 @@ export function SortableLecture({
             </div>
           </div>
 
-          {/* Duración */}
           <div className="md:col-span-3">
             <div className="relative">
               <Clock className="text-muted-foreground pointer-events-none absolute top-3 left-3 h-4 w-4" />

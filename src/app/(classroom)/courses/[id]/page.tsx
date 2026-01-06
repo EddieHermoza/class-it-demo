@@ -1,4 +1,4 @@
-import CoursePreviewContent from '@/modules/courses/components/course-preview-content'
+import CoursePreviewContentPage from '@/modules/courses/components/course-preview-content-page'
 import { notFound } from 'next/navigation'
 
 type Props = {
@@ -9,8 +9,8 @@ export default async function CoursePreviewPage({ params }: Props) {
   if (!id) notFound()
 
   return (
-    <div className="w-full">
-      <CoursePreviewContent courseId={id} />
+    <div className="relative size-full">
+      <CoursePreviewContentPage courseId={id} />
     </div>
   )
 }

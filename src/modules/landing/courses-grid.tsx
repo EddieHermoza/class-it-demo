@@ -11,7 +11,7 @@ import { Skeleton } from '@/modules/shared/components/ui/skeleton'
 import { Star, Clock, ArrowRight } from 'lucide-react'
 import { useApiFetch } from '@/modules/shared/hooks/use-api-fetch'
 import CustomImage from '../shared/components/custom-image'
-import { formatDuration } from '@/lib/utils'
+import { formatDuration, getCourseLevelLabel } from '@/lib/utils'
 
 export type PublishedCourseResponseDto = {
   id: string
@@ -97,10 +97,7 @@ export default function CoursesGrid({
                   />
                   <div className="absolute top-4 left-4">
                     <span className="bg-primary text-primary-foreground px-3 py-1 text-xs font-medium">
-                      {course.level === 'BEGINNER' && 'Principiante'}
-                      {course.level === 'INTERMEDIATE' && 'Intermedio'}
-                      {course.level === 'ADVANCED' && 'Avanzado'}
-                      {course.level === 'ALL_LEVELS' && 'Todos los niveles'}
+                      {getCourseLevelLabel(course.level)}
                     </span>
                   </div>
                 </div>

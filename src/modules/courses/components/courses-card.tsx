@@ -8,7 +8,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/modules/shared/components/ui/avatar'
-import { Badge } from '@/modules/shared/components/ui/badge'
 import { Button } from '@/modules/shared/components/ui/button'
 import Link from 'next/link'
 import { formatDuration, getCourseLevelLabel } from '@/lib/utils'
@@ -38,7 +37,7 @@ export function CourseCard({ course, isInProfile = false }: CourseCardProps) {
           handleOpenDetails()
         }
       }}
-      className={`group cursor-pointer overflow-hidden rounded-none py-0 transition-all duration-300 hover:shadow-xl ${
+      className={`bg-card group relative mx-auto mt-5 w-full cursor-pointer overflow-hidden rounded-none py-0 shadow-none duration-300 max-md:max-w-5/6 ${
         isInProfile
           ? 'border-primary/70 hover:border-primary shadow-primary/10 shadow-lg'
           : 'border-border/50 hover:border-primary/50 hover:shadow-primary/5'
@@ -49,29 +48,21 @@ export function CourseCard({ course, isInProfile = false }: CourseCardProps) {
           src={course.imageUrl}
           alt={course.title}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className=""
         />
         <div
           className={`absolute top-2 ${isInProfile ? 'right-2' : 'right-2'}`}
         >
-          <Badge
-            variant="secondary"
-            className="bg-background/90 py-0.5 text-xs"
-          >
+          <span className="bg-primary text-primary-foreground px-3 py-1 text-xs font-medium">
             {getCourseLevelLabel(course.level)}
-          </Badge>
+          </span>
         </div>
       </div>
 
       <CardContent className="space-y-2.5 p-3">
-        <div className="space-y-1.5">
-          <h3 className="group-hover:text-primary line-clamp-2 text-base leading-tight font-semibold text-balance transition-colors">
-            {course.title}
-          </h3>
-          <p className="text-muted-foreground line-clamp-1 text-sm leading-relaxed">
-            {course.shortDescription}
-          </p>
-        </div>
+        <h3 className="line-clamp-2 text-base leading-tight font-semibold text-balance transition-colors">
+          {course.title}
+        </h3>
 
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
@@ -91,13 +82,13 @@ export function CourseCard({ course, isInProfile = false }: CourseCardProps) {
 
           <div className="flex shrink-0 items-center gap-3 text-xs">
             <div className="flex items-center gap-0.5">
-              <Star className="h-3.5 w-3.5 fill-yellow-500 text-yellow-500" />
+              <Star className="size-3.5 fill-yellow-500 text-yellow-500" />
               <span className="font-semibold">
                 {course.avgRating.toFixed(1)}
               </span>
             </div>
             <div className="text-muted-foreground flex items-center gap-1">
-              <Clock className="h-3.5 w-3.5" />
+              <Clock className="size-3.5" />
               <span>{formatDuration(course.estimatedDuration)}</span>
             </div>
           </div>

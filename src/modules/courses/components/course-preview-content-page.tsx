@@ -1,7 +1,7 @@
 'use client'
 
 import Lottie from 'lottie-react'
-import { Dot, BarChart3, Star } from 'lucide-react'
+import { BarChart3, Star } from 'lucide-react'
 import { TeacherSection } from '../../shared/components/course-details/teacher-section'
 import { AppBreadcrumb, Loading } from '../../shared/components'
 import { Badge } from '../../shared/components/ui/badge'
@@ -26,7 +26,7 @@ interface Props {
   courseId: string
 }
 
-export default function CoursePreviewContent({ courseId }: Props) {
+export default function CoursePreviewContentPage({ courseId }: Props) {
   const { data, isLoading } = useApiFetch<CoursePreviewContent>(
     `/api/V1/courses/${courseId}/preview-content`
   )
@@ -45,57 +45,78 @@ export default function CoursePreviewContent({ courseId }: Props) {
   const { course, teacher } = data
 
   return (
-    <div className="container mx-auto flex flex-col py-5 max-sm:px-4">
+    <div className="relative flex w-full flex-col px-4 py-5 max-sm:px-4">
       <AppBreadcrumb
         items={[{ label: 'Cursos', href: '/courses' }, { label: course.title }]}
       />
 
-      <div className="container mx-auto px-0 pt-6 pb-12">
-        <div className="w-full">
-          <Badge className="bg-primary/20 text-primary border-primary/30 hover:bg-primary/30 border px-2 py-0.5 text-[10px] font-semibold uppercase transition-colors sm:px-3 sm:py-1 sm:text-xs">
-            {course.category}
-          </Badge>
+      <div className="relative container mx-auto pt-12 md:pt-16 2xl:pb-10">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Badge
+              variant="outline"
+              className="border-border mb-6 text-xs font-medium tracking-wider uppercase"
+            >
+              {course.category}
+            </Badge>
 
-          <h1 className="mb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
-            {course.title}
-          </h1>
+            <h1 className="text-foreground text-2xl leading-[1.12] font-semibold tracking-tight sm:text-3xl lg:text-5xl">
+              {course.title}
+            </h1>
 
-          <div className="text-muted-foreground mb-6 flex items-center gap-2">
-            <span className="text-sm sm:text-base">Enseña:</span>
-            <span className="text-foreground text-sm font-semibold sm:text-base">
-              {teacher.name} {teacher.lastName}
-            </span>
-            <Dot className="size-4" />
-            <span className="text-sm sm:text-base">{teacher.title}</span>
-          </div>
+            <p className="text-muted-foreground mt-6 max-w-3xl text-xl leading-relaxed max-md:text-base">
+              {course.shortDescription}
+            </p>
 
-          <div className="flex flex-wrap items-center gap-6 pb-6">
-            <div className="flex items-center gap-2.5 rounded-lg bg-white/5 px-3 py-2 transition-colors hover:bg-white/10">
-              <div className="bg-primary/20 rounded-md p-1.5">
-                <BarChart3 className="text-primary size-4" />
-              </div>
-              <span className="text-xs font-medium sm:text-sm">
-                {getCourseLevelLabel(course.level)}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2.5 rounded-lg bg-white/5 px-3 py-2 transition-colors hover:bg-white/10">
-              <div className="bg-primary/20 rounded-md p-1.5">
-                <Star className="text-primary fill-primary size-4" />
-              </div>
-              <span className="text-xs font-semibold sm:text-sm">
-                {course.avgRating}
-              </span>
+            <div className="relative mt-10 w-full">
+              <EnrollCourseButton
+                courseId={course.id}
+                className="btn-cut max-md:w-full"
+              />
             </div>
           </div>
 
-          <EnrollCourseButton courseId={course.id} />
+          <div className="m-auto max-lg:hidden lg:col-span-5">
+            <div className="border-border/50 bg-background/50 overflow-hidden rounded-xl border shadow-sm">
+              <Image
+                src={course.imageUrl}
+                alt={`Dashboard profesional de ${course.title}`}
+                width={700}
+                height={525}
+                className="h-auto w-full object-cover"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </div>
+      <div className="flex-center my-10 flex-wrap gap-x-8 gap-y-4 text-base max-sm:text-sm">
+        <div className="flex items-center gap-2">
+          <Star className="text-primary fill-primary size-4.5" />
+          <span className="font-medium">{course.avgRating}</span>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <span className="text-muted-foreground">Enseña:</span>
+          <span className="text-foreground font-semibold">
+            {teacher.name} {teacher.lastName}
+          </span>
+          <span className="text-muted-foreground hidden sm:inline">·</span>
+          <span className="text-muted-foreground">{teacher.title}</span>
+        </div>
 
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <BarChart3 className="text-primary size-4.5" />
+            <span className="text-primary font-semibold">
+              {getCourseLevelLabel(course.level)}
+            </span>
+          </div>
+        </div>
+      </div>
       <div className="relative container mx-auto">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
           <div className="max-w-4xl flex-1">
+            <div className="bg-primary my-5 h-1 w-full rounded-full lg:hidden" />
             <CourseInfoSection
               description={course.description ?? ''}
               whatYouWillLearn={course.whatYouWillLearn ?? ''}

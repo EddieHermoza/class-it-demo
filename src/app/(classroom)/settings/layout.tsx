@@ -34,17 +34,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // Opcional: mostrar un esqueleto o mensaje mientras carga
   if (status === 'loading') {
     return (
-      <div className="flex size-full">
-        <aside className="w-70 border-r px-4 py-10">
+      <div className="flex size-full flex-col lg:flex-row">
+        <aside className="border-b px-4 py-6 md:w-70 md:border-r md:border-b-0 md:py-10">
           <div className="flex flex-col items-center gap-3 border-b pb-6">
             <div className="bg-muted size-20 animate-pulse rounded-full" />
             <div className="bg-muted h-4 w-32 animate-pulse rounded" />
           </div>
-          <nav className="mt-6 flex flex-col gap-1">
+          <nav className="mt-6 flex gap-1 overflow-x-auto md:flex-col">
             {SETTINGS_LINKS.map((link) => (
               <div
                 key={link.src}
-                className="bg-muted h-9 w-full animate-pulse rounded"
+                className="bg-muted h-9 w-24 shrink-0 animate-pulse rounded md:w-full"
               />
             ))}
           </nav>
@@ -57,9 +57,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex size-full">
+    <div className="flex size-full flex-col md:flex-row">
       {/* Sidebar */}
-      <aside className="w-70 border-r px-4 py-10">
+      <aside className="border-b px-4 py-6 md:w-70 md:border-r md:border-b-0 md:py-10">
         <div className="flex flex-col items-center gap-3 border-b pb-6">
           <Avatar className="size-20">
             <AvatarImage src={avatarUrl} alt={usernameForAvatar} />
@@ -71,7 +71,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <p className="text-center font-medium">{fullName}</p>
         </div>
 
-        <nav className="mt-6 flex flex-col gap-1 text-sm">
+        <nav className="scrollbar-hide mt-6 flex gap-1 overflow-x-auto p-1 text-sm md:flex-col">
           {SETTINGS_LINKS.map(({ label, src }) => {
             const isActive = pathname === src
 
@@ -79,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link
                 key={src}
                 href={src}
-                className={`rounded-md px-3 py-2 transition-colors ${
+                className={`whitespace-nowrap rounded-md px-3 py-2 transition-colors ${
                   isActive
                     ? 'bg-primary text-primary-foreground dark:bg-primary/30 font-medium'
                     : 'hover:bg-primary/10 hover:text-primary'

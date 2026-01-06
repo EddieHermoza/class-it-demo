@@ -12,7 +12,6 @@ import { DeleteCourseButton } from './delete-course-button'
 import { useSession } from 'next-auth/react'
 import Pagination from '../shared/components/ui/pagination'
 import { ITEMS_PER_PAGE } from '../shared/constants'
-import { ToogleStatus } from './filters/status-filter'
 
 export type CourseResponse = {
   id: string
@@ -22,7 +21,7 @@ export type CourseResponse = {
   level: string
   imageUrl: string
   estimatedDuration: number // en minutos u horas, según tu lógica
-  isPublished: boolean
+  status: string // 'DRAFT' | 'READY_FOR_REVIEW' | 'REJECTED' | 'PUBLISHED' | 'ARCHIVED'
   createdAt: string // ISO date string
   updatedAt: string // ISO date string
 }
@@ -41,20 +40,24 @@ export default function MyCourseContainer() {
   const searchParams = useSearchParams()
   const categoryId = searchParams.get('categoryId') || undefined
   const status = searchParams.get('status') || undefined
+  const query = searchParams.get('query') || undefined
   const page = searchParams.get('page') || 1
+
   const limit = ITEMS_PER_PAGE
+
   const { data, isLoading, error, mutate, isValidating } =
     useApiFetch<GetCoursesResponse>(
       '/api/V1/courses/my-courses',
-      { categoryId, status, page, limit },
+      { categoryId, status, page, limit, query },
       accessToken,
       {},
       hasToken
     )
 
   const [open, setOpen] = useState(false)
-  const [selectedCourse, setSelectedCourse] =
-    useState<CourseResponse | null>(null)
+  const [selectedCourse, setSelectedCourse] = useState<CourseResponse | null>(
+    null
+  )
 
   const courses = data?.data ?? []
 
@@ -76,7 +79,7 @@ export default function MyCourseContainer() {
 
         <Link
           href="/my-courses/create"
-          className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium text-white transition-colors"
+          className="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 px-5 py-3 font-medium text-white transition-colors"
         >
           <PlusCircle className="h-5 w-5" />
           Crear mi primer curso
@@ -90,7 +93,6 @@ export default function MyCourseContainer() {
       <div className="h-full w-full flex-1">
         <div className="container mx-auto flex items-center justify-between">
           <Pagination totalPages={data?.totalPages ?? 0} />
-          <ToogleStatus />
         </div>
         <div className="container mx-auto grid grid-cols-1 gap-6 py-5 md:grid-cols-2 xl:grid-cols-3">
           {courses.map((course) => (

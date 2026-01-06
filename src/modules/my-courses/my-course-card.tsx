@@ -19,7 +19,24 @@ interface MyCourseCardProps {
 }
 
 export default function MyCourseCard({ course, onDelete }: MyCourseCardProps) {
-  const { id, title, isPublished, createdAt, updatedAt } = course
+  const { id, title, status, createdAt, updatedAt } = course
+  
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'PUBLISHED':
+        return <Badge className="bg-green-500 text-white">Publicado</Badge>
+      case 'DRAFT':
+        return <Badge className="bg-slate-500 text-white">Borrador</Badge>
+      case 'READY_FOR_REVIEW':
+        return <Badge className="bg-yellow-500 text-white">En Revisión</Badge>
+      case 'REJECTED':
+        return <Badge className="bg-red-500 text-white">Rechazado</Badge>
+      case 'ARCHIVED':
+        return <Badge className="bg-gray-500 text-white">Archivado</Badge>
+      default:
+        return <Badge className="bg-slate-500 text-white">{status}</Badge>
+    }
+  }
 
   return (
     <Tooltip>
@@ -32,11 +49,7 @@ export default function MyCourseCard({ course, onDelete }: MyCourseCardProps) {
           <h3 className="font-semibold">{title}</h3>
 
           <div className="absolute bottom-3 left-3">
-            {isPublished ? (
-              <Badge className="bg-green-500 text-white">Publicado</Badge>
-            ) : (
-              <Badge className="bg-red-500 text-white">Borrador</Badge>
-            )}
+            {getStatusBadge(status)}
           </div>
 
           <div className="text-muted-foreground my-3 space-y-2 text-xs">

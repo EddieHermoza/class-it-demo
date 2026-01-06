@@ -40,8 +40,8 @@ export function CategoryFilter({ className }: Props) {
         variant={selectedCategory === 'all' ? 'default' : 'outline'}
         className={`cursor-pointer px-4 py-2 text-xs transition-all ${
           selectedCategory === 'all'
-            ? 'bg-primary text-primary-foreground shad ow-md scale-105'
-            : 'hover:bg-accent hover:text-accent-foreground hover:scale-105'
+            ? 'bg-primary text-primary-foreground'
+            : 'hover:bg-accent hover:text-accent-foreground'
         }`}
         onClick={() => handleCategoryChange('all')}
       >
@@ -58,8 +58,8 @@ export function CategoryFilter({ className }: Props) {
               variant={isSelected ? 'default' : 'outline'}
               className={`cursor-pointer px-4 py-2 text-xs transition-all ${
                 isSelected
-                  ? 'bg-primary text-primary-foreground scale-105 shadow-md'
-                  : 'hover:bg-accent hover:text-accent-foreground hover:scale-105'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'hover:bg-accent hover:text-accent-foreground '
               }`}
               onClick={() => handleCategoryChange(category.id)}
             >

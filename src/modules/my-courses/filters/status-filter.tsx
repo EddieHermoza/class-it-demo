@@ -8,12 +8,12 @@ import {
 } from '@/modules/shared/components/ui/select'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 
-export function ToogleStatus() {
+export function ToggleStatus() {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
 
-  const currentStatus = searchParams.get('status') || 'all'
+  const currentStatus = searchParams.get('status') || 'ALL'
 
   function handleOrder(term: string) {
     const params = new URLSearchParams(searchParams)
@@ -32,10 +32,13 @@ export function ToogleStatus() {
         <span>Estado: </span>
         <SelectValue />
       </SelectTrigger>
-      <SelectContent position="popper" sideOffset={10} hideWhenDetached>
-        <SelectItem value="all">Todos</SelectItem>
-        <SelectItem value="draft">Borradores</SelectItem>
-        <SelectItem value="published">Publicados</SelectItem>
+      <SelectContent position="popper" sideOffset={0} hideWhenDetached>
+        <SelectItem value="ALL">Todos</SelectItem>
+        <SelectItem value="DRAFT">Borrador</SelectItem>
+        <SelectItem value="READY_FOR_REVIEW">Listo para Revisión</SelectItem>
+        <SelectItem value="PUBLISHED">Publicado</SelectItem>
+        <SelectItem value="REJECTED">Rechazado</SelectItem>
+        <SelectItem value="ARCHIVED">Archivado</SelectItem>
       </SelectContent>
     </Select>
   )

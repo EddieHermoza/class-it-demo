@@ -1,11 +1,10 @@
 'use client'
 
 import { IoCalendarOutline as _ } from 'react-icons/io5'
-import { TbCertificate } from 'react-icons/tb'
 import { MdOutlineLibraryBooks } from 'react-icons/md'
 import { FaRegBookmark } from 'react-icons/fa'
 import { IoMdHome } from 'react-icons/io'
-
+import { PiCertificate } from 'react-icons/pi'
 type NavItem = {
   label: string
   src: string
@@ -32,20 +31,20 @@ export const COMMON_LINKS: NavItem[] = [
 
 const STUDENT_SPECIFIC: NavItem[] = [
   {
-    label: 'Aprendizaje',
+    label: 'Mi aprendizaje',
     src: '/learning',
     icon: FaRegBookmark,
   },
   {
-    label: 'Certificados',
+    label: 'Mis certificados',
     src: '/certificates',
-    icon: TbCertificate,
+    icon: PiCertificate,
   },
 ]
 
 const TEACHER_SPECIFIC: NavItem[] = [
   {
-    label: 'Mis Cursos',
+    label: 'Mis cursos',
     icon: FaRegBookmark,
     src: '/my-courses',
   },

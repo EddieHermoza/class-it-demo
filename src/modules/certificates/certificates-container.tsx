@@ -1,16 +1,15 @@
 'use client'
-import useSWR from 'swr'
 import { Card, CardContent } from '@/modules/shared/components/ui/card'
 import { Button } from '@/modules/shared/components/ui/button'
 
 import { Award } from 'lucide-react'
 import { Loading } from '@/modules/shared/components'
 import { useSession } from 'next-auth/react'
-import { fetcher } from '@/lib/http/fetcher'
 import CertificateCard from './certificate-card'
 import { toast } from 'sonner'
 import Pagination from '../shared/components/ui/pagination'
 import Link from 'next/link'
+import { useApiFetch } from '../shared/hooks/use-api-fetch'
 
 interface Props {
   page: number
@@ -36,10 +35,14 @@ export type GetCertificatesResponse = {
 
 export default function CertificatesContainer({ page, limit }: Props) {
   const { data: session } = useSession()
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/V1/certificates/me?limit=${limit}&page=${page}`
+  const hasToken = !!session?.tokens.access
   const { data, error, isLoading, isValidating } =
-    useSWR<GetCertificatesResponse>(session ? url : null, (url: string) =>
-      fetcher(url, session?.tokens.access)
+    useApiFetch<GetCertificatesResponse>(
+      '/api/V1/certificates/me',
+      { page, limit },
+      session?.tokens.access,
+      {},
+      hasToken
     )
   const certificates = data?.data ?? []
 
@@ -59,11 +62,11 @@ export default function CertificatesContainer({ page, limit }: Props) {
             Aún no tienes certificados
           </h3>
           <p className="text-muted-foreground mb-6 max-w-md">
-            Completa tus primeros cursos para obtener certificados que validen
+            Completa tus primeros cursos inscritos para obtener certificados que validen
             tus conocimientos
           </p>
           <Button size="lg" asChild>
-            <Link href={'/courses'}>Explorar Cursos</Link>
+            <Link href={'/learning'}>Ir a mi aprendizje</Link>
           </Button>
         </CardContent>
       </Card>
