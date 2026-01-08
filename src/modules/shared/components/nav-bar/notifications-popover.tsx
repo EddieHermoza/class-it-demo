@@ -44,7 +44,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
   },
 ]
 
-export default function NotificationsPopover() {
+export function NotificationsPopover() {
   const [open, setOpen] = useState(false)
 
   const unreadCount = MOCK_NOTIFICATIONS.filter((n) => !n.read).length

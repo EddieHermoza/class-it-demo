@@ -1,5 +1,8 @@
 const getApiUrl = () => {
-  return process.env.NEXT_PUBLIC_API
+  if (IS_PRODUCTION) {
+    return process.env.NEXT_PUBLIC_PRODUCTION_API
+  }
+  return process.env.NEXT_PUBLIC_DEVELOPMENT_API
 }
 
 const getApiGeneratorUrl = () => {

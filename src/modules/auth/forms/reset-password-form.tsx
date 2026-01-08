@@ -18,7 +18,7 @@ interface Props {
 }
 export default function ResetPasswordForm({ token }: Props) {
   const { push } = useRouter()
-  const { sendRequest } = useSendRequest('/api/V1/auth/reset-password', 'PATCH')
+  const { sendRequest } = useSendRequest('/api/V1/auth/reset-password', 'POST')
 
   const {
     register,

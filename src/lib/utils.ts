@@ -14,6 +14,14 @@ export const formatDate = (dateString: string) => {
   })
 }
 
+export const formatTime = (dateString: string) => {
+  const date = new Date(dateString)
+  return date.toLocaleTimeString('es-ES', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 export const formatDuration = (mins: number) => {
   const hours = Math.floor(mins / 60)
   const minutes = mins % 60

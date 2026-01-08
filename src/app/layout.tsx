@@ -5,10 +5,9 @@ import { ThemeProvider } from '@/providers/theme-provider'
 import { NextAuthProvider } from '@/providers/session-provider'
 import { primaryFont } from '@/config/fonts'
 import { Toaster } from '@/modules/shared/components/ui/sonner'
-export const metadata: Metadata = {
-  title: 'Class IT',
-  description: 'Plataforma de aprendizaje online',
-}
+import { META_DATA } from '@/config/metadata'
+
+export const metadata: Metadata = META_DATA
 
 export default function RootLayout({
   children,

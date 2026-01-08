@@ -102,11 +102,11 @@ export default function SearchBar() {
                 <Link
                   href={`/courses/${course.id}`}
                   onClick={() => setIsOpen(false)}
-                  className="hover:bg-primary/10 flex items-center gap-3 p-3 text-sm transition-colors"
+                  className="hover:bg-accent flex items-center gap-3 p-3 text-sm transition-colors"
                 >
                   <CustomImage
+                    height={40}
                     width={80}
-                    height={80}
                     src={course.imageUrl}
                     alt=""
                   />

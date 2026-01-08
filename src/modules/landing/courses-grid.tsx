@@ -114,7 +114,7 @@ export default function CoursesGrid({
                     </p>
 
                     <div className="flex items-center gap-4 text-sm">
-                      <div className="flex items-center gap-1">
+                      {/* <div className="flex items-center gap-1">
                         <div className="flex">
                           {[...Array(5)].map((_, i) => (
                             <Star
@@ -130,7 +130,7 @@ export default function CoursesGrid({
                         <span className="font-medium">
                           {course.avgRating.toFixed(1)}
                         </span>
-                      </div>
+                      </div> */}
 
                       <div className="flex items-center gap-1">
                         <Clock className="text-muted-foreground size-4" />

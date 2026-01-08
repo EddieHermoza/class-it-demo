@@ -11,7 +11,7 @@ import {
 import { useGetCategories } from '@/modules/shared/hooks/use-get-categories'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 
-export function ToggleCategory() {
+export default function CategorySelectFilter() {
   const { categories = [], isLoading } = useGetCategories()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -40,12 +40,10 @@ export function ToggleCategory() {
       </SelectTrigger>
 
       <SelectContent position="popper" className="max-h-64 overflow-y-auto">
-        {/* Todas */}
         <SelectItem value="all">
           <span className="text-muted-foreground">Todas</span>
         </SelectItem>
 
-        {/* Categorías */}
         {categories.map((category) => (
           <SelectItem key={category.id} value={category.id}>
             {category.name}

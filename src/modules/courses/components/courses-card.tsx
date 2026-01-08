@@ -81,12 +81,12 @@ export function CourseCard({ course, isInProfile = false }: CourseCardProps) {
           </div>
 
           <div className="flex shrink-0 items-center gap-3 text-xs">
-            <div className="flex items-center gap-0.5">
+            {/* <div className="flex items-center gap-0.5">
               <Star className="size-3.5 fill-yellow-500 text-yellow-500" />
               <span className="font-semibold">
                 {course.avgRating.toFixed(1)}
               </span>
-            </div>
+            </div> */}
             <div className="text-muted-foreground flex items-center gap-1">
               <Clock className="size-3.5" />
               <span>{formatDuration(course.estimatedDuration)}</span>

@@ -177,7 +177,7 @@ export default function CoursePreviewContentPage({ courseId }: Props) {
               Certifícate e impulsa tu carrera
             </h2>
 
-            <div className="overflow-hidden rounded-xl border border-gray-200 shadow-xl dark:border-gray-800">
+            {/* <div className="overflow-hidden rounded-xl border border-gray-200 shadow-xl dark:border-gray-800">
               <Image
                 src="/ejemplo-certificado.jpg"
                 alt="Ejemplo de certificado profesional"
@@ -186,7 +186,7 @@ export default function CoursePreviewContentPage({ courseId }: Props) {
                 className="h-auto w-full"
                 quality={85}
               />
-            </div>
+            </div> */}
           </div>
         </section>
       </div>

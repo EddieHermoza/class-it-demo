@@ -1,15 +1,15 @@
 import { authOptions } from '@/modules/auth/auth-options'
-import QueryInputFilter from '@/modules/shared/components/filters/query-input-filter'
-import { ToggleStatus } from '@/modules/my-courses/filters/status-filter'
-import MyCourseContainer from '@/modules/my-courses/my-courses-container'
+import WebinarContainer from '@/modules/webinars/webinar-container'
 import { Button } from '@/modules/shared/components/ui/button'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { FiPlus } from 'react-icons/fi'
+import QueryInputFilter from '@/modules/shared/components/filters/query-input-filter'
 import CategorySelectFilter from '@/modules/shared/components/filters/category-select-filter'
-export default async function MyCoursesPage() {
+
+export default async function MyWebinarsPage() {
   const session = await getServerSession(authOptions)
   if (!session) {
     redirect('/auth/login')
@@ -19,29 +19,28 @@ export default async function MyCoursesPage() {
       <div className="container mx-auto mb-5 flex w-full items-end justify-between gap-5 p-5 max-sm:flex-col">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-balance lg:text-3xl">
-            Mis cursos
+            Mis Webinars
           </h1>
           <p className="text-muted-foreground">
-            Gestiona tus cursos publicados y en borrador como instructor
+            Administra y programa tus sesiones en vivo
           </p>
         </div>
         <Button
           asChild
           className="flex-center gap-3 rounded-none max-sm:w-full"
         >
-          <Link href={'/my-courses/create'}>
+          <Link href={'/my-webinars/create'}>
             <FiPlus className="size-4" />
-            Crear un curso
+            Programar Webinar
           </Link>
         </Button>
       </div>
       <Suspense>
         <div className="container mx-auto mb-5 flex items-center justify-between gap-5 max-md:flex-col max-md:items-start">
           <QueryInputFilter />
-          <ToggleStatus />
           <CategorySelectFilter />
         </div>
-        <MyCourseContainer />
+        <WebinarContainer />
       </Suspense>
     </div>
   )

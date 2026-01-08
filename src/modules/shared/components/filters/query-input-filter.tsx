@@ -6,10 +6,10 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '../../shared/components/ui/input-group'
+} from '@/modules/shared/components/ui/input-group'
 import { Search } from 'lucide-react'
 
-export default function QueryFilter() {
+export default function QueryInputFilter() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { replace } = useRouter()

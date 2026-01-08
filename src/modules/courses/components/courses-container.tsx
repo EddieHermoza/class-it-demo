@@ -1,11 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import {
-  CategoryFilter,
-  CourseCard,
-  EmptyState,
-} from '@/modules/courses/components'
+import { CourseCard, EmptyState } from '@/modules/courses/components'
 import { ITEMS_PER_PAGE } from '@/modules/shared/constants'
 import { fetcher } from '@/lib/http/fetcher'
 import { useCallback, useEffect, useRef } from 'react'
@@ -13,6 +9,7 @@ import useSWRInfinite from 'swr/infinite'
 import CoursesGridSkeleton from './skeletons/courses-grid-skeleton'
 import { toast } from 'sonner'
 import { API_URL } from '@/config/env'
+import { CategoryFilter } from './category-filter'
 
 export type PublishedCourse = {
   id: string
@@ -61,8 +58,8 @@ export default function CoursesContainer() {
     getKey,
     fetcher,
     {
-      revalidateOnFocus: false, 
-      revalidateIfStale: false, 
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
       revalidateOnReconnect: false,
     }
   )
@@ -102,7 +99,7 @@ export default function CoursesContainer() {
   if (error) toast.error(error.message)
 
   return (
-    <div className="container mx-auto grid sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-5">
+    <div className="container mx-auto my-5 grid sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <CategoryFilter className="col-span-1 flex sm:gap-5 md:col-span-2 lg:col-span-3 lg:justify-center xl:col-span-4" />
       {isLoading && <CoursesGridSkeleton items={12} />}
 

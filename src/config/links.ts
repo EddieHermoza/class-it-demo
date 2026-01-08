@@ -1,6 +1,6 @@
 'use client'
 
-import { IoCalendarOutline as _ } from 'react-icons/io5'
+import { IoCalendarOutline } from 'react-icons/io5'
 import { MdOutlineLibraryBooks } from 'react-icons/md'
 import { FaRegBookmark } from 'react-icons/fa'
 import { IoMdHome } from 'react-icons/io'
@@ -22,11 +22,11 @@ export const COMMON_LINKS: NavItem[] = [
     src: '/courses',
     icon: MdOutlineLibraryBooks,
   },
-  // {
-  //   label: 'Calendario',
-  //   src: '/calendar',
-  //   icon: IoCalendarOutline,
-  // },
+  {
+    label: 'Calendario',
+    src: '/calendar',
+    icon: IoCalendarOutline,
+  },
 ]
 
 const STUDENT_SPECIFIC: NavItem[] = [
@@ -47,6 +47,11 @@ const TEACHER_SPECIFIC: NavItem[] = [
     label: 'Mis cursos',
     icon: FaRegBookmark,
     src: '/my-courses',
+  },
+  {
+    label: 'Mis webinars',
+    icon: IoCalendarOutline,
+    src: '/my-webinars',
   },
 ]
 

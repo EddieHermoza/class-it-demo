@@ -150,7 +150,7 @@ export default function LoginPage() {
                 <>Iniciar Sesión</>
               )}
             </Button>
-
+{/* 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="border-border w-full border-t" />
@@ -186,7 +186,7 @@ export default function LoginPage() {
                 />
               </svg>
               Google
-            </Button>
+            </Button> */}
 
             <div className="text-center text-sm">
               <span className="text-muted-foreground">

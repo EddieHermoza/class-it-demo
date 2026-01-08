@@ -21,7 +21,8 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import SearchBar from '@/modules/courses/components/search-bar'
 import { COMMON_LINKS, LINKS_STUDENT, LINKS_TEACHER } from '@/config/links'
 import InstructorPopover from './instructor-popover'
-import NotificationsPopover from './notifications-popover'
+import {NotificationsPopover as _b} from './notifications-popover'
+import { DonationDialog as _a } from './donation-dialog'
 
 export function Navbar() {
   const { data: session, status } = useSession()
@@ -145,7 +146,8 @@ export function Navbar() {
             size="lg"
             modes={['light', 'dark']}
           />
-          <NotificationsPopover />
+          {/* <DonationDialog /> */}
+          {/* <NotificationsPopover /> */}
         </div>
         {status === 'loading' ? (
           <AiOutlineLoading3Quarters className="text-primary animate-spin" />

@@ -119,6 +119,32 @@
   }
 }
 
+@layer components {
+  /* Calendar CSS*/
+  .fc .fc-toolbar-chunk {
+    @apply flex p-2;
+  }
+
+  .fc-v-event {
+    @apply !bg-transparent !border-none !shadow-none;
+  }
+  .fc .fc-button-primary {
+    @apply !bg-primary !text-primary-foreground focus:!shadow-none hover:!bg-primary/80 disabled:!bg-primary/50 disabled:!text-primary-foreground/50;
+  }
+  .fc .fc-button-group {
+    @apply !flex !gap-2;
+  }
+
+  .fc .fc-toolbar-title {
+    @apply !text-lg;
+  }
+
+  .fc-daygrid-dot-event.fc-event-mirror,
+  .fc-daygrid-dot-event:hover {
+    @apply !bg-transparent !border-none !shadow-none;
+  }
+}
+
 @utility flex-center {
   @apply flex items-center justify-center;
 }
