@@ -1,6 +1,6 @@
 const getApiUrl = () => {
   if (IS_PRODUCTION) {
-    return process.env.NEXT_PUBLIC_PRODUCTION_API
+    return 'https://api.class-it.edu.pe'
   }
   return process.env.NEXT_PUBLIC_DEVELOPMENT_API
 }
