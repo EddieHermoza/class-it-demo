@@ -34,7 +34,7 @@ export default function ResetPasswordForm({ token }: Props) {
   const onSubmit = async (data: ResetPasswordSchemaType) => {
     const { error } = await sendRequest(data)
     if (error) {
-      toast.error('Error al reestablecer la contraseña')
+      toast.error(error)
       return
     }
     toast.success('Contraseña actualizada correctamente')
