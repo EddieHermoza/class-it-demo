@@ -16,7 +16,7 @@ export default async function MyWebinarsPage() {
   }
   return (
     <div className="py-5 max-md:px-3">
-      <div className="container mx-auto mb-5 flex w-full items-end justify-between gap-5 p-5 max-sm:flex-col">
+      <div className="container mx-auto mb-5 flex w-full items-start justify-between gap-5 p-5 max-sm:flex-col">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-balance lg:text-3xl">
             Mis Webinars

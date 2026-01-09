@@ -22,7 +22,7 @@ export default function InstructorPopover() {
             : 'text-muted-foreground hover:bg-primary/10 hover:text-primary'
         }`}
       >
-        <Link href={'/auth/register'}>Ser instructor</Link>
+        <Link href={'/auth/register-teacher'}>Ser instructor</Link>
       </HoverCardTrigger>
 
       <HoverCardContent

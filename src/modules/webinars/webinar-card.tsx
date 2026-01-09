@@ -17,7 +17,7 @@ interface Props {
 
 export default function WebinarCard({ webinar }: Props) {
   return (
-    <Card className="hover:bg-accent hover:border-accent flex h-full flex-col rounded-none duration-300">
+    <Card className="border-primary/20 hover:bg-accent hover:border-accent flex h-full flex-col rounded-md duration-300">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <CardTitle className="line-clamp-2 text-lg">
