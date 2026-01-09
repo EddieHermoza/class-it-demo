@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardDescription,
@@ -15,7 +14,7 @@ export default async function SecurityPage() {
   if (!session) redirect('/auth/login')
   return (
     <>
-      <Card className="w-full max-w-3xl rounded-none">
+      <Card className="w-full max-w-3xl rounded-none max-sm:border-none">
         {/* Header */}
         <CardHeader className="border-b px-8 py-6 text-center">
           <CardTitle className="text-2xl">Seguridad</CardTitle>
@@ -40,8 +39,6 @@ export default async function SecurityPage() {
               </Button>
             </div>
           </section> */}
-
-          <hr />
 
           <section className="space-y-4">
             <ChangePasswordForm session={session} />

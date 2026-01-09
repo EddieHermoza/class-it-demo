@@ -56,7 +56,7 @@ export function SheetSidebar() {
       </SheetTrigger>
 
       <SheetContent side="left" className="max-sm:w-full">
-        <SheetHeader className="h-15P">
+        <SheetHeader className="h-15">
           <SheetTitle className="text-primary text-lg">Class IT</SheetTitle>
         </SheetHeader>
 
@@ -73,7 +73,7 @@ export function SheetSidebar() {
                         className={`flex w-full items-center justify-between p-4 transition-colors hover:no-underline ${
                           active
                             ? 'bg-primary text-primary-foreground'
-                            : 'hover:bg-primary/10'
+                            : 'hover:bg-accent active:bg-accent hover:text-primary'
                         }`}
                       >
                         <span className="flex-center gap-2">
@@ -90,7 +90,7 @@ export function SheetSidebar() {
                         <Link
                           href="/courses"
                           onClick={() => setOpen(false)}
-                          className="hover:bg-primary/10 hover:text-primary flex w-full items-center rounded-md p-2 text-sm transition"
+                          className="hover:bg-accent active:bg-accent hover:text-primary flex w-full items-center p-4 text-sm transition"
                         >
                           Todos los cursos
                         </Link>
@@ -104,7 +104,7 @@ export function SheetSidebar() {
                     className={`flex w-full items-center gap-2 p-4 transition-colors hover:no-underline ${
                       active
                         ? 'bg-primary text-primary-foreground'
-                        : 'hover:bg-primary/10'
+                        : 'hover:bg-accent active:bg-accent hover:text-primary'
                     }`}
                   >
                     {Icon && <Icon className="size-5" />}
@@ -120,7 +120,7 @@ export function SheetSidebar() {
               <Link
                 href="/auth/register-teacher"
                 onClick={() => setOpen(false)}
-                className="hover:bg-primary/10 hover:text-primary flex w-full items-center gap-2 p-4 text-xs transition"
+                className="hover:bg-accent active:bg-accent hover:text-primary flex w-full items-center gap-2 p-4 text-sm transition"
               >
                 <FaChalkboardTeacher className="size-5" />
                 Ser instructor
@@ -132,18 +132,29 @@ export function SheetSidebar() {
         <div className="flex-center w-full p-4">
           {session ? (
             <div className="flex w-full flex-col items-center gap-4">
-              <div className="flex w-full items-center gap-3">
+              <Link
+                onClick={() => setOpen(false)}
+                href="/settings/edit-profile"
+                className="hover:bg-accent active:bg-accent flex w-full items-center gap-3 rounded-md border p-3 transition-colors"
+              >
                 <Avatar>
                   <AvatarImage src={session.user.avatarUrl} alt={username} />
                   <AvatarFallback className="bg-primary text-primary-foreground">
                     {username[0]?.toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <span>{username}</span>
-              </div>
+                <div className="flex w-full flex-col">
+                  <span>{username}</span>
+                  <span className="text-xs text-primary">Ir al perfil</span>
+                </div>
+              </Link>
 
+              {/* Botón de cerrar sesión */}
               <SheetClose asChild>
-                <CloseSessionButton label="Cerrar Sesión" className="mx-auto" />
+                <CloseSessionButton
+                  label="Cerrar Sesión"
+                  className="mx-auto border px-3"
+                />
               </SheetClose>
             </div>
           ) : (

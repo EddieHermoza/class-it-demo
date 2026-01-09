@@ -33,7 +33,7 @@ export default function QueryInputFilter() {
       <InputGroupInput
         defaultValue={searchParams.get('query') ?? ''}
         onChange={(e) => debouncedSearch(e.target.value)}
-        placeholder="Buscar cursos..."
+        placeholder="Busqueda..."
         className="text-sm"
       />
 

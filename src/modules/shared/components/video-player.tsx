@@ -24,16 +24,14 @@ export default function VideoPlayer({ videoUrl, title }: Props) {
 
   if (!youtubeId) {
     return (
-      <div className="flex-center bg-black/60 text-red-500">
-        URL de YouTube inválida
-      </div>
+      <div className="flex-center text-red-500">URL de YouTube inválida</div>
     )
   }
 
   const posterUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
 
   return (
-    <div className="relative size-full rounded-none bg-black/60 p-0">
+    <div className="relative size-full rounded-none bg-transparent p-0">
       <MediaPlayer
         title={title}
         src={`youtube/${youtubeId}`}

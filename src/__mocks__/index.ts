@@ -1,5 +1,0 @@
-export * from './courses'
-export * from './categories'
-export * from './course-detail'
-export * from './my-courses'
-export * from './course-content'

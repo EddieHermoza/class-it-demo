@@ -60,7 +60,7 @@ export default function ProfileForm({ session }: Props) {
       return
     }
 
-    toast.success('Perfil actualizado correctamente')
+    toast.success('Perfil actualizado. Los cambios se verán en el próximo inicio de sesión.')
     await update({
       user: {
         ...session.user,

@@ -4,10 +4,17 @@ import { ArrowRight, Clock, Award, CheckCircle2 } from 'lucide-react'
 import CategoriesGrid from '@/modules/landing/categories-grid'
 import CoursesGrid from '@/modules/landing/courses-grid'
 import LearningAnimation from '@/modules/shared/components/lottie/learning-animation'
+import WebinarHero from '@/modules/landing/webinar-hero'
+import WebinarOverlay from '@/modules/landing/webinar-overlay'
+import InstructorsShowcase from '@/modules/landing/instructors-showcase'
+import AlliancesSection from '@/modules/landing/alliances-section'
+import { Separator } from '@/modules/shared/components/ui/separator'
 
 export default function LandingPage() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col bg-muted/30">
+      {/* ================= WEBINAR OVERLAY (First Visit) ================= */}
+      <WebinarOverlay />
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden py-24 md:py-32">
         <div className="relative mx-auto max-w-7xl px-6">
@@ -44,8 +51,11 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ================= WEBINAR HERO ================= */}
+      <WebinarHero />
+
       {/* ================= STATS ================= */}
-      <section className="bg-muted/30 border-y py-14">
+      {/* <section className="bg-muted/30 border-y py-14">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
             {[
@@ -61,13 +71,17 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <CategoriesGrid />
 
       <CoursesGrid />
+      
+      {/* ================= INSTRUCTORS ================= */}
+      <InstructorsShowcase />
+
       {/* ================= BENEFITS ================= */}
-      <section className="bg-background py-20">
+      <section className="py-20 bg-muted/30">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 text-center">
             <h2 className="text-4xl font-bold">¿Por qué elegir Class IT?</h2>
@@ -107,6 +121,10 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      
+      {/* ================= ALLIANCES ================= */}
+      <AlliancesSection />
+
       {/* ================= FINAL CTA ================= */}
       <section className="from-primary to-primary/80 bg-gradient-to-r py-24">
         <div className="text-primary-foreground mx-auto max-w-4xl px-6 text-center">
@@ -123,7 +141,7 @@ export default function LandingPage() {
               asChild
               size="lg"
               variant="secondary"
-              className="btn-cut w-full rounded-none px-10 py-6 text-lg max-w-80"
+              className="btn-cut w-full rounded-none px-10 py-6 text-lg sm:max-w-80"
             >
               <Link href={'/courses'}>
                 Ir cursos
@@ -131,6 +149,10 @@ export default function LandingPage() {
               </Link>
             </Button>
           </div>
+<Separator className='my-5 dark:bg-white'/>
+          <p className="text-xs sm:text-sm">
+            Derechos reservados Responsabilidad Social Universitario e Integración Tecnológica
+          </p>
         </div>
       </section>
     </main>

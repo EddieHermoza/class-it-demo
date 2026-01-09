@@ -29,7 +29,7 @@ export default function CategoriesGrid() {
   }
 
   return (
-    <section className="bg-background py-20">
+    <section className=" py-20">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-12 text-center">
           <h2 className="text-4xl font-bold">Explora por categorías</h2>

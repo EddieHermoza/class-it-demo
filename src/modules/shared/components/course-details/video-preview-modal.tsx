@@ -2,6 +2,7 @@
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogTitle,
 } from '@/modules/shared/components/ui/dialog'
@@ -10,6 +11,7 @@ import { cn } from '@/lib/utils'
 import { getYouTubeThumbnail } from '@/modules/shared/utils'
 import CourseVideoPlayer from './custom-video-player'
 import VideoPlayer from '../video-player'
+import { IoClose } from 'react-icons/io5'
 
 interface PreviewVideo {
   id: string
@@ -41,12 +43,12 @@ export function VideoPreviewModal({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
-        className="h-auto overflow-hidden rounded-none p-0 shadow-none sm:max-w-7xl"
+        className="h-auto overflow-hidden p-0 shadow-none sm:max-w-7xl"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">Videos de vista previa</DialogTitle>
         <div className="flex max-lg:flex-col">
-          <div className="bg-background flex-center relative aspect-video h-auto w-full max-w-4xl overflow-hidden">
+          <div className="bg-background flex-center relative aspect-video h-auto w-full max-w-4xl overflow-hidden m-auto">
             <VideoPlayer
               title={currentVideo?.title}
               videoUrl={currentVideo?.url}
@@ -59,9 +61,11 @@ export function VideoPreviewModal({
               <p className="text-muted-foreground text-xs">
                 {videos.length} videos disponibles
               </p>
+              <DialogClose className="absolute top-1/2 -translate-y-1/2 right-4 cursor-pointer">
+                <IoClose className="size-5" />
+              </DialogClose>
             </div>
-
-            <div className="custom-scrollbar w-full flex-1 overflow-y-auto">
+            <div className="custom-scrollbar w-full flex-1 overflow-y-auto max-h-80">
               {videos.map((video) => {
                 const isActive = currentVideoId === video.id
                 const thumbnail = getYouTubeThumbnail(video.url)

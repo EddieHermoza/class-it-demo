@@ -48,7 +48,6 @@ export default function PhotoForm({ session }: Props) {
     resolver: zodResolver(PhotoSchema),
   })
 
-  // ← CORRECCIÓN AQUÍ: obtenemos el File real
   const fileList = useWatch({ control, name: 'photo' })
   const selectedFile = fileList && fileList.length > 0 ? fileList[0] : null
 
@@ -67,21 +66,21 @@ export default function PhotoForm({ session }: Props) {
   }, [selectedFile, currentPhotoUrl])
 
   const onSubmit: SubmitHandler<PhotoSchemaType> = async (data) => {
-    // data.photo es FileList, usamos [0]
     if (!data.photo || data.photo.length === 0) return
 
     const formData = new FormData()
     formData.append('file', data.photo[0])
 
-    const { error, data: response } =
-      await sendRequest(formData)
+    const { error, data: response } = await sendRequest(formData)
 
     if (error) {
       toast.error(error ?? 'Error al guardar la foto')
       return
     }
 
-    toast.success('¡Foto actualizada correctamente!')
+    toast.success(
+      'Foto actualizada. Los cambios se verán en el próximo inicio de sesión.'
+    )
     await update({
       user: {
         ...session.user,

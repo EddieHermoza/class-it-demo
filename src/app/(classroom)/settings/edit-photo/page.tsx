@@ -15,7 +15,7 @@ export default async function EditPhotoPage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/auth/login')
   return (
-    <Card className="w-full max-w-3xl rounded-none">
+    <Card className="w-full max-w-3xl rounded-none max-sm:border-none">
       <CardHeader className="border-b text-center">
         <CardTitle className="text-2xl font-semibold">Foto</CardTitle>
         <CardDescription>Añade una foto tuya a tu perfil</CardDescription>

@@ -60,7 +60,9 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
     resolver: zodResolver(webinarSchema),
     defaultValues: {
       title: '',
-      date: '',
+      date: new Date().toLocaleDateString('en-CA', {
+        timeZone: 'America/Lima',
+      }),
       time: '',
       categoryId: '',
       linkUrl: '',
@@ -91,11 +93,15 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
   }, [selectedFile])
 
   const onSubmitHandler: SubmitHandler<WebinarFormValues> = async (values) => {
-    const scheduleAt = `${values.date}T${values.time}:00Z`
+    // Construct date string with Lima Offset (-05:00)
+    // Values.date is YYYY-MM-DD
+    // Values.time is HH:MM
+    const scheduleAtLima = `${values.date}T${values.time}:00-05:00`
+    const scheduleAtUtc = new Date(scheduleAtLima).toISOString()
 
     const formData = new FormData()
     formData.append('title', values.title)
-    formData.append('scheduleAt', scheduleAt)
+    formData.append('scheduleAt', scheduleAtUtc)
     formData.append('linkUrl', values.linkUrl)
     formData.append('categoryId', values.categoryId)
 
@@ -114,7 +120,7 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
       toast.success('Webinar programado exitosamente')
       mutate('/api/V1/webinars/my-webinars', undefined, { revalidate: true })
       mutate('/api/V1/webinars', undefined, { revalidate: true })
-      
+
       if (onSuccess) {
         onSuccess()
       } else {
@@ -128,7 +134,7 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Main Content Column */}
         <div className="space-y-8 lg:col-span-2">
-          <Card className="shadow-sm">
+          <Card className="rounded-none">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <ImageIcon className="text-primary size-5" />
@@ -190,7 +196,7 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm">
+          <Card className="rounded-none">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Tag className="text-primary size-5" />
@@ -243,7 +249,7 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
 
         {/* Sidebar Column */}
         <div className="space-y-8">
-          <Card className="shadow-sm">
+          <Card className="rounded-none">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
                 <Calendar className="text-primary size-4" />
@@ -253,7 +259,7 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
             <CardContent className="space-y-5">
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold italic opacity-80">
-                  Fecha del evento
+                  Fecha del evento (Hora Perú)
                 </span>
                 <div className="relative">
                   <Calendar className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
@@ -270,7 +276,7 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
 
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold italic opacity-80">
-                  Hora de inicio (UTC)
+                  Hora de inicio (Hora Perú)
                 </span>
                 <div className="relative">
                   <Clock className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
@@ -287,7 +293,7 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
             </CardContent>
           </Card>
 
-          <Card className="border-primary/20 bg-primary/5 shadow-sm">
+          <Card className="rounded-none">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
                 <LinkIcon className="text-primary size-4" />
@@ -314,26 +320,26 @@ export function WebinarCreateForm({ onSuccess }: WebinarCreateFormProps = {}) {
               </p>
             </CardContent>
           </Card>
+          <div className="relative flex w-full gap-4">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-1/2"
+              onClick={() => router.back()}
+              disabled={loading}
+            >
+              Cancelar
+            </Button>
+            <Button type="submit" disabled={loading} className="w-1/2 gap-2">
+              {loading ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <PlusCircle className="size-4" />
+              )}
+              Agendar Webinar
+            </Button>
+          </div>
         </div>
-      </div>
-
-      <div className="flex justify-end gap-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.back()}
-          disabled={loading}
-        >
-          Cancelar
-        </Button>
-        <Button type="submit" disabled={loading} className="gap-2">
-          {loading ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : (
-            <PlusCircle className="size-4" />
-          )}
-          Agendar Webinar
-        </Button>
       </div>
     </form>
   )

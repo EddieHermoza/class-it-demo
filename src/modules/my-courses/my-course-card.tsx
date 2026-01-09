@@ -20,7 +20,7 @@ interface MyCourseCardProps {
 
 export default function MyCourseCard({ course, onDelete }: MyCourseCardProps) {
   const { id, title, status, createdAt, updatedAt } = course
-  
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'PUBLISHED':
@@ -40,11 +40,7 @@ export default function MyCourseCard({ course, onDelete }: MyCourseCardProps) {
 
   return (
     <Tooltip>
-      <div className="group bg-card hover:border-primary/50 relative flex w-full items-center gap-5 border p-4 transition-colors duration-300">
-        <div className="flex-shrink-0 pr-3">
-          <IoBookOutline className="text-primary size-10" />
-        </div>
-
+      <div className="border-primary/30 hover:bg-accent hover:border-accent group bg-card h -full flex items-center rounded-md border p-4 duration-200">
         <div className="flex flex-1 flex-col justify-between">
           <h3 className="font-semibold">{title}</h3>
 
@@ -76,7 +72,7 @@ export default function MyCourseCard({ course, onDelete }: MyCourseCardProps) {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button asChild size="sm" variant="secondary">
+                <Button asChild size="sm" variant="outline">
                   <Link href={`/my-courses/edit/${id}`}>
                     <FaEdit />
                   </Link>

@@ -6,7 +6,10 @@ export type WebinarType = {
   imageUrl: string
   imageId: string
   categoryId: string
+  categoryName: string
   teacherId: string
+  teacherFullName: string
+  teacherAvatarUrl: string
   createdAt: string
   updatedAt: string
 }

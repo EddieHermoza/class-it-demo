@@ -25,7 +25,7 @@ export default function CategoriesList({ onCategoryClick, className }: Props) {
             <li key={i} className="w-full">
               <Link
                 onClick={() => onCategoryClick?.()}
-                className="hover:bg-primary/10 hover:text-primary flex p-2 text-sm transition-colors duration-300"
+                className="hover:bg-accent hover:text-primary flex p-2 text-sm transition-colors duration-300"
                 href={`/courses?categoryId=${c.id}`}
               >
                 {c.name}

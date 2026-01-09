@@ -17,9 +17,7 @@ export default function InstructorPopover() {
       <HoverCardTrigger
         asChild
         className={`cursor-default rounded-md px-5 py-2 text-sm transition-colors duration-300 ${
-          open
-            ? 'bg-primary/10 text-primary'
-            : 'text-muted-foreground hover:bg-primary/10 hover:text-primary'
+          open ? 'bg-accent text-primary' : 'hover:bg-accent hover:text-primary'
         }`}
       >
         <Link href={'/auth/register-teacher'}>Ser instructor</Link>

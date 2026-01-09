@@ -62,7 +62,7 @@ export default function CoursesGrid({
   }
 
   return (
-    <section className="bg-muted/30 py-20">
+    <section className="py-20">
       <div className="max-w-8xl mx-auto px-6">
         {/* Título y subtítulo */}
         <div className="mb-12 text-center">

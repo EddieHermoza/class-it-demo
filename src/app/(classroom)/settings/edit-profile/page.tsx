@@ -14,7 +14,7 @@ export default async function EditProfilePage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/auth/login')
   return (
-    <Card className="w-full max-w-3xl rounded-none">
+    <Card className="w-full max-w-3xl rounded-none max-sm:border-none">
       <CardHeader className="border-b text-center">
         <CardTitle className="text-2xl font-semibold">Perfil</CardTitle>
         <CardDescription>Añade información sobre ti</CardDescription>

@@ -21,8 +21,9 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import SearchBar from '@/modules/courses/components/search-bar'
 import { COMMON_LINKS, LINKS_STUDENT, LINKS_TEACHER } from '@/config/links'
 import InstructorPopover from './instructor-popover'
-import {NotificationsPopover as _b} from './notifications-popover'
+import { NotificationsPopover as _b } from './notifications-popover'
 import { DonationDialog as _a } from './donation-dialog'
+import Image from 'next/image'
 
 export function Navbar() {
   const { data: session, status } = useSession()
@@ -50,12 +51,15 @@ export function Navbar() {
       </div>
 
       {/* Brand */}
-      <Link href={'/'}>
-        <span
-          className={`text-primary inline-flex shrink-0 text-xl font-semibold`}
-        >
-          Class IT
-        </span>
+      <Link href="/" className="flex shrink-0 items-center overflow-hidden h-10">
+        <Image
+          src="/logo-1.png"
+          alt="Logo"
+          width={130}
+          height={40}
+          priority
+          className="object-cover object-center"
+        />
       </Link>
 
       <SearchBar />
@@ -81,8 +85,8 @@ export function Navbar() {
                       active
                         ? 'bg-primary text-primary-foreground'
                         : open
-                          ? 'bg-primary/10 text-primary dark:bg-accent/50'
-                          : 'text-muted-foreground hover:bg-primary/10 hover:text-primary dark:hover:bg-accent/50'
+                          ? 'bg-accent text-primary '
+                          : 'hover:bg-accent hover:text-primary'
                     }`}
                   >
                     {Icon && <Icon className="size-4" />}
@@ -110,7 +114,7 @@ export function Navbar() {
                   <Link
                     href="/courses"
                     onClick={() => setOpen(false)}
-                    className="hover:bg-primary/10 hover:text-primary block rounded p-3 text-sm transition-colors"
+                    className="hover:bg-accent hover:text-primary block rounded p-3 text-sm transition-colors"
                   >
                     Todos los cursos
                   </Link>
@@ -126,7 +130,7 @@ export function Navbar() {
               className={`flex-center shrink-0 gap-2 rounded-md px-5 py-2 text-sm transition-colors duration-200 ${
                 active
                   ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-primary/10 hover:text-primary dark:hover:bg-accent/50'
+                  : 'hover:bg-accent hover:text-primary'
               }`}
             >
               {Icon && <Icon className="size-4" />}

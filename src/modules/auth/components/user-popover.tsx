@@ -49,7 +49,7 @@ export default function UserPopover({ session }: Props) {
       <HoverCardContent
         align="end"
         sideOffset={5}
-        className="w-64 rounded-none border p-2 shadow-lg"
+        className="w-64 rounded-none border px-0 py-0"
       >
         <div className="flex flex-col items-center gap-1 py-3 text-center">
           <span className="text-lg leading-tight font-semibold">
@@ -60,11 +60,11 @@ export default function UserPopover({ session }: Props) {
           </span>
         </div>
 
-        <Separator className="my-2" />
+        <Separator />
 
         <Link
           href="/settings/edit-profile"
-          className="hover:bg-accent flex w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
+          className="hover:bg-accent flex h-12 w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
         >
           <CgProfile className="size-5 shrink-0" />
           Mi Perfil
@@ -74,14 +74,14 @@ export default function UserPopover({ session }: Props) {
           <>
             <Link
               href="/my-courses"
-              className="hover:bg-accent flex w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
+              className="hover:bg-accent flex h-12 w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
             >
               <FaChalkboardTeacher className="size-5 shrink-0" />
               Mis Cursos
             </Link>
             <Link
               href="/my-courses/create"
-              className="hover:bg-accent flex w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
+              className="hover:bg-accent flex h-12 w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
             >
               <HiPlusCircle className="size-5 shrink-0" />
               Crear Curso
@@ -91,14 +91,14 @@ export default function UserPopover({ session }: Props) {
           <>
             <Link
               href="/learning"
-              className="hover:bg-accent flex w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
+              className="hover:bg-accent flex h-12 w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
             >
               <FaRegBookmark className="size-5 shrink-0" />
               Cursos Inscritos
             </Link>
             <Link
               href="/certificates"
-              className="hover:bg-accent flex w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
+              className="hover:bg-accent flex h-12 w-full items-center gap-3 rounded px-3 py-2 text-sm transition-colors"
             >
               <TbCertificate className="size-5 shrink-0" />
               Mis Certificados
@@ -106,13 +106,13 @@ export default function UserPopover({ session }: Props) {
           </>
         )}
 
-        <Separator className="my-2" />
+        <Separator />
 
         {/* Cerrar sesión */}
         <CloseSessionButton
           iconSize={20}
           label="Cerrar Sesión"
-          className="w-full justify-start px-3 text-sm"
+          className="h-12 w-full justify-start px-3 text-sm"
         />
       </HoverCardContent>
     </HoverCard>

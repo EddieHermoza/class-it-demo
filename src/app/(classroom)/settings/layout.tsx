@@ -57,9 +57,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex size-full flex-col md:flex-row">
+    <div className="flex size-full flex-col lg:flex-row">
       {/* Sidebar */}
-      <aside className="border-b px-4 py-6 md:w-70 md:border-r md:border-b-0 md:py-10">
+      <aside className="border-b px-4 py-6 md:py-10 lg:w-70 lg:border-r lg:border-b-0">
         <div className="flex flex-col items-center gap-3 border-b pb-6">
           <Avatar className="size-20">
             <AvatarImage src={avatarUrl} alt={usernameForAvatar} />
@@ -71,7 +71,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <p className="text-center font-medium">{fullName}</p>
         </div>
 
-        <nav className="scrollbar-hide mt-6 flex gap-1 overflow-x-auto p-1 text-sm md:flex-col">
+        <nav className="scrollbar-hide mt-6 flex gap-1 overflow-x-auto p-1 text-sm lg:flex-col">
           {SETTINGS_LINKS.map(({ label, src }) => {
             const isActive = pathname === src
 
@@ -79,10 +79,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link
                 key={src}
                 href={src}
-                className={`whitespace-nowrap rounded-md px-3 py-2 transition-colors ${
+                className={`rounded-md px-4 py-2 whitespace-nowrap transition-colors ${
                   isActive
-                    ? 'bg-primary text-primary-foreground dark:bg-primary/30 font-medium'
-                    : 'hover:bg-primary/10 hover:text-primary'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'hover:bg-accent active:bg-accent hover:text-primary'
                 }`}
               >
                 {label}
@@ -92,8 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </nav>
       </aside>
 
-      {/* Contenido principal */}
-      <main className="flex-center flex-1 p-8">{children}</main>
+      <main className="flex-center flex-1 sm:p-8">{children}</main>
     </div>
   )
 }
