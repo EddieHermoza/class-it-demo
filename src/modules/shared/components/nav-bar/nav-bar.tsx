@@ -53,7 +53,7 @@ export function Navbar() {
       {/* Brand */}
       <Link href="/" className="flex shrink-0 items-center overflow-hidden h-10">
         <Image
-          src="/logo-1.png"
+          src="/logo.png"
           alt="Logo"
           width={130}
           height={40}

@@ -11,7 +11,7 @@ import { Label } from '@/modules/shared/components/ui/label'
 import { Input } from '@/modules/shared/components/ui/input'
 import { Button } from '@/modules/shared/components/ui/button'
 import { Eye, EyeOff } from 'lucide-react'
-import animationData from '@/assets/animation/register.json'
+import animationData from '@/assets/animation/forgot-password.json'
 import Lottie from 'lottie-react'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -39,7 +39,7 @@ export default function RegisterPage() {
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
     const { error } = await sendRequest(data)
     if (error) {
-      toast.error('Error al crear la cuenta')
+      toast.error(error ?? 'Error al crear la cuenta')
       return
     }
     toast.success('Cuenta creada correctamente')

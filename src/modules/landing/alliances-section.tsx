@@ -13,11 +13,11 @@ import { Handshake } from 'lucide-react'
 export default function AlliancesSection() {
   // Alliance logos data
   const alliances = [
-    { id: 1, src: '/alliances/1.png', alt: 'Partner Alliance 1' },
-    { id: 2, src: '/alliances/2.png', alt: 'Partner Alliance 2' },
-    { id: 3, src: '/alliances/3.jpeg', alt: 'Partner Alliance 3' },
-    { id: 4, src: '/alliances/4.png', alt: 'Partner Alliance 4' },
-    { id: 5, src: '/alliances/5.png', alt: 'Partner Alliance 5' },
+    { id: 1, src: '/alliances/hackthony.webp', alt: 'Partner Alliance 1' },
+    { id: 2, src: '/alliances/idea.webp', alt: 'Partner Alliance 2' },
+    { id: 3, src: '/alliances/atids.webp', alt: 'Partner Alliance 3' },
+    { id: 4, src: '/alliances/nexo.webp', alt: 'Partner Alliance 4' },
+    { id: 5, src: '/alliances/conecta.webp', alt: 'Partner Alliance 5' },
   ]
 
   // Animation variants

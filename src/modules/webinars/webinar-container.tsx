@@ -11,6 +11,9 @@ import { WebinarResponse } from '@/modules/shared/types/webinar.types'
 import { useApiFetch } from '../shared/hooks/use-api-fetch'
 import WebinarCard from './webinar-card'
 import { ITEMS_PER_PAGE } from '../shared/constants'
+import { useState } from 'react'
+import { DeleteWebinarButton } from './delete-webinar-button'
+import { WebinarType } from '../shared/types/webinar.types'
 
 export default function WebinarContainer() {
   const { data: session } = useSession()
@@ -23,7 +26,7 @@ export default function WebinarContainer() {
 
   const hasToken = !!session?.tokens.access
 
-  const { data, isLoading, isValidating } = useApiFetch<WebinarResponse>(
+  const { data, isLoading, isValidating, mutate } = useApiFetch<WebinarResponse>(
     '/api/V1/webinars/my-webinars',
     {
       page,
@@ -34,6 +37,11 @@ export default function WebinarContainer() {
     session?.tokens.access,
     {},
     hasToken
+  )
+
+  const [open, setOpen] = useState(false)
+  const [selectedWebinar, setSelectedWebinar] = useState<WebinarType | null>(
+    null
   )
 
   const webinars = data?.data ?? []
@@ -86,10 +94,24 @@ export default function WebinarContainer() {
         </div>
         <div className="container mx-auto grid grid-cols-1 gap-6 py-5 md:grid-cols-2 xl:grid-cols-3">
           {webinars.map((webinar) => (
-            <WebinarCard key={webinar.id} webinar={webinar} />
+            <WebinarCard
+              key={webinar.id}
+              webinar={webinar}
+              onDelete={() => {
+                setSelectedWebinar(webinar)
+                setOpen(true)
+              }}
+            />
           ))}
         </div>
       </div>
+      <DeleteWebinarButton
+        token={session?.tokens.access ?? ''}
+        open={open}
+        handleOpenChange={setOpen}
+        webinar={selectedWebinar}
+        handleRefresh={mutate}
+      />
     </>
   )
 }

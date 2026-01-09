@@ -22,14 +22,7 @@ export const RegisterTeacherSchema = z.object({
   password: z
     .string()
     .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
-    .max(100, { message: 'La contraseña es demasiado larga' })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      {
-        message:
-          'La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial',
-      }
-    ),
+    .max(100, { message: 'La contraseña es demasiado larga' }),
 
   title: z
     .string()

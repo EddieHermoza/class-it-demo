@@ -8,15 +8,16 @@ import {
 } from '@/modules/shared/components/ui/card'
 import { Button } from '@/modules/shared/components/ui/button'
 import { formatDate, formatTime } from '@/lib/utils'
-import { Copy, Calendar, Clock, Link as LinkIcon, Edit, Tag } from 'lucide-react'
+import { Copy, Calendar, Clock, Link as LinkIcon, Edit, Tag, Trash } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 
 interface Props {
   webinar: WebinarType
+  onDelete: () => void
 }
 
-export default function WebinarCard({ webinar }: Props) {
+export default function WebinarCard({ webinar, onDelete }: Props) {
   const handleCopy = () => {
     navigator.clipboard.writeText(webinar.linkUrl)
     toast.success('Link copiado al portapapeles')
@@ -78,6 +79,14 @@ export default function WebinarCard({ webinar }: Props) {
             <Edit className="mr-2 size-4" />
             Editar
           </Link>
+        </Button>
+        <Button
+          variant="destructive"
+          size="icon"
+          onClick={onDelete}
+          title="Eliminar webinar"
+        >
+          <Trash className="size-4" />
         </Button>
         <Button
           className="flex-1"

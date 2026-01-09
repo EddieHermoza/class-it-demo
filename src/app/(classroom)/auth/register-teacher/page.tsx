@@ -43,7 +43,7 @@ export default function RegisterTeacherPage() {
   const onSubmit: SubmitHandler<RegisterTeacherSchemaType> = async (data) => {
     const { error } = await sendRequest(data)
     if (error) {
-      toast.error('Error al crear la cuenta de instructor')
+      toast.error(error ?? 'Error al crear la cuenta de instructor')
       return
     }
     toast.success(

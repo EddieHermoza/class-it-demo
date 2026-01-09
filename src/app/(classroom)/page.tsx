@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/modules/shared/components/ui/button'
-import { ArrowRight, Clock, Award, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Clock, Award, CheckCircle2, RefreshCw, Users } from 'lucide-react'
 import CategoriesGrid from '@/modules/landing/categories-grid'
 import CoursesGrid from '@/modules/landing/courses-grid'
 import LearningAnimation from '@/modules/shared/components/lottie/learning-animation'
@@ -25,9 +25,9 @@ export default function LandingPage() {
                 <span className="text-primary block">del futuro digital</span>
               </h1>
 
-              <p className="max-w-lg text-lg md:text-xl">
-                Cursos prácticos de Desarrollo, IA, Diseño, Data y más,
-                impartidos por expertos de la industria.
+              <p className="max-w-lg text-base ">
+Cursos prácticos en tecnología, creatividad, liderazgo, negocios, bienestar y más.
+Impartidos por expertos reales, diseñados para que apliques lo aprendido desde el día 1.
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row">
@@ -81,46 +81,46 @@ export default function LandingPage() {
       <InstructorsShowcase />
 
       {/* ================= BENEFITS ================= */}
-      <section className="py-20 bg-muted/30">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 text-center">
-            <h2 className="text-4xl font-bold">¿Por qué elegir Class IT?</h2>
-          </div>
+<section className="py-20 bg-muted/30">
+  <div className="mx-auto max-w-7xl px-6">
+    <div className="mb-12 text-center">
+      <h2 className="text-4xl font-bold">¿Por qué elegir Class IT?</h2>
+    </div>
 
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-            {[
-              {
-                icon: Clock,
-                title: 'Aprende a tu ritmo',
-                desc: 'Acceso ilimitado de por vida. Estudia cuando y donde quieras.',
-              },
-              {
-                icon: Award,
-                title: 'Certificado oficial',
-                desc: 'Al finalizar recibes un certificado ',
-              },
-              {
-                icon: CheckCircle2,
-                title: 'Proyectos reales',
-                desc: 'Construye un portafolio profesional con proyectos prácticos.',
-              },
-            ].map((benefit) => {
-              const Icon = benefit.icon
-              return (
-                <div key={benefit.title} className="space-y-5 text-center">
-                  <div className="bg-primary/10 mx-auto flex size-20 items-center justify-center rounded-full">
-                    <Icon className="text-primary size-10" />
-                  </div>
-                  <h3 className="text-2xl font-bold">{benefit.title}</h3>
-                  <p className="text-muted-foreground mx-auto max-w-sm text-lg">
-                    {benefit.desc}
-                  </p>
-                </div>
-              )
-            })}
+    <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+      {[
+        {
+          icon: Clock,
+          title: 'Aprende a tu ritmo',
+          desc: 'Acceso ilimitado de por vida. Estudia cuando y donde quieras, desde cualquier dispositivo.',
+        },
+        {
+          icon: RefreshCw,
+          title: 'Contenido siempre actualizado',
+          desc: 'Cursos renovados constantemente con las últimas tendencias y herramientas del mercado.',
+        },
+        {
+          icon: Users,
+          title: 'Expertos de la industria',
+          desc: 'Aprende directamente de profesionales activos que aplican lo que enseñan todos los días.',
+        },
+      ].map((benefit) => {
+        const Icon = benefit.icon
+        return (
+          <div key={benefit.title} className="space-y-5 text-center">
+            <div className="bg-primary/10 mx-auto flex size-20 items-center justify-center rounded-full">
+              <Icon className="text-primary size-10" />
+            </div>
+            <h3 className="text-2xl font-bold">{benefit.title}</h3>
+            <p className="text-muted-foreground mx-auto max-w-sm text-lg">
+              {benefit.desc}
+            </p>
           </div>
-        </div>
-      </section>
+        )
+      })}
+    </div>
+  </div>
+</section>
       
       {/* ================= ALLIANCES ================= */}
       <AlliancesSection />

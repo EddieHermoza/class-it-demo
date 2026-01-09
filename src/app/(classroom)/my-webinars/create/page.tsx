@@ -7,7 +7,7 @@ export default function CreateWebinarPage() {
   return (
     <div className="container mx-auto px-5 py-10">
       <div className="mb-8 flex items-center gap-5">
-        <Button asChild variant={'ghost'}>
+        <Button asChild variant={'ghost'} className='rounded-full size-10'>
           <Link href={'/my-webinars'}>
             <ChevronLeftIcon className="size-5" />
           </Link>
