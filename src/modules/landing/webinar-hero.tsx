@@ -3,7 +3,17 @@
 import Link from 'next/link'
 import { Button } from '@/modules/shared/components/ui/button'
 import { Calendar, Clock, ArrowRight, Video } from 'lucide-react'
+import { useCountdown } from '../shared/hooks/use-countdown'
 import CustomImage from '../shared/components/custom-image'
+import { cn } from '@/lib/utils'
+
+interface WebinarData {
+  title: string
+  description: string
+  date: string
+  time: string
+  linkUrl: string
+}
 
 /**
  * Webinar Hero Section Component
@@ -13,13 +23,13 @@ import CustomImage from '../shared/components/custom-image'
  */
 export default function WebinarHero() {
   // Static webinar data
-  const webinar = {
+  const webinar: WebinarData = {
     title: 'Fortalecer la Democracia - Por un Perú Ganador',
     description:
       'El compromiso de la juventud en la construcción de una democracia sólida y sostenible.',
     date: 'Viernes, 9 de Enero de 2026',
     time: '09:00 p.m.',
-    linkUrl: 'https://meet.google.com/ejemplo-webinar',
+    linkUrl: 'https://zoom.us/j/97585713104',
   }
 
   return (
@@ -75,16 +85,7 @@ export default function WebinarHero() {
               </div>
             </div>
 
-            <Button
-              asChild
-              size="lg"
-              className="btn-cut h-12 w-full rounded-none px-8"
-            >
-              <Link href={webinar.linkUrl} target="_blank">
-                <Video className="mr-2 h-5 w-5" />
-                Unirse al webinar
-              </Link>
-            </Button>
+            <WebinarJoinButton linkUrl={webinar.linkUrl} />
           </div>
 
           {/* Image Column */}
@@ -106,5 +107,47 @@ export default function WebinarHero() {
         </div>
       </div>
     </section>
+  )
+}
+
+/**
+ * Isolated join button with countdown to prevent flickering
+ * in the parent component.
+ */
+function WebinarJoinButton({
+  linkUrl,
+  requiresValidation = false,
+}: {
+  linkUrl: string
+  requiresValidation?: boolean
+}) {
+  // Target: Jan 9, 2026, 21:00 (9:00 PM)
+  const targetDate = new Date(2026, 0, 9, 21, 0, 0)
+  const { hours, minutes, seconds, isFinished } = useCountdown(targetDate)
+
+  const canJoin = isFinished || !requiresValidation
+
+  return (
+    <Button
+      asChild={canJoin}
+      disabled={!canJoin}
+      size="lg"
+      className={cn(
+        'btn-cut h-14 w-full rounded-none px-8 text-lg font-bold transition-all',
+        !canJoin && 'cursor-not-allowed opacity-70'
+      )}
+    >
+      {canJoin ? (
+        <Link href={linkUrl} target="_blank">
+          <Video className="mr-2 h-5 w-5" />
+          Unirse al webinar
+        </Link>
+      ) : (
+        <span className="flex items-center">
+          <Clock className="mr-2 h-5 w-5 animate-pulse" />
+          Unirse en {hours}:{minutes}:{seconds}
+        </span>
+      )}
+    </Button>
   )
 }

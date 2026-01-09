@@ -151,7 +151,14 @@ export default function LandingPage() {
           </div>
 <Separator className='my-5 dark:bg-white'/>
           <p className="text-xs sm:text-sm">
-            Derechos reservados Responsabilidad Social Universitario e Integración Tecnológica
+            <Link
+              href="https://rsu-it.com/"
+              target="_blank"
+              className="hover:underline"
+            >
+              Derechos reservados Responsabilidad Social Universitario e
+              Integración Tecnológica
+            </Link>
           </p>
         </div>
       </section>

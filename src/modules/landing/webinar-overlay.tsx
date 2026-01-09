@@ -5,8 +5,10 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'motion/react'
 import { Button } from '@/modules/shared/components/ui/button'
 import { Calendar, Clock, Video, X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import CustomImage from '../shared/components/custom-image'
 import { useWebinarOverlayStore } from '@/modules/shared/stores/use-webinar-overlay-store'
+import { useCountdown } from '../shared/hooks/use-countdown'
 
 /**
  * Webinar Promotional Overlay Component
@@ -18,6 +20,7 @@ export default function WebinarOverlay() {
   const isOpen = useWebinarOverlayStore((state) => state.isOpen)
   const hasSeenOverlay = useWebinarOverlayStore((state) => state.hasSeenOverlay)
   const closeOverlay = useWebinarOverlayStore((state) => state.closeOverlay)
+
 
   // Auto-open overlay if user hasn't seen it
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function WebinarOverlay() {
       'El compromiso de la juventud en la construcción de una democracia sólida y sostenible.',
     date: 'Viernes, 9 de Enero de 2026',
     time: '09:00 p.m.',
-    linkUrl: 'https://meet.google.com/ejemplo-webinar',
+    linkUrl: 'https://zoom.us/j/97585713104',
   }
 
   const handleClose = () => {
@@ -153,20 +156,7 @@ export default function WebinarOverlay() {
                   </div>
                 </div>
 
-                <Button
-                  asChild
-                  size="lg"
-                  className="btn-cut h-12 w-full rounded-none px-8"
-                >
-                  <Link
-                    href={webinar.linkUrl}
-                    target="_blank"
-                    onClick={handleClose}
-                  >
-                    <Video className="mr-2 h-5 w-5" />
-                    Unirse al webinar
-                  </Link>
-                </Button>
+                <WebinarJoinButton linkUrl={webinar.linkUrl} onClick={handleClose} />
               </div>
 
               {/* Image Column */}
@@ -190,5 +180,45 @@ export default function WebinarOverlay() {
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+function WebinarJoinButton({
+  linkUrl,
+  onClick,
+  requiresValidation = false,
+}: {
+  linkUrl: string
+  onClick?: () => void
+  requiresValidation?: boolean
+}) {
+  // Target: Jan 9, 2026, 21:00 (9:00 PM)
+  const targetDate = new Date(2026, 0, 9, 21, 0, 0)
+  const { hours, minutes, seconds, isFinished } = useCountdown(targetDate)
+
+  const canJoin = isFinished || !requiresValidation
+
+  return (
+    <Button
+      asChild={canJoin}
+      disabled={!canJoin}
+      size="lg"
+      className={cn(
+        'btn-cut h-14 w-full rounded-none px-8 text-lg font-bold transition-all',
+        !canJoin && 'cursor-not-allowed opacity-70'
+      )}
+    >
+      {canJoin ? (
+        <Link href={linkUrl} target="_blank" onClick={onClick}>
+          <Video className="mr-2 h-5 w-5" />
+          Unirse al webinar
+        </Link>
+      ) : (
+        <span className="flex items-center">
+          <Clock className="mr-2 h-5 w-5 animate-pulse" />
+          Unirse en {hours}:{minutes}:{seconds}
+        </span>
+      )}
+    </Button>
   )
 }

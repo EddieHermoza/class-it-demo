@@ -15,7 +15,7 @@ export default function AlliancesSection() {
   const alliances = [
     { id: 1, src: '/alliances/1.png', alt: 'Partner Alliance 1' },
     { id: 2, src: '/alliances/2.png', alt: 'Partner Alliance 2' },
-    { id: 3, src: '/alliances/3.png', alt: 'Partner Alliance 3' },
+    { id: 3, src: '/alliances/3.jpeg', alt: 'Partner Alliance 3' },
     { id: 4, src: '/alliances/4.png', alt: 'Partner Alliance 4' },
     { id: 5, src: '/alliances/5.png', alt: 'Partner Alliance 5' },
   ]
