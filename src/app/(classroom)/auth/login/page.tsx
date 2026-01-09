@@ -84,8 +84,6 @@ export default function LoginPage() {
       }
 
       toast.success('Inicio de sesión exitoso')
-      // Redirigimos manualmente (o puedes usar router.push si importas useRouter)
-      window.location.href = '/dashboard' // ajusta según tu ruta
 
     } catch (error: unknown) {
       const errorMessage =
