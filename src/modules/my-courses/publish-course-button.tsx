@@ -47,7 +47,7 @@ export default function ReadyForReviewCourseButton({ courseId, token }: Props) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            ¿Seguro q desea marcar a revision este curso?
+            ¿Seguro que desea marcar a revision este curso?
           </DialogTitle>
         </DialogHeader>
         <DialogDescription>

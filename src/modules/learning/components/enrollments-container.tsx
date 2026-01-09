@@ -43,6 +43,7 @@ export default function EnrollmentsContainer() {
   const { data: session } = useSession()
   const searchParams = useSearchParams()
   const page = Number(searchParams.get('page') || '1')
+  const status = searchParams.get('status') || 'all'
   const limit = ITEMS_PER_PAGE
   const hasToken = !!session?.tokens.access
 
@@ -52,9 +53,10 @@ export default function EnrollmentsContainer() {
       {
         limit,
         page,
+        status
       },
       session?.tokens.access,
-      {},
+      {revalidateOnMount:true},
       hasToken
     )
   const enrollments = data?.data ?? []

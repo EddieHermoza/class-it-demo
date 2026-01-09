@@ -36,7 +36,7 @@ export default function LastWatchedContainer() {
       '/api/V1/enrollments/last-watched',
       {},
       accessToken,
-      {},
+      {revalidateOnMount:true},
       isAuthenticated
     )
 
