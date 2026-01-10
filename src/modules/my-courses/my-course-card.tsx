@@ -40,7 +40,7 @@ export default function MyCourseCard({ course, onDelete }: MyCourseCardProps) {
 
   return (
     <Tooltip>
-      <div className="border-primary/30 hover:bg-accent hover:border-accent group bg-card h -full flex items-center rounded-md border p-4 duration-200">
+      <div className="relative border-primary/30 hover:bg-accent hover:border-accent group bg-card h-full flex items-center rounded-md border p-4 duration-200">
         <div className="flex flex-1 flex-col justify-between">
           <h3 className="font-semibold">{title}</h3>
 
