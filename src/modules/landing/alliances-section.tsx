@@ -1,8 +1,10 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { motion, useAnimation, useMotionValue } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
 import CustomImage from '../shared/components/custom-image'
-import { Handshake } from 'lucide-react'
+import { Button } from '../shared/components/ui/button'
+import { ChevronLeft, ChevronRight, Handshake } from 'lucide-react'
 
 /**
  * Alliances Section Component
@@ -11,6 +13,11 @@ import { Handshake } from 'lucide-react'
  * grayscale-to-color hover effects, and subtle animations.
  */
 export default function AlliancesSection() {
+  const [subsetWidth, setSubsetWidth] = useState(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const controls = useAnimation()
+
   // Alliance logos data
   const alliances = [
     { id: 1, src: '/alliances/hackthony.webp', alt: 'Partner Alliance 1' },
@@ -18,35 +25,59 @@ export default function AlliancesSection() {
     { id: 3, src: '/alliances/atids.webp', alt: 'Partner Alliance 3' },
     { id: 4, src: '/alliances/nexo.webp', alt: 'Partner Alliance 4' },
     { id: 5, src: '/alliances/conecta.webp', alt: 'Partner Alliance 5' },
+    { id: 6, src: '/alliances/cartagena.webp', alt: 'Partner Alliance 6' },
+    { id: 7, src: '/alliances/centro.webp', alt: 'Partner Alliance 7' },
+    { id: 8, src: '/alliances/escuela.webp', alt: 'Partner Alliance 8' },
   ]
 
+  // Triple the list to have [Left Buffer, Middle (Visible), Right Buffer]
+  const infiniteAlliances = [...alliances, ...alliances, ...alliances]
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      // Calculate width of a single set (total width / 3)
+      const singleSetWidth = carouselRef.current.scrollWidth / 3
+      setSubsetWidth(singleSetWidth)
+      
+      // Initialize to the middle set (start of 2nd set)
+      x.set(-singleSetWidth)
+    }
+  }, [x])
+
+  useEffect(() => {
+    if (subsetWidth === 0) return
+
+    const unsubscribe = x.on('change', (latest: number) => {
+      // Limit to ensure we don't jump if width is not calculated yet
+      const overflowThreshold = 0
+      const underflowThreshold = -2 * subsetWidth
+
+      if (latest >= overflowThreshold) {
+        // Dragged too far right (into first set) -> jump to start of middle set
+        x.set(latest - subsetWidth)
+      } else if (latest <= underflowThreshold) {
+        // Dragged too far left (into third set) -> jump to end of middle set
+        x.set(latest + subsetWidth)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [x, subsetWidth])
+
+  const slide = (direction: 'left' | 'right') => {
+    const currentX = x.get()
+    const containerWidth = carouselRef.current?.parentElement?.offsetWidth || 0
+    const scrollAmount = containerWidth / 2 
+
+    const newX = direction === 'left' ? currentX - scrollAmount : currentX + scrollAmount
+
+    controls.start({
+      x: newX,
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
+    })
+  }
+
   // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 20,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1] as const,
-      },
-    },
-  }
-
   const headerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -87,45 +118,67 @@ export default function AlliancesSection() {
           </h2>
         </motion.div>
 
-        {/* Logos Grid */}
-        <motion.div
-          className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          variants={containerVariants}
-        >
-          {alliances.map((alliance) => (
-            <motion.div
-              key={alliance.id}
-              className="group relative"
-              variants={itemVariants}
+        {/* Carousel Container */}
+        <div className="relative mx-auto w-full">
+          {/* Navigation Buttons */}
+          <div className="absolute -left-4 top-1/2 z-10 hidden -translate-y-1/2 md:-left-12 md:block">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary"
+              onClick={() => slide('right')}
             >
-              {/* Logo Container */}
-              <motion.div
-                className="relative flex aspect-[3/2] items-center justify-center overflow-hidden rounded-2xl border border-border/50 bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
-                whileHover={{ 
-                  scale: 1.05,
-                  y: -4,
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Logo Image */}
-                <div className="relative h-full w-full">
-                  <CustomImage
-                    src={alliance.src}
-                    alt={alliance.alt}
-                    fill
-                    className="object-contain grayscale opacity-70 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
-                  />
-                </div>
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+          </div>
 
-                {/* Subtle glow effect on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              </motion.div>
+          <div className="absolute -right-4 top-1/2 z-10 hidden -translate-y-1/2 md:-right-12 md:block">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary"
+              onClick={() => slide('left')}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Draggable Area */}
+          <motion.div className="cursor-grab overflow-hidden active:cursor-grabbing">
+            <motion.div
+              ref={carouselRef}
+              drag="x"
+              // Remove hard constraints to allow infinite feel (logic handles reset)
+              dragConstraints={{ left: -100000, right: 100000 }} 
+              onDragEnd={() => {
+                 // Optional: Snap logic could go here, but free scroll is fine
+              }}
+              whileTap={{ cursor: 'grabbing' }}
+              animate={controls}
+              style={{ x }}
+              className="flex w-max gap-8 py-4 sm:gap-12"
+            >
+              {infiniteAlliances.map((alliance, index) => (
+                <motion.div
+                  key={`${alliance.id}-${index}`}
+                  className="group relative flex h-24 w-40 shrink-0 items-center justify-center grayscale transition-all duration-300 hover:grayscale-0 sm:h-28 sm:w-48"
+                >
+                  <div className="relative h-full w-full opacity-70 transition-opacity duration-300 group-hover:opacity-100">
+                    <CustomImage
+                      src={alliance.src}
+                      alt={alliance.alt}
+                      fill
+                      className="pointer-events-none object-contain"
+                    />
+                  </div>
+                  
+                  {/* Subtle glow effect on hover */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Bottom Text */}
         <motion.p

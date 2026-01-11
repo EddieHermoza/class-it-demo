@@ -29,7 +29,7 @@ export default function WebinarHero() {
       'El compromiso de la juventud en la construcción de una democracia sólida y sostenible.',
     date: 'Viernes, 9 de Enero de 2026',
     time: '09:00 p.m.',
-    linkUrl: 'https://zoom.us/j/97585713104',
+    linkUrl: 'https://zoom.us/rec/share/pagmAMWki_kEfA-AcjUMzvEtcpMLQ1ymZps9fHYFdUZpSeAIqGOCJllhADZazJJr.ixF4qifBDTlNkvrT',
   }
 
   return (
@@ -140,7 +140,7 @@ function WebinarJoinButton({
       {canJoin ? (
         <Link href={linkUrl} target="_blank">
           <Video className="mr-2 h-5 w-5" />
-          Unirse al webinar
+          Ver repetición
         </Link>
       ) : (
         <span className="flex items-center">

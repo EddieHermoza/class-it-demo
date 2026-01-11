@@ -36,7 +36,7 @@ export default function WebinarOverlay() {
       'El compromiso de la juventud en la construcción de una democracia sólida y sostenible.',
     date: 'Viernes, 9 de Enero de 2026',
     time: '09:00 p.m.',
-    linkUrl: 'https://zoom.us/j/97585713104',
+    linkUrl: 'https://zoom.us/rec/share/pagmAMWki_kEfA-AcjUMzvEtcpMLQ1ymZps9fHYFdUZpSeAIqGOCJllhADZazJJr.ixF4qifBDTlNkvrT',
   }
 
   const handleClose = () => {
@@ -192,7 +192,6 @@ function WebinarJoinButton({
   onClick?: () => void
   requiresValidation?: boolean
 }) {
-  // Target: Jan 9, 2026, 21:00 (9:00 PM)
   const targetDate = new Date(2026, 0, 9, 21, 0, 0)
   const { hours, minutes, seconds, isFinished } = useCountdown(targetDate)
 
@@ -211,7 +210,7 @@ function WebinarJoinButton({
       {canJoin ? (
         <Link href={linkUrl} target="_blank" onClick={onClick}>
           <Video className="mr-2 h-5 w-5" />
-          Unirse al webinar
+          Ver repetición
         </Link>
       ) : (
         <span className="flex items-center">

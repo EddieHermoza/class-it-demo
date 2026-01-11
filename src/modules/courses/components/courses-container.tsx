@@ -100,7 +100,7 @@ export default function CoursesContainer() {
 
   return (
     <div className="container mx-auto my-5 grid sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      <CategoryFilter className="col-span-1 flex sm:gap-5 md:col-span-2 lg:col-span-3 lg:justify-center xl:col-span-4" />
+      <CategoryFilter className="col-span-1 flex sm:gap-5 md:col-span-2 lg:col-span-3 lg:justify-start xl:col-span-4" />
       {isLoading && <CoursesGridSkeleton items={12} />}
 
       {courses.length > 0

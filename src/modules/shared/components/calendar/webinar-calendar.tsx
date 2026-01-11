@@ -42,7 +42,7 @@ import { WebinarCalendarSkeleton } from './webinar-calendar-skeleton'
 import { WebinarCalendarEvent } from './webinar-calendar-event'
 import { WebinarCalendarDayDialog } from './webinar-calendar-day-dialog'
 import { WebinarCalendarDetailDialog } from './webinar-calendar-detail-dialog'
-import { formatDateToISO } from './webinar-calendar-utils'
+import { formatDateToISO, toLimaIsoString } from './webinar-calendar-utils'
 
 export function WebinarCalendar() {
   const { data: session, status } = useSession()
@@ -99,13 +99,15 @@ export function WebinarCalendar() {
     data?.data.map((webinar: WebinarType) => ({
       id: webinar.id,
       title: webinar.title,
-      start: webinar.scheduleAt,
+      // Convert UTC scheduleAt to a "floating" ISO string relative to Lima
+      // This forces FullCalendar to display it at the correct visual time in the grid
+      start: toLimaIsoString(webinar.scheduleAt),
       extendedProps: {
         instructor: webinar.teacherFullName,
         category: webinar.categoryName,
         zoomUrl: webinar.linkUrl,
         imageUrl: webinar.imageUrl,
-        scheduleAt: webinar.scheduleAt,
+        scheduleAt: webinar.scheduleAt, // Keep original UTC for other uses
       },
     })) || []
 
@@ -129,14 +131,15 @@ export function WebinarCalendar() {
   const handleMoreLinkClick = (info: any) => {
     const date = info.date
 
-    // Format cell date as UTC (preserves visual date)
-    const targetDateISO = formatDateToISO(date, 'UTC')
+    // Format cell date as ISO string (YYYY-MM-DD)
+    // FullCalendar passes the date clicked
+    const targetDateISO = formatDateToISO(date, 'UTC') // Use 'UTC' or just rely on date parts as it comes from calendar
 
-    // Filter events that fall on this day (converted to Lima time)
+    // Filter events that fall on this day (comparing YYYY-MM-DD parts)
     const daysEvents = events.filter((e) => {
-      const eDate = new Date(e.start)
-      const eDateISO = formatDateToISO(eDate, 'America/Lima')
-      return eDateISO === targetDateISO
+      // e.start is now a floating string "YYYY-MM-DDTHH:mm:ss"
+      const eDatePart = e.start.split('T')[0]
+      return eDatePart === targetDateISO
     })
 
     setDayEvents(daysEvents)

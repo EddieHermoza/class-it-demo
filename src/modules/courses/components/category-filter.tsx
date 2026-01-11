@@ -32,7 +32,7 @@ export function CategoryFilter({ className }: Props) {
   return (
     <div
       className={cn(
-        'bg-background custom-scrollbar sticky top-0 z-50 mx-auto inline-flex h-20 w-full gap-3 overflow-x-auto border-t px-3 py-5',
+        'bg-background custom-scrollbar sticky top-0 z-50 inline-flex h-20 w-full gap-3 overflow-x-auto border-t px-3 py-5',
         className
       )}
     >
