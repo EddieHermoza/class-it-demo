@@ -7,13 +7,7 @@ import { useCountdown } from '../shared/hooks/use-countdown'
 import CustomImage from '../shared/components/custom-image'
 import { cn } from '@/lib/utils'
 
-interface WebinarData {
-  title: string
-  description: string
-  date: string
-  time: string
-  linkUrl: string
-}
+import { nextWebinar } from '@/__mocks__/webinar'
 
 /**
  * Webinar Hero Section Component
@@ -22,15 +16,7 @@ interface WebinarData {
  * Redesigned for a modern, elegant, and static look.
  */
 export default function WebinarHero() {
-  // Static webinar data
-  const webinar: WebinarData = {
-    title: 'Fortalecer la Democracia - Por un Perú Ganador',
-    description:
-      'El compromiso de la juventud en la construcción de una democracia sólida y sostenible.',
-    date: 'Viernes, 9 de Enero de 2026',
-    time: '09:00 p.m.',
-    linkUrl: 'https://zoom.us/rec/share/pagmAMWki_kEfA-AcjUMzvEtcpMLQ1ymZps9fHYFdUZpSeAIqGOCJllhADZazJJr.ixF4qifBDTlNkvrT',
-  }
+  const webinar = nextWebinar
 
   return (
     <section className=" relative w-full overflow-hidden py-20 lg:py-32">
@@ -93,7 +79,7 @@ export default function WebinarHero() {
             {/* Aspect ratio wrapper 766/723 ~= 1.06 */}
             <div className="ring-border/50 bg-muted/20 relative aspect-[1024/1536] w-full overflow-hidden rounded-2xl shadow-2xl ring-1">
               <CustomImage
-                src="/webinar-banner.jpeg"
+                src={webinar.image}
                 alt={webinar.title}
                 fill
                 className="object-cover"
@@ -140,7 +126,7 @@ function WebinarJoinButton({
       {canJoin ? (
         <Link href={linkUrl} target="_blank">
           <Video className="mr-2 h-5 w-5" />
-          Ver repetición
+          Unirse
         </Link>
       ) : (
         <span className="flex items-center">

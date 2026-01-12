@@ -121,22 +121,19 @@ export default function AlliancesSection() {
         {/* Carousel Container */}
         <div className="relative mx-auto w-full">
           {/* Navigation Buttons */}
-          <div className="absolute -left-4 top-1/2 z-10 hidden -translate-y-1/2 md:-left-12 md:block">
+          <div className="mt-8 flex justify-center gap-4 md:mt-0">
             <Button
               variant="outline"
               size="icon"
-              className="h-10 w-10 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary"
+              className="static h-10 w-10 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all"
               onClick={() => slide('right')}
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
-          </div>
-
-          <div className="absolute -right-4 top-1/2 z-10 hidden -translate-y-1/2 md:-right-12 md:block">
             <Button
               variant="outline"
               size="icon"
-              className="h-10 w-10 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary"
+              className="static h-10 w-10 md:absolute md:-right-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all"
               onClick={() => slide('left')}
             >
               <ChevronRight className="h-5 w-5" />
@@ -161,14 +158,14 @@ export default function AlliancesSection() {
               {infiniteAlliances.map((alliance, index) => (
                 <motion.div
                   key={`${alliance.id}-${index}`}
-                  className="group relative flex h-24 w-40 shrink-0 items-center justify-center grayscale transition-all duration-300 hover:grayscale-0 sm:h-28 sm:w-48"
+                  className="group relative flex h-28 w-48 shrink-0 items-center justify-center grayscale transition-all duration-300 hover:grayscale-0 sm:h-32 sm:w-56"
                 >
-                  <div className="relative h-full w-full opacity-70 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="relative h-full w-full opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100">
                     <CustomImage
                       src={alliance.src}
                       alt={alliance.alt}
                       fill
-                      className="pointer-events-none object-contain"
+                      className="pointer-events-none object-contain scale-105"
                     />
                   </div>
                   

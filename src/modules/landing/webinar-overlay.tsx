@@ -10,6 +10,9 @@ import CustomImage from '../shared/components/custom-image'
 import { useWebinarOverlayStore } from '@/modules/shared/stores/use-webinar-overlay-store'
 import { useCountdown } from '../shared/hooks/use-countdown'
 
+
+import { nextWebinar } from '@/__mocks__/webinar'
+
 /**
  * Webinar Promotional Overlay Component
  *
@@ -29,15 +32,7 @@ export default function WebinarOverlay() {
     }
   }, [hasSeenOverlay])
 
-  // Static webinar data (matching WebinarHero)
-  const webinar = {
-    title: 'Fortalecer la Democracia - Por un Perú Ganador',
-    description:
-      'El compromiso de la juventud en la construcción de una democracia sólida y sostenible.',
-    date: 'Viernes, 9 de Enero de 2026',
-    time: '09:00 p.m.',
-    linkUrl: 'https://zoom.us/rec/share/pagmAMWki_kEfA-AcjUMzvEtcpMLQ1ymZps9fHYFdUZpSeAIqGOCJllhADZazJJr.ixF4qifBDTlNkvrT',
-  }
+  const webinar = nextWebinar
 
   const handleClose = () => {
     closeOverlay()
@@ -164,7 +159,7 @@ export default function WebinarOverlay() {
                 {/* Aspect ratio wrapper 766/723 */}
                 <div className="ring-border/50 bg-muted/20 relative aspect-[1024/1536] w-full overflow-hidden rounded-2xl shadow-xl ring-1">
                   <CustomImage
-                    src="/webinar-banner.jpeg"
+                    src={webinar.image}
                     alt={webinar.title}
                     fill
                     className="object-cover"
@@ -210,7 +205,7 @@ function WebinarJoinButton({
       {canJoin ? (
         <Link href={linkUrl} target="_blank" onClick={onClick}>
           <Video className="mr-2 h-5 w-5" />
-          Ver repetición
+          Unirse
         </Link>
       ) : (
         <span className="flex items-center">

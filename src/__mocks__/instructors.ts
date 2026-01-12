@@ -71,4 +71,23 @@ export const instructors = [
       'Entorno competitivo digital',
     ],
   },
+  {
+    id: 5,
+    nombre_completo: 'Mg. Harumi Alejandra Palacios Sánchez',
+    pais: 'Perú',
+    bandera_iso: 'PE',
+    foto: '/instructors/harumi-palacios.png',
+    capacitacion: {
+      titulo:
+        'LA EVOLUCIÓN DEL EMPRENDIMIENTO CON LA TECNOLOGÍA: ¡EL MUNDO QUIERE CONOCERTE!',
+      objetivo_alcanzado:
+        'Se fortalecieron las competencias digitales de mujeres emprendedoras. Esta capacitación no solo incrementó su seguridad en el ámbito digital, sino que también promovió su autonomía y confianza para proteger a sus familias y negocios, consolidando su empoderamiento en la era tecnológica.',
+    },
+    temas_destacados: [
+      'Emprendimiento con tecnología',
+      'Competencias digitales',
+      'Empoderamiento femenino',
+      'Seguridad y autonomía digital',
+    ],
+  },
 ]

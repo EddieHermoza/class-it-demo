@@ -12,17 +12,23 @@ import {
   DialogTrigger,
 } from '../shared/components/ui/dialog'
 import { useIsDesktop } from '../shared/hooks/use-desktop'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '../shared/components/ui/carousel'
 
 /**
  * Instructors Showcase Component
  * 
- * Displays a simple showcase of national and international instructors
- * with minimal design - showing only image, name, and country.
- * Includes a hover card with detailed information.
+ * Displays a showcase of national and international instructors
+ * using a shadcn/ui Carousel with navigation buttons and hover cards.
  */
 export default function InstructorsShowcase() {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-28 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="mb-16 text-center">
@@ -34,11 +40,29 @@ export default function InstructorsShowcase() {
           </p>
         </div>
 
-        {/* Instructors Grid */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {instructors.map((instructor) => (
-            <InstructorItem key={instructor.id} instructor={instructor} />
-          ))}
+        {/* Carousel Container */}
+        <div className="relative w-full">
+          <Carousel
+            opts={{
+              align: 'start',
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-12">
+              {instructors.map((instructor) => (
+                <CarouselItem key={instructor.id} className="pl-12 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                  <InstructorItem instructor={instructor} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            {/* Responsive Navigation Buttons */}
+            <div className="mt-8 flex justify-center gap-4 md:mt-0">
+              <CarouselPrevious className="static h-10 w-10 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all" />
+              <CarouselNext className="static h-10 w-10 md:absolute md:-right-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all" />
+            </div>
+          </Carousel>
         </div>
       </div>
     </section>
@@ -49,7 +73,7 @@ function InstructorItem({ instructor }: { instructor: (typeof instructors)[0] })
   const isDesktop = useIsDesktop()
 
   const ImageTrigger = (
-    <div className="border hover:border-primary hover:shadow-xl transition-[shadow,border-color] duration-500 group relative aspect-square overflow-hidden mb-4 mx-auto size-60 cursor-pointer rounded-full">
+    <div className="border hover:border-primary hover:shadow-xl transition-[shadow,border-color] duration-500 group relative aspect-square overflow-hidden mb-4 mx-auto size-50 cursor-pointer rounded-full">
       <CustomImage
         src={instructor.foto}
         alt={instructor.nombre_completo}
@@ -84,7 +108,7 @@ function InstructorItem({ instructor }: { instructor: (typeof instructors)[0] })
   const PersonInfo = (
     <>
       {/* Name */}
-      <h3 className="mb-2 text-xl font-bold">{instructor.nombre_completo}</h3>
+      <h3 className="mb-2 text-xl font-bold line-clamp-1">{instructor.nombre_completo}</h3>
 
       {/* Country */}
       <div className="flex items-center justify-center gap-3">
@@ -127,3 +151,5 @@ function InstructorItem({ instructor }: { instructor: (typeof instructors)[0] })
     </div>
   )
 }
+
+
