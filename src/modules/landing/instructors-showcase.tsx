@@ -73,12 +73,13 @@ function InstructorItem({ instructor }: { instructor: (typeof instructors)[0] })
   const isDesktop = useIsDesktop()
 
   const ImageTrigger = (
-    <div className="border hover:border-primary hover:shadow-xl transition-[shadow,border-color] duration-500 group relative aspect-square overflow-hidden mb-4 mx-auto size-50 cursor-pointer rounded-full">
+    <div className="relative border hover:border-primary hover:shadow-xl transition-[shadow,border-color] duration-500 group aspect-square overflow-hidden mb-4 mx-auto size-48 cursor-pointer rounded-full bg-muted">
       <CustomImage
         src={instructor.foto}
         alt={instructor.nombre_completo}
-        fill
-        className="object-cover"
+        height={224}
+        width={224}
+        className="w-40 mt-3  mx-auto object-contain object-bottom"
       />
     </div>
   )

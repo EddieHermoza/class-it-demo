@@ -12,6 +12,7 @@ type Props = {
   category?: string
   className?: string
   fill?: boolean
+  style?: React.CSSProperties
   placeholderSize?: number
 }
 
@@ -21,6 +22,7 @@ export default function CustomImage({
   height,
   alt,
   className,
+  style,
   fill = false,
   placeholderSize = 50,
 }: Props) {
@@ -50,6 +52,7 @@ export default function CustomImage({
             e.currentTarget.style.display = 'none'
             e.currentTarget.nextElementSibling?.classList.remove('hidden')
           }}
+          style={style}
         />
       ) : null}
 
