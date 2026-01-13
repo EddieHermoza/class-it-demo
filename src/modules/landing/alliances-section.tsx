@@ -1,28 +1,29 @@
 'use client'
 
-import { motion, useAnimation, useMotionValue } from 'motion/react'
-import { useEffect, useRef, useState } from 'react'
+import { motion } from 'motion/react'
 import CustomImage from '../shared/components/custom-image'
-import { Button } from '../shared/components/ui/button'
-import { ChevronLeft, ChevronRight, Handshake } from 'lucide-react'
+import { Handshake } from 'lucide-react'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '../shared/components/ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
 
 /**
  * Alliances Section Component
  * 
  * Displays an elegant showcase of partner organizations with modern design,
- * grayscale-to-color hover effects, and subtle animations.
+ * grayscale-to-color hover effects, and auto-playing carousel.
  */
 export default function AlliancesSection() {
-  const [subsetWidth, setSubsetWidth] = useState(0)
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const controls = useAnimation()
-
   // Alliance logos data
   const alliances = [
     { id: 1, src: '/alliances/hackthony.webp', alt: 'Partner Alliance 1' },
     { id: 2, src: '/alliances/idea.webp', alt: 'Partner Alliance 2' },
-    { id: 3, src: '/alliances/atids.webp', alt: 'Partner Alliance 3' },
+    { id: 3, src: '/alliances/atids.png', alt: 'Partner Alliance 3' },
     { id: 4, src: '/alliances/nexo.webp', alt: 'Partner Alliance 4' },
     { id: 5, src: '/alliances/conecta.webp', alt: 'Partner Alliance 5' },
     { id: 6, src: '/alliances/cartagena.webp', alt: 'Partner Alliance 6' },
@@ -30,54 +31,7 @@ export default function AlliancesSection() {
     { id: 8, src: '/alliances/escuela.webp', alt: 'Partner Alliance 8' },
   ]
 
-  // Triple the list to have [Left Buffer, Middle (Visible), Right Buffer]
-  const infiniteAlliances = [...alliances, ...alliances, ...alliances]
-
-  useEffect(() => {
-    if (carouselRef.current) {
-      // Calculate width of a single set (total width / 3)
-      const singleSetWidth = carouselRef.current.scrollWidth / 3
-      setSubsetWidth(singleSetWidth)
-      
-      // Initialize to the middle set (start of 2nd set)
-      x.set(-singleSetWidth)
-    }
-  }, [x])
-
-  useEffect(() => {
-    if (subsetWidth === 0) return
-
-    const unsubscribe = x.on('change', (latest: number) => {
-      // Limit to ensure we don't jump if width is not calculated yet
-      const overflowThreshold = 0
-      const underflowThreshold = -2 * subsetWidth
-
-      if (latest >= overflowThreshold) {
-        // Dragged too far right (into first set) -> jump to start of middle set
-        x.set(latest - subsetWidth)
-      } else if (latest <= underflowThreshold) {
-        // Dragged too far left (into third set) -> jump to end of middle set
-        x.set(latest + subsetWidth)
-      }
-    })
-
-    return () => unsubscribe()
-  }, [x, subsetWidth])
-
-  const slide = (direction: 'left' | 'right') => {
-    const currentX = x.get()
-    const containerWidth = carouselRef.current?.parentElement?.offsetWidth || 0
-    const scrollAmount = containerWidth / 2 
-
-    const newX = direction === 'left' ? currentX - scrollAmount : currentX + scrollAmount
-
-    controls.start({
-      x: newX,
-      transition: { type: 'spring', stiffness: 300, damping: 30 },
-    })
-  }
-
-  // Animation variants
+  // Animation variants for header
   const headerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -120,61 +74,49 @@ export default function AlliancesSection() {
 
         {/* Carousel Container */}
         <div className="relative mx-auto w-full">
-          {/* Navigation Buttons */}
-          <div className="mt-8 flex justify-center gap-4 md:mt-0">
-            <Button
-              variant="outline"
-              size="icon"
-              className="static h-10 w-10 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all"
-              onClick={() => slide('right')}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="static h-10 w-10 md:absolute md:-right-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all"
-              onClick={() => slide('left')}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          </div>
-
-          {/* Draggable Area */}
-          <motion.div className="cursor-grab overflow-hidden active:cursor-grabbing">
-            <motion.div
-              ref={carouselRef}
-              drag="x"
-              // Remove hard constraints to allow infinite feel (logic handles reset)
-              dragConstraints={{ left: -100000, right: 100000 }} 
-              onDragEnd={() => {
-                 // Optional: Snap logic could go here, but free scroll is fine
-              }}
-              whileTap={{ cursor: 'grabbing' }}
-              animate={controls}
-              style={{ x }}
-              className="flex w-max gap-8 py-4 sm:gap-12"
-            >
-              {infiniteAlliances.map((alliance, index) => (
-                <motion.div
-                  key={`${alliance.id}-${index}`}
-                  className="group relative flex h-28 w-48 shrink-0 items-center justify-center grayscale transition-all duration-300 hover:grayscale-0 sm:h-32 sm:w-56"
+          <Carousel
+            opts={{
+              align: 'start',
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 3000,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-8 py-4 sm:-ml-12">
+              {alliances.map((alliance) => (
+                <CarouselItem 
+                  key={alliance.id} 
+                  className="pl-8 sm:pl-12 basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
                 >
-                  <div className="relative h-full w-full opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100">
-                    <CustomImage
-                      src={alliance.src}
-                      alt={alliance.alt}
-                      fill
-                      className="pointer-events-none object-contain scale-105"
-                    />
-                  </div>
-                  
-                  {/* Subtle glow effect on hover */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                </motion.div>
+                  <motion.div
+                    className="group relative flex h-28 w-full items-center justify-center grayscale transition-all duration-300 hover:grayscale-0 sm:h-32"
+                  >
+                    <div className="relative h-full w-full opacity-70 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100">
+                      <CustomImage
+                        src={alliance.src}
+                        alt={alliance.alt}
+                        fill
+                        className="pointer-events-none object-contain scale-105"
+                      />
+                    </div>
+                    
+                    {/* Subtle glow effect on hover */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </motion.div>
+                </CarouselItem>
               ))}
-            </motion.div>
-          </motion.div>
+            </CarouselContent>
+
+            {/* Navigation Buttons */}
+            <div className="mt-8 flex justify-center gap-4 md:mt-0">
+              <CarouselPrevious className="static h-10 w-10 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all" />
+              <CarouselNext className="static h-10 w-10 md:absolute md:-right-12 md:top-1/2 md:-translate-y-1/2 rounded-full border-primary/20 bg-background/80 shadow-sm backdrop-blur-sm hover:bg-primary/10 hover:text-primary transition-all" />
+            </div>
+          </Carousel>
         </div>
 
         {/* Bottom Text */}

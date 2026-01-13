@@ -90,4 +90,21 @@ export const instructors = [
       'Seguridad y autonomía digital',
     ],
   },
+  {
+    id: 6,
+    nombre_completo: 'Ing. Eduardo Noriega Campos',
+    pais: 'Perú',
+    bandera_iso: 'PE',
+    foto: '/instructors/eduardo-noriega.png',
+    capacitacion: {
+      titulo: 'CONFERENCIA "FORTALECIENDO LA DEMOCRACIA, POR UN PERÚ GANADOR"',
+      objetivo_alcanzado:
+        'Se fortaleció el conocimiento y el compromiso de la juventud en la construcción de una democracia sólida y sostenible.',
+    },
+    temas_destacados: [
+      'Fortalecimiento de la democracia',
+      'Compromiso de la juventud',
+      'Democracia sólida y sostenible',
+    ],
+  },
 ]

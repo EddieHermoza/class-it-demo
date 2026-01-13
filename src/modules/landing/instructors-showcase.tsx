@@ -19,6 +19,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '../shared/components/ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
 
 /**
  * Instructors Showcase Component
@@ -47,6 +48,11 @@ export default function InstructorsShowcase() {
               align: 'start',
               loop: true,
             }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+              }),
+            ]}
             className="w-full"
           >
             <CarouselContent className="-ml-12">
