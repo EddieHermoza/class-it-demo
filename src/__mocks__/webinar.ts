@@ -8,10 +8,11 @@ export interface WebinarData {
 }
 
 export const nextWebinar: WebinarData = {
-  title: 'La democracia del siglo XXI - La democracia calificada (o cualificada), frente a desafíos como la globalización',
-  description: 'Conferencia a cargo del Dr. Akbar Salazar Centella sobre los desafíos de la democracia contemporánea en el contexto de la globalización.',
-  date: 'Martes, 13 de Enero de 2026',
-  time: '09:00 p.m.',
-  linkUrl: 'https://zoom.us/j/99121488984',
+  title: 'Gobierno y Sostenibilidad en el Perú',
+  description:
+    'Conferencia a cargo de la Dra. Isabel Delgado Vaca Guzmán sobre los retos y oportunidades para lograr un desarrollo sostenible en el Perú.',
+  date: 'Viernes, 16 de Enero de 2026',
+  time: '07:00 p.m.',
+  linkUrl: 'https://zoom.us/j/91815585965',
   image: '/webinar-2.jpg',
 }
